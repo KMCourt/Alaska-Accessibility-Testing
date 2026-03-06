@@ -10,7 +10,7 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
 
   // Test file location
-  testDir: './tests',
+  testDir: './CPCBA-accessibility-tests',
 
   // Move Playwright's debug output to a dev-only folder
   // Testers should use the results/ folder for reports
@@ -22,11 +22,11 @@ module.exports = defineConfig({
   // Retry failed tests once before marking as failed
   retries: 1,
 
-  // Number of parallel workers — increased to handle mobile device tests
-  workers: 6,
+  // Number of parallel workers
+  workers: 3,
 
-  // Global timeout per test — increased to 90 seconds for mobile tests
-  timeout: 90000,
+  // Global timeout per test
+  timeout: 60000,
 
   // Reporter — shows results in terminal and saves an HTML report
   reporter: [
