@@ -1,0 +1,169 @@
+ACCESSIBILITY REPORT
+====================
+Page         : Details and Payment
+URL          : https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment
+Scanned on   : 05/03/2026, 18:04:32
+====================
+
+SUMMARY
+-------
+This page has 5 accessibility issue(s) that need attention:
+
+  Critical : 1  (must fix immediately)
+  Serious  : 3  (fix as soon as possible)
+  Moderate : 1  (plan in for fixing)
+  Minor    : 0  (low priority)
+
+FAILURES
+--------
+The following issues were automatically confirmed as failures.
+They must be reviewed and fixed by the development team.
+
+Issue 1 of 5
+Severity     : SERIOUS — Should be fixed as soon as possible. This significantly impacts some users.
+What is it?  : The page is missing a language setting.
+Why does it  
+matter?      : Screen readers use the language setting to know how to read the page out loud. Without it, the content may be read in the wrong language or accent, making it very difficult to understand for visually impaired users.
+How to fix   : A developer needs to add a language attribute to the top of the page code. This is a very quick, one-line change.
+Elements     : 1 element(s) on the page are affected.
+Affected     :
+  1. html
+More info    : https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Issue 2 of 5
+Severity     : CRITICAL — Must be fixed immediately. This blocks some users from accessing the page.
+What is it?  : One or more images on the page have no description.
+Why does it  
+matter?      : Users who are blind or visually impaired use screen readers that read out descriptions of images. If an image has no description, the screen reader has nothing to say, so the user misses that content entirely.
+How to fix   : A developer needs to add a short text description to each affected image explaining what it shows. For decorative images that add no meaning, they should be marked as decorative so screen readers skip them.
+Elements     : 2 element(s) on the page are affected.
+Affected     :
+  1. ._ttcLogo_1aja9_99
+  2. ._cpcLogo_1aja9_95
+More info    : https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Issue 3 of 5
+Severity     : MODERATE — Should be planned in for fixing. This causes difficulty for some users.
+What is it?  : The page is preventing users from zooming in on mobile devices.
+Why does it  
+matter?      : Many users with low vision need to pinch and zoom on their phone to read text clearly. This page has a setting that blocks that ability, making it inaccessible on mobile for those users.
+How to fix   : A developer needs to remove the zoom restriction from the page settings. This is a very quick, one-line change.
+Elements     : 1 element(s) on the page are affected.
+Affected     :
+  1. meta[name="viewport"]
+More info    : https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Issue 4 of 5
+Severity     : SERIOUS — Should be fixed as soon as possible. This significantly impacts some users.
+What is it?  : Some clickable elements on the page are incorrectly placed inside other clickable elements.
+Why does it  
+matter?      : When a button or link is placed inside another button or link, keyboard users and screen reader users can get confused or stuck. The assistive technology may not know which element to activate, or may skip one entirely.
+How to fix   : A developer needs to review the affected elements and restructure them so no interactive element is placed inside another. This may take more time depending on how many components are affected.
+Elements     : 20 element(s) on the page are affected.
+Affected     :
+  1. ._card_1ekm4_47._instance_15d14_47:nth-child(1) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  2. ._card_1ekm4_47._instance_15d14_47:nth-child(2) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  3. ._card_1ekm4_47._instance_15d14_47:nth-child(3) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  4. ._card_1ekm4_47._instance_15d14_47:nth-child(4) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  5. ._card_1ekm4_47._instance_15d14_47:nth-child(5) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  6. ._card_1ekm4_47._instance_15d14_47:nth-child(6) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  7. ._card_1ekm4_47._instance_15d14_47:nth-child(7) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  8. ._card_1ekm4_47._instance_15d14_47:nth-child(8) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  9. ._card_1ekm4_47._instance_15d14_47:nth-child(9) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  10. ._card_1ekm4_47._instance_15d14_47:nth-child(10) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  11. ._card_1ekm4_47._instance_15d14_47:nth-child(11) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  12. ._card_1ekm4_47._instance_15d14_47:nth-child(12) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  13. ._card_1ekm4_47._instance_15d14_47:nth-child(13) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  14. ._card_1ekm4_47._instance_15d14_47:nth-child(14) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  15. ._card_1ekm4_47._instance_15d14_47:nth-child(15) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  16. ._card_1ekm4_47._instance_15d14_47:nth-child(16) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  17. ._card_1ekm4_47._instance_15d14_47:nth-child(17) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  18. ._card_1ekm4_47._instance_15d14_47:nth-child(18) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  19. ._card_1ekm4_47._instance_15d14_47:nth-child(19) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+  20. ._card_1ekm4_47._instance_15d14_47:nth-child(20) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60
+More info    : https://dequeuniversity.com/rules/axe/4.11/nested-interactive?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Issue 5 of 5
+Severity     : SERIOUS — Should be fixed as soon as possible. This significantly impacts some users.
+What is it?  : An accessibility issue was detected (rule: target-size).
+Why does it  
+matter?      : This issue may prevent some users from accessing or understanding content on this page.
+How to fix   : A developer should review this issue and address it. See the help link in the technical report for guidance.
+Elements     : 40 element(s) on the page are affected.
+Affected     :
+  1. ._card_1ekm4_47._instance_15d14_47:nth-child(1) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  2. ._card_1ekm4_47._instance_15d14_47:nth-child(1) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  3. ._card_1ekm4_47._instance_15d14_47:nth-child(2) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  4. ._card_1ekm4_47._instance_15d14_47:nth-child(2) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  5. ._card_1ekm4_47._instance_15d14_47:nth-child(3) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  6. ._card_1ekm4_47._instance_15d14_47:nth-child(3) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  7. ._card_1ekm4_47._instance_15d14_47:nth-child(4) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  8. ._card_1ekm4_47._instance_15d14_47:nth-child(4) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  9. ._card_1ekm4_47._instance_15d14_47:nth-child(5) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  10. ._card_1ekm4_47._instance_15d14_47:nth-child(5) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  11. ._card_1ekm4_47._instance_15d14_47:nth-child(6) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  12. ._card_1ekm4_47._instance_15d14_47:nth-child(6) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  13. ._card_1ekm4_47._instance_15d14_47:nth-child(7) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  14. ._card_1ekm4_47._instance_15d14_47:nth-child(7) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  15. ._card_1ekm4_47._instance_15d14_47:nth-child(8) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  16. ._card_1ekm4_47._instance_15d14_47:nth-child(8) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  17. ._card_1ekm4_47._instance_15d14_47:nth-child(9) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  18. ._card_1ekm4_47._instance_15d14_47:nth-child(9) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  19. ._card_1ekm4_47._instance_15d14_47:nth-child(10) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  20. ._card_1ekm4_47._instance_15d14_47:nth-child(10) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  21. ._card_1ekm4_47._instance_15d14_47:nth-child(11) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  22. ._card_1ekm4_47._instance_15d14_47:nth-child(11) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  23. ._card_1ekm4_47._instance_15d14_47:nth-child(12) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  24. ._card_1ekm4_47._instance_15d14_47:nth-child(12) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  25. ._card_1ekm4_47._instance_15d14_47:nth-child(13) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  26. ._card_1ekm4_47._instance_15d14_47:nth-child(13) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  27. ._card_1ekm4_47._instance_15d14_47:nth-child(14) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  28. ._card_1ekm4_47._instance_15d14_47:nth-child(14) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  29. ._card_1ekm4_47._instance_15d14_47:nth-child(15) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  30. ._card_1ekm4_47._instance_15d14_47:nth-child(15) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  31. ._card_1ekm4_47._instance_15d14_47:nth-child(16) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  32. ._card_1ekm4_47._instance_15d14_47:nth-child(16) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  33. ._card_1ekm4_47._instance_15d14_47:nth-child(17) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  34. ._card_1ekm4_47._instance_15d14_47:nth-child(17) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  35. ._card_1ekm4_47._instance_15d14_47:nth-child(18) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  36. ._card_1ekm4_47._instance_15d14_47:nth-child(18) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  37. ._card_1ekm4_47._instance_15d14_47:nth-child(19) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  38. ._card_1ekm4_47._instance_15d14_47:nth-child(19) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  39. ._card_1ekm4_47._instance_15d14_47:nth-child(20) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._minus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+  40. ._card_1ekm4_47._instance_15d14_47:nth-child(20) > ._addButton_1jgj7_47._add_15d14_95._primary_1g856_60 > ._numberInput_1l5v0_47._embedded_1l5v0_74[data-react-aria-pressable="true"] > ._plus_1l5v0_64[role="button"][data-react-aria-pressable="true"]
+More info    : https://dequeuniversity.com/rules/axe/4.11/target-size?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+NEEDS MANUAL REVIEW
+-------------------
+The following items could not be automatically confirmed as pass or fail.
+A team member needs to manually check each one.
+
+Manual Check 1 of 2
+What is it?  : An accessibility issue was detected (rule: bypass).
+Why does it  
+matter?      : This issue may prevent some users from accessing or understanding content on this page.
+What to do   : Manually visit the page and check whether this issue exists.
+More info    : https://dequeuniversity.com/rules/axe/4.11/bypass?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Manual Check 2 of 2
+What is it?  : Some text on the page does not have enough contrast against its background colour.
+Why does it  
+matter?      : Users with low vision or colour blindness may struggle to read text that does not stand out clearly from its background. Good contrast makes text readable for everyone.
+What to do   : Manually visit the page and check whether this issue exists.
+More info    : https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+END OF REPORT

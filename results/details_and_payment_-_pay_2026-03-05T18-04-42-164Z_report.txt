@@ -1,0 +1,85 @@
+ACCESSIBILITY REPORT
+====================
+Page         : Details and Payment - Pay
+URL          : https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment/pay
+Scanned on   : 05/03/2026, 18:04:42
+====================
+
+SUMMARY
+-------
+This page has 3 accessibility issue(s) that need attention:
+
+  Critical : 1  (must fix immediately)
+  Serious  : 1  (fix as soon as possible)
+  Moderate : 1  (plan in for fixing)
+  Minor    : 0  (low priority)
+
+FAILURES
+--------
+The following issues were automatically confirmed as failures.
+They must be reviewed and fixed by the development team.
+
+Issue 1 of 3
+Severity     : SERIOUS — Should be fixed as soon as possible. This significantly impacts some users.
+What is it?  : The page is missing a language setting.
+Why does it  
+matter?      : Screen readers use the language setting to know how to read the page out loud. Without it, the content may be read in the wrong language or accent, making it very difficult to understand for visually impaired users.
+How to fix   : A developer needs to add a language attribute to the top of the page code. This is a very quick, one-line change.
+Elements     : 1 element(s) on the page are affected.
+Affected     :
+  1. html
+More info    : https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Issue 2 of 3
+Severity     : CRITICAL — Must be fixed immediately. This blocks some users from accessing the page.
+What is it?  : One or more images on the page have no description.
+Why does it  
+matter?      : Users who are blind or visually impaired use screen readers that read out descriptions of images. If an image has no description, the screen reader has nothing to say, so the user misses that content entirely.
+How to fix   : A developer needs to add a short text description to each affected image explaining what it shows. For decorative images that add no meaning, they should be marked as decorative so screen readers skip them.
+Elements     : 2 element(s) on the page are affected.
+Affected     :
+  1. ._ttcLogo_1aja9_99
+  2. ._cpcLogo_1aja9_95
+More info    : https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Issue 3 of 3
+Severity     : MODERATE — Should be planned in for fixing. This causes difficulty for some users.
+What is it?  : The page is preventing users from zooming in on mobile devices.
+Why does it  
+matter?      : Many users with low vision need to pinch and zoom on their phone to read text clearly. This page has a setting that blocks that ability, making it inaccessible on mobile for those users.
+How to fix   : A developer needs to remove the zoom restriction from the page settings. This is a very quick, one-line change.
+Elements     : 1 element(s) on the page are affected.
+Affected     :
+  1. meta[name="viewport"]
+More info    : https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+NEEDS MANUAL REVIEW
+-------------------
+The following items could not be automatically confirmed as pass or fail.
+A team member needs to manually check each one.
+
+Manual Check 1 of 2
+What is it?  : An accessibility issue was detected (rule: bypass).
+Why does it  
+matter?      : This issue may prevent some users from accessing or understanding content on this page.
+What to do   : Manually visit the page and check whether this issue exists.
+More info    : https://dequeuniversity.com/rules/axe/4.11/bypass?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+Manual Check 2 of 2
+What is it?  : Some text on the page does not have enough contrast against its background colour.
+Why does it  
+matter?      : Users with low vision or colour blindness may struggle to read text that does not stand out clearly from its background. Good contrast makes text readable for everyone.
+What to do   : Manually visit the page and check whether this issue exists.
+More info    : https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright
+
+- - - - - - - - - - - - - - - - - - -
+
+END OF REPORT

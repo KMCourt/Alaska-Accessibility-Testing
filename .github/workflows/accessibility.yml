@@ -1,0 +1,57 @@
+# ===========================================
+# GITHUB ACTIONS — DAILY ACCESSIBILITY TESTS
+# ===========================================
+# This file automatically runs the accessibility
+# tests every day at 8am UTC and on every push
+# to the main branch.
+# ===========================================
+
+name: Daily Accessibility Tests
+
+on:
+  # Run every day at 8am UTC
+  schedule:
+    - cron: '0 8 * * *'
+
+  # Also run whenever code is pushed to main
+  push:
+    branches: [ main ]
+
+  # Allow manual triggering from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  accessibility-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Install Playwright browsers
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox msedge
+
+      # Run the accessibility tests
+      - name: Run accessibility tests
+        run: npx playwright test alaska-accessibility.spec.js --reporter=list
+
+      # Upload results as downloadable artifacts in GitHub
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-results-${{ github.run_number }}
+          path: results/
+          retention-days: 30

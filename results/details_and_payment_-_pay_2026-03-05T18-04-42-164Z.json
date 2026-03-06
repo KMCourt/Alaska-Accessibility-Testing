@@ -1,0 +1,120 @@
+{
+  "page": "Details and Payment - Pay",
+  "url": "https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment/pay",
+  "scannedAt": "2026-03-05T18:04:42.164Z",
+  "summary": {
+    "totalViolations": 3,
+    "byCriticality": {
+      "critical": 1,
+      "serious": 1,
+      "moderate": 1,
+      "minor": 0
+    }
+  },
+  "violations": [
+    {
+      "id": "html-has-lang",
+      "description": "Ensure every HTML document has a lang attribute",
+      "impact": "serious",
+      "wcagCriteria": [
+        "wcag2a",
+        "wcag311"
+      ],
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+      "affectedElements": [
+        {
+          "html": "<html style=\"\">",
+          "target": [
+            "html"
+          ],
+          "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+        }
+      ]
+    },
+    {
+      "id": "image-alt",
+      "description": "Ensure <img> elements have alternative text or a role of none or presentation",
+      "impact": "critical",
+      "wcagCriteria": [
+        "wcag2a",
+        "wcag111"
+      ],
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+      "affectedElements": [
+        {
+          "html": "<img class=\"_ttcLogo_1aja9_99\" src=\"data:image/svg+xml,%...\">",
+          "target": [
+            "._ttcLogo_1aja9_99"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+        },
+        {
+          "html": "<img class=\"_cpcLogo_1aja9_95\" src=\"/assets/CPCLogo-B8erhcSu.svg\">",
+          "target": [
+            "._cpcLogo_1aja9_95"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+        }
+      ]
+    },
+    {
+      "id": "meta-viewport",
+      "description": "Ensure <meta name=\"viewport\"> does not disable text scaling and zooming",
+      "impact": "moderate",
+      "wcagCriteria": [
+        "wcag2aa",
+        "wcag144"
+      ],
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+      "affectedElements": [
+        {
+          "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">",
+          "target": [
+            "meta[name=\"viewport\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  maximum-scale on <meta> tag disables zooming on mobile devices"
+        }
+      ]
+    }
+  ],
+  "incomplete": [
+    {
+      "id": "bypass",
+      "description": "Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+      "impact": "serious",
+      "wcagCriteria": [
+        "wcag2a",
+        "wcag241"
+      ],
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/bypass?application=playwright",
+      "note": "Needs manual review",
+      "affectedElements": [
+        {
+          "html": "<html style=\"\">",
+          "target": [
+            "html"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "impact": "serious",
+      "wcagCriteria": [
+        "wcag2aa",
+        "wcag143"
+      ],
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+      "note": "Needs manual review",
+      "affectedElements": [
+        {
+          "html": "<div class=\"_text_14lsm_66\">Special Offer: Book 5+ places and get 10% discount\n</div>",
+          "target": [
+            "._text_14lsm_66"
+          ]
+        }
+      ]
+    }
+  ]
+}
