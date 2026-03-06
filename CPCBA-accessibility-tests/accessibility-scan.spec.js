@@ -22,9 +22,7 @@ const { test } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 const fs = require('fs');
 const path = require('path');
-const { generateConsolidatedReport } = require('../utils/report-generator');
 const { getPreviousCounts, recordRun, isRegression } = require('../utils/trend-tracker');
-const { postToTeams } = require('../utils/teams-notify');
 
 // -------------------------------------------
 // PAGES TO SCAN
@@ -90,9 +88,6 @@ const jsonDir = path.join(resultsDir, 'json');
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
-// Collects all scan results — used to build the single consolidated report
-const allResults = [];
-const regressions = [];
 
 test.setTimeout(60000);
 
@@ -160,28 +155,10 @@ test.describe('Accessibility Scan', () => {
       // Get previous run counts for trend comparison
       const previousCounts = getPreviousCounts(pageDef.name, browserName);
 
-      // Check for regression
-      if (isRegression(previousCounts, counts.total)) {
-        regressions.push({ page: pageDef.name, browser: browserName });
-        console.log(`\n⚠️ REGRESSION: ${pageDef.name} (${browserName}) has more violations than last run!`);
-      }
-
       // Record this run in trend history
       recordRun({ page: pageDef.name, browser: browserName, counts });
 
-      // Store full result for the consolidated report
-      allResults.push({
-        page: pageDef.name,
-        url: actualUrl,
-        browser: browserName,
-        counts,
-        previousCounts,
-        violations: results.violations,
-        screenshotFile,
-        elementScreenshots,
-      });
-
-      // Save JSON (for programmatic access / import to tracking tools)
+      // Save JSON — includes everything needed by global teardown to build the report
       const jsonPath = path.join(jsonDir, `${safeName}_${browserName}.json`);
       fs.writeFileSync(jsonPath, JSON.stringify({
         page: pageDef.name,
@@ -189,6 +166,10 @@ test.describe('Accessibility Scan', () => {
         browser: browserName,
         scannedAt: new Date().toISOString(),
         summary: counts,
+        previousCounts,
+        regression: isRegression(previousCounts, counts.total),
+        screenshotFile,
+        elementScreenshots,
         violations: results.violations,
         incomplete: results.incomplete,
       }, null, 2));
@@ -206,26 +187,6 @@ test.describe('Accessibility Scan', () => {
     });
   }
 
-  // -------------------------------------------
-  // GENERATE CONSOLIDATED REPORT + NOTIFY TEAMS
-  // -------------------------------------------
-  test('Generate report and notify Teams', async () => {
-
-    const reportPath = path.join(resultsDir, 'report.html');
-    generateConsolidatedReport({ allResults, regressions, reportPath, today });
-
-    console.log(`\n✅ Report saved to: results/${today}/report.html`);
-
-    // Post to Teams
-    const summaryData = allResults.map(r => ({
-      page: r.page, url: r.url, browser: r.browser, ...r.counts,
-    }));
-
-    await postToTeams({
-      webhookUrl: process.env.TEAMS_WEBHOOK_URL,
-      summaryData,
-      today,
-      regressions,
-    });
-  });
 });
+// Report generation and Teams notification are handled by utils/global-teardown.js
+// which runs after ALL tests across ALL browsers complete.

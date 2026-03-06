@@ -12,6 +12,9 @@ module.exports = defineConfig({
   // Test file location
   testDir: './CPCBA-accessibility-tests',
 
+  // Runs after ALL tests across ALL browsers finish — generates report and notifies Teams
+  globalTeardown: './utils/global-teardown.js',
+
   // Move Playwright's debug output to a dev-only folder
   // Testers should use the results/ folder for reports
   outputDir: './dev-debug',
