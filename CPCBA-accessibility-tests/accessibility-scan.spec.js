@@ -44,6 +44,17 @@ const PAGES = [
     url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment/pay',
   },
   {
+    name: 'Info Page',
+    url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc',
+    setup: async (page) => {
+      // Click the first Info button — navigates to a live course details page
+      // without hardcoding an eventInstanceId that will expire
+      await page.locator('button[class*="_info_"]').first().click();
+      await page.waitForLoadState('domcontentloaded');
+      await page.waitForTimeout(2000);
+    },
+  },
+  {
     name: 'My Basket Modal',
     url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc',
     timeout: 120000,
@@ -97,11 +108,14 @@ test.describe('Accessibility Scan', () => {
       await page.goto(pageDef.url, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(3000);
 
-      // Run any setup steps (e.g. open a modal)
+      // Run any setup steps (e.g. open a modal or navigate via click)
       if (pageDef.setup) {
         await pageDef.setup(page);
         await page.waitForTimeout(1000);
       }
+
+      // Capture the actual URL after any navigation (e.g. clicking Info lands on a different page)
+      const actualUrl = page.url();
 
       // Full page screenshot — saved in screenshots/ subfolder
       const safeName = pageDef.name.replace(/\s+/g, '_').toLowerCase();
@@ -158,7 +172,7 @@ test.describe('Accessibility Scan', () => {
       // Store full result for the consolidated report
       allResults.push({
         page: pageDef.name,
-        url: pageDef.url,
+        url: actualUrl,
         browser: browserName,
         counts,
         previousCounts,
@@ -171,7 +185,7 @@ test.describe('Accessibility Scan', () => {
       const jsonPath = path.join(jsonDir, `${safeName}_${browserName}.json`);
       fs.writeFileSync(jsonPath, JSON.stringify({
         page: pageDef.name,
-        url: pageDef.url,
+        url: actualUrl,
         browser: browserName,
         scannedAt: new Date().toISOString(),
         summary: counts,
