@@ -1,7 +1,8 @@
 {
   "page": "CPC Page",
   "url": "https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc",
-  "scannedAt": "2026-03-05T18:04:27.046Z",
+  "browser": "firefox",
+  "scannedAt": "2026-03-06T06:59:22.771Z",
   "summary": {
     "totalViolations": 5,
     "byCriticality": {
@@ -531,15 +532,7 @@
         "wcag241"
       ],
       "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/bypass?application=playwright",
-      "note": "Needs manual review",
-      "affectedElements": [
-        {
-          "html": "<html>",
-          "target": [
-            "html"
-          ]
-        }
-      ]
+      "note": "Needs manual review"
     },
     {
       "id": "color-contrast",
@@ -550,15 +543,7 @@
         "wcag143"
       ],
       "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-      "note": "Needs manual review",
-      "affectedElements": [
-        {
-          "html": "<div class=\"_text_14lsm_66\">Special Offer: Book 5+ places and get 10% discount\n</div>",
-          "target": [
-            "._text_14lsm_66"
-          ]
-        }
-      ]
+      "note": "Needs manual review"
     }
   ]
 }
