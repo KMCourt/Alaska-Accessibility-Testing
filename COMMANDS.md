@@ -30,6 +30,13 @@ npx playwright test tests/colour-contrast.spec.js
 npx playwright test tests/keyboard-navigation.spec.js
 ```
 
+### Run an individual test and view results immediately
+```bash
+npx playwright test tests/accessibility-scan.spec.js && npx playwright show-report results/html-report
+npx playwright test tests/colour-contrast.spec.js && npx playwright show-report results/html-report
+npx playwright test tests/keyboard-navigation.spec.js && npx playwright show-report results/html-report
+```
+
 ### Run tests in a specific browser only
 ```bash
 npx playwright test --project=chromium
@@ -40,6 +47,15 @@ npx playwright test --project=edge
 ### Run a specific test by name
 ```bash
 npx playwright test --grep "CPC Page"
+```
+
+---
+
+## Viewing Results
+
+### Open the HTML report after tests finish
+```bash
+npx playwright show-report results/html-report
 ```
 
 ---
