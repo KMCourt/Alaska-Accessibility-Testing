@@ -4,11 +4,16 @@
  * ===========================================
  * Runs axe-core accessibility scans against all pages
  * in Chrome, Firefox and Edge.
- * Generates HTML reports with screenshots and bug tickets.
- * Posts results to Teams and tracks trends over time.
+ *
+ * Generates ONE consolidated HTML report at:
+ *   results/YYYY-MM-DD/report.html
+ *
+ * The report contains every page, every browser,
+ * every violation, and a copy-ready bug ticket
+ * for each issue — all in one place.
  *
  * HOW TO RUN:
- * npx playwright test tests/accessibility-scan.spec.js --reporter=list
+ * npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js
  * ===========================================
  */
 
@@ -17,7 +22,7 @@ const { test } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 const fs = require('fs');
 const path = require('path');
-const { generateHtmlReport } = require('../utils/report-generator');
+const { generateConsolidatedReport } = require('../utils/report-generator');
 const { getPreviousCounts, recordRun, isRegression } = require('../utils/trend-tracker');
 const { postToTeams } = require('../utils/teams-notify');
 
@@ -38,6 +43,28 @@ const PAGES = [
     name: 'Details and Payment - Pay',
     url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment/pay',
   },
+  {
+    name: 'My Basket Modal',
+    url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc',
+    timeout: 120000,
+    scanScope: '[role="dialog"]',
+    setup: async (page) => {
+      // Add a course to the basket so the modal has content
+      await page.locator('button:has-text("Add to basket")').first().click();
+      // Wait for basket badge to update (indicates item was added)
+      await page.waitForSelector('div[class*="_badge_"]', { state: 'visible' });
+      await page.waitForTimeout(500);
+      // Click the cart container div to open the basket modal
+      await page.locator('div[class*="_cart_"]').first().click();
+      // Wait for the modal to become visible
+      await page.waitForFunction(() => {
+        const dialog = document.querySelector('[role="dialog"]');
+        if (!dialog) return false;
+        const style = window.getComputedStyle(dialog);
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+      });
+    },
+  },
 ];
 
 // -------------------------------------------
@@ -45,14 +72,15 @@ const PAGES = [
 // -------------------------------------------
 const today = new Date().toISOString().split('T')[0];
 const resultsDir = path.join(__dirname, '..', 'results', today);
-const summaryDir = path.join(resultsDir, 'summary');
+const screenshotsDir = path.join(resultsDir, 'screenshots');
 const jsonDir = path.join(resultsDir, 'json');
 
-[resultsDir, summaryDir, jsonDir].forEach(dir => {
+[resultsDir, screenshotsDir, jsonDir].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
-const summaryData = [];
+// Collects all scan results — used to build the single consolidated report
+const allResults = [];
 const regressions = [];
 
 test.setTimeout(60000);
@@ -62,23 +90,30 @@ test.describe('Accessibility Scan', () => {
   for (const pageDef of PAGES) {
     test(`Scan: ${pageDef.name}`, async ({ page, browserName }) => {
 
+      // Use per-page timeout if specified (e.g. modals need more time)
+      if (pageDef.timeout) test.setTimeout(pageDef.timeout);
+
       // Navigate to page
       await page.goto(pageDef.url, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(3000);
 
-      // Create folder per page per browser
-      const safeName = pageDef.name.replace(/\s+/g, '_').toLowerCase();
-      const pageDir = path.join(resultsDir, `${safeName}_${browserName}`);
-      if (!fs.existsSync(pageDir)) fs.mkdirSync(pageDir, { recursive: true });
+      // Run any setup steps (e.g. open a modal)
+      if (pageDef.setup) {
+        await pageDef.setup(page);
+        await page.waitForTimeout(1000);
+      }
 
-      // Full page screenshot
-      const screenshotPath = path.join(pageDir, 'screenshot.png');
+      // Full page screenshot — saved in screenshots/ subfolder
+      const safeName = pageDef.name.replace(/\s+/g, '_').toLowerCase();
+      const screenshotFile = `${safeName}_${browserName}.png`;
+      const screenshotPath = path.join(screenshotsDir, screenshotFile);
       await page.screenshot({ path: screenshotPath, fullPage: true });
 
-      // Run axe scan
-      const results = await new AxeBuilder({ page })
-        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
-        .analyze();
+      // Run axe scan (scoped to a specific element if defined, e.g. a modal)
+      const axeBuilder = new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']);
+      if (pageDef.scanScope) axeBuilder.include(pageDef.scanScope);
+      const results = await axeBuilder.analyze();
 
       // Take element screenshots for each violation
       const elementScreenshots = {};
@@ -89,9 +124,10 @@ test.describe('Accessibility Scan', () => {
           if (target) {
             try {
               const element = page.locator(target).first();
-              const shotPath = path.join(pageDir, `${violation.id}_element_${i}.png`);
-              await element.screenshot({ path: shotPath });
-              elementScreenshots[violation.id].push(shotPath);
+              const shotFile = `${safeName}_${browserName}_${violation.id}_${i}.png`;
+              const shotPath = path.join(screenshotsDir, shotFile);
+              await element.screenshot({ path: shotPath, timeout: 5000 });
+              elementScreenshots[violation.id].push(shotFile);
             } catch {
               elementScreenshots[violation.id].push(null);
             }
@@ -100,7 +136,7 @@ test.describe('Accessibility Scan', () => {
       }
 
       const counts = {
-        total: results.violations.length,
+        total:    results.violations.length,
         critical: results.violations.filter(v => v.impact === 'critical').length,
         serious:  results.violations.filter(v => v.impact === 'serious').length,
         moderate: results.violations.filter(v => v.impact === 'moderate').length,
@@ -119,23 +155,19 @@ test.describe('Accessibility Scan', () => {
       // Record this run in trend history
       recordRun({ page: pageDef.name, browser: browserName, counts });
 
-      // Add to summary
-      summaryData.push({ page: pageDef.name, url: pageDef.url, browser: browserName, ...counts });
-
-      // Generate HTML report
-      const htmlPath = path.join(pageDir, 'report.html');
-      generateHtmlReport({
-        pageDef,
-        browserName,
-        results,
-        screenshotPath,
-        elementScreenshots,
-        reportPath: htmlPath,
+      // Store full result for the consolidated report
+      allResults.push({
+        page: pageDef.name,
+        url: pageDef.url,
+        browser: browserName,
+        counts,
         previousCounts,
-        isMobile: false,
+        violations: results.violations,
+        screenshotFile,
+        elementScreenshots,
       });
 
-      // Save JSON report
+      // Save JSON (for programmatic access / import to tracking tools)
       const jsonPath = path.join(jsonDir, `${safeName}_${browserName}.json`);
       fs.writeFileSync(jsonPath, JSON.stringify({
         page: pageDef.name,
@@ -157,75 +189,24 @@ test.describe('Accessibility Scan', () => {
       console.log(`Serious  : ${counts.serious}`);
       console.log(`Moderate : ${counts.moderate}`);
       console.log(`Minor    : ${counts.minor}`);
-      console.log(`Report   : results/${today}/${safeName}_${browserName}/report.html`);
     });
   }
 
   // -------------------------------------------
-  // COMBINED SUMMARY + TEAMS NOTIFICATION
+  // GENERATE CONSOLIDATED REPORT + NOTIFY TEAMS
   // -------------------------------------------
-  test('Generate summary and notify Teams', async () => {
-    const date = new Date().toLocaleString('en-GB');
-    const totalViolations = summaryData.reduce((s, r) => s + r.total, 0);
+  test('Generate report and notify Teams', async () => {
 
-    // Generate summary HTML
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Accessibility Summary — ${today}</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 24px; color: #222; }
-    h1 { background: #0b3c6e; color: white; padding: 20px; border-radius: 6px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 24px; }
-    th { background: #0b3c6e; color: white; padding: 10px; text-align: left; }
-    td { padding: 10px; border-bottom: 1px solid #eee; }
-    tr:nth-child(even) { background: #f9f9f9; }
-    .critical { color: #cc0000; font-weight: bold; }
-    .serious  { color: #e65100; font-weight: bold; }
-    .moderate { color: #f9a825; font-weight: bold; }
-    .minor    { color: #558b2f; font-weight: bold; }
-    .regression { background: #ffe0e0; }
-  </style>
-</head>
-<body>
-  <h1>♿ Accessibility Audit — Combined Summary</h1>
-  <p><strong>Site:</strong> TTC Alaska Bookings</p>
-  <p><strong>Standard:</strong> WCAG 2.2 AA</p>
-  <p><strong>Browsers:</strong> Chrome, Firefox, Edge</p>
-  <p><strong>Generated:</strong> ${date}</p>
-  <p><strong>Total violations:</strong> ${totalViolations}</p>
-  ${regressions.length > 0 ? `<p style="color:#cc0000;font-weight:bold;">⚠️ Regressions detected on: ${regressions.map(r => `${r.page} (${r.browser})`).join(', ')}</p>` : '<p style="color:#2e7d32;font-weight:bold;">✅ No regressions detected</p>'}
-  <table>
-    <thead>
-      <tr><th>Page</th><th>Browser</th><th>Total</th><th>Critical</th><th>Serious</th><th>Moderate</th><th>Minor</th></tr>
-    </thead>
-    <tbody>
-      ${summaryData.map(r => {
-        const isReg = regressions.some(x => x.page === r.page && x.browser === r.browser);
-        return `<tr class="${isReg ? 'regression' : ''}">
-          <td>${r.page}${isReg ? ' ⚠️' : ''}</td>
-          <td>${r.browser}</td>
-          <td><strong>${r.total}</strong></td>
-          <td class="critical">${r.critical}</td>
-          <td class="serious">${r.serious}</td>
-          <td class="moderate">${r.moderate}</td>
-          <td class="minor">${r.minor}</td>
-        </tr>`;
-      }).join('')}
-    </tbody>
-  </table>
-  <p style="color:#888;font-size:12px;margin-top:40px;border-top:1px solid #eee;padding-top:16px;">
-    Generated by TTC Accessibility Test Suite — ${date}
-  </p>
-</body>
-</html>`;
+    const reportPath = path.join(resultsDir, 'report.html');
+    generateConsolidatedReport({ allResults, regressions, reportPath, today });
 
-    const summaryPath = path.join(summaryDir, `summary_${today}.html`);
-    fs.writeFileSync(summaryPath, html, 'utf8');
-    console.log(`\nSummary saved to: results/${today}/summary/summary_${today}.html`);
+    console.log(`\n✅ Report saved to: results/${today}/report.html`);
 
     // Post to Teams
+    const summaryData = allResults.map(r => ({
+      page: r.page, url: r.url, browser: r.browser, ...r.counts,
+    }));
+
     await postToTeams({
       webhookUrl: process.env.TEAMS_WEBHOOK_URL,
       summaryData,

@@ -2,161 +2,274 @@
  * ===========================================
  * HTML REPORT GENERATOR
  * ===========================================
- * Generates a detailed HTML report for each
- * page/browser accessibility scan.
+ * Generates a single consolidated HTML report
+ * containing all pages, all browsers, all
+ * violations and copy-ready bug tickets.
+ *
+ * Output: results/YYYY-MM-DD/report.html
  * ===========================================
  */
 
 const fs = require('fs');
 const path = require('path');
 
-function generateHtmlReport({
-  pageDef,
-  browserName,
-  results,
-  screenshotPath,
-  elementScreenshots = {},
-  reportPath,
-  previousCounts,
-  isMobile = false,
-}) {
-  const today = new Date().toLocaleString('en-GB');
+// Reads an image file and returns a base64 data URI, or null if not found
+function toBase64(filePath) {
+  try {
+    const data = fs.readFileSync(filePath);
+    return `data:image/png;base64,${data.toString('base64')}`;
+  } catch {
+    return null;
+  }
+}
 
-  const counts = {
-    total:    results.violations.length,
-    critical: results.violations.filter(v => v.impact === 'critical').length,
-    serious:  results.violations.filter(v => v.impact === 'serious').length,
-    moderate: results.violations.filter(v => v.impact === 'moderate').length,
-    minor:    results.violations.filter(v => v.impact === 'minor').length,
-  };
+function generateConsolidatedReport({ allResults, regressions, reportPath, today }) {
+  const date = new Date().toLocaleString('en-GB');
+  const totalViolations = allResults.reduce((s, r) => s + r.counts.total, 0);
+  const screenshotsDir = path.join(path.dirname(reportPath), 'screenshots');
 
-  const trend = previousCounts
-    ? counts.total > previousCounts.total
-      ? `<span style="color:#cc0000">▲ +${counts.total - previousCounts.total} from last run</span>`
-      : counts.total < previousCounts.total
-      ? `<span style="color:#2e7d32">▼ -${previousCounts.total - counts.total} from last run</span>`
-      : `<span style="color:#555">= Same as last run</span>`
-    : `<span style="color:#555">First run — no previous data</span>`;
-
-  const screenshotRelative = screenshotPath
-    ? path.relative(path.dirname(reportPath), screenshotPath).replace(/\\/g, '/')
-    : null;
-
-  const violationsHtml = results.violations.map(v => {
-    const shots = (elementScreenshots[v.id] || [])
-      .filter(Boolean)
-      .map(s => {
-        const rel = path.relative(path.dirname(reportPath), s).replace(/\\/g, '/');
-        return `<img src="${rel}" alt="Element screenshot" style="max-width:100%;border:1px solid #ddd;margin:4px 0;border-radius:4px;">`;
-      }).join('');
-
-    const nodesHtml = v.nodes.map(n => `
-      <div style="background:#f5f5f5;padding:8px;border-radius:4px;margin:4px 0;font-size:12px;">
-        <strong>Target:</strong> ${n.target?.join(', ') || 'N/A'}<br>
-        <strong>HTML:</strong> <code style="word-break:break-all">${n.html?.replace(/</g, '&lt;').replace(/>/g, '&gt;') || ''}</code><br>
-        ${n.failureSummary ? `<strong>Fix:</strong> ${n.failureSummary}` : ''}
-      </div>
-    `).join('');
-
-    const impactColour = {
-      critical: '#cc0000',
-      serious:  '#e65100',
-      moderate: '#f9a825',
-      minor:    '#558b2f',
-    }[v.impact] || '#555';
-
-    return `
-      <div style="border:1px solid #ddd;border-radius:6px;padding:16px;margin-bottom:16px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="margin:0;font-size:15px;">${v.id}</h3>
-          <span style="background:${impactColour};color:white;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:bold;">${v.impact}</span>
-        </div>
-        <p style="margin:8px 0;color:#444;">${v.description}</p>
-        <p style="margin:4px 0;font-size:13px;"><strong>WCAG:</strong> ${v.tags?.filter(t => t.startsWith('wcag')).join(', ') || 'N/A'}</p>
-        <p style="margin:4px 0;font-size:13px;"><strong>Affected elements:</strong> ${v.nodes.length}</p>
-        <details style="margin-top:8px;">
-          <summary style="cursor:pointer;font-size:13px;color:#0b3c6e;">View affected elements</summary>
-          <div style="margin-top:8px;">${nodesHtml}</div>
-        </details>
-        ${shots ? `<div style="margin-top:8px;">${shots}</div>` : ''}
-      </div>
-    `;
+  // ─── Navigation sidebar links ─────────────────────────────────────────
+  const navLinks = allResults.map(r => {
+    const id = `${r.page.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${r.browser}`;
+    const isReg = regressions.some(x => x.page === r.page && x.browser === r.browser);
+    const dotColour = r.counts.total === 0 ? '#2e7d32' : r.counts.critical > 0 ? '#cc0000' : r.counts.serious > 0 ? '#e65100' : '#f9a825';
+    return `<a href="#${id}" style="display:block;padding:7px 12px;text-decoration:none;color:#222;border-radius:4px;font-size:13px;border-left:3px solid ${dotColour};margin-bottom:4px;background:white;" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='white'">
+      ${isReg ? '⚠️ ' : ''}<strong>${r.page}</strong><br>
+      <span style="font-size:11px;color:#888;">${r.browser} — ${r.counts.total} issue${r.counts.total !== 1 ? 's' : ''}</span>
+    </a>`;
   }).join('');
 
+  // ─── Individual page/browser sections ────────────────────────────────
+  const pageSections = allResults.map(r => {
+    const id = `${r.page.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${r.browser}`;
+    const isReg = regressions.some(x => x.page === r.page && x.browser === r.browser);
+
+    const trend = r.previousCounts
+      ? r.counts.total > r.previousCounts.total
+        ? `<span style="color:#cc0000">▲ +${r.counts.total - r.previousCounts.total} from last run</span>`
+        : r.counts.total < r.previousCounts.total
+        ? `<span style="color:#2e7d32">▼ -${r.previousCounts.total - r.counts.total} from last run</span>`
+        : `<span style="color:#555">= Same as last run</span>`
+      : `<span style="color:#555">First run</span>`;
+
+    // Coloured summary cards (matches original style)
+    const cardStyle = (bg, border) =>
+      `background:${bg};border:2px solid ${border};border-radius:6px;padding:14px 20px;text-align:center;min-width:110px;flex:1;`;
+
+    const summaryCards = `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin:18px 0;">
+        <div style="${cardStyle('#f5f5f5','#aaa','#222')}"><div style="font-size:28px;font-weight:bold;">${r.counts.total}</div><div style="font-size:12px;font-weight:bold;color:#555;">Total</div></div>
+        <div style="${cardStyle('#ffe0e0','#cc0000','#cc0000')}"><div style="font-size:28px;font-weight:bold;color:#cc0000;">${r.counts.critical}</div><div style="font-size:12px;font-weight:bold;color:#cc0000;">Critical</div></div>
+        <div style="${cardStyle('#fff3e0','#e65100','#e65100')}"><div style="font-size:28px;font-weight:bold;color:#e65100;">${r.counts.serious}</div><div style="font-size:12px;font-weight:bold;color:#e65100;">Serious</div></div>
+        <div style="${cardStyle('#fffde7','#f9a825','#f9a825')}"><div style="font-size:28px;font-weight:bold;color:#f9a825;">${r.counts.moderate}</div><div style="font-size:12px;font-weight:bold;color:#f9a825;">Moderate</div></div>
+        <div style="${cardStyle('#f1f8e9','#558b2f','#558b2f')}"><div style="font-size:28px;font-weight:bold;color:#558b2f;">${r.counts.minor}</div><div style="font-size:12px;font-weight:bold;color:#558b2f;">Minor</div></div>
+      </div>`;
+
+    // Violations
+    const violationsHtml = r.violations.length === 0
+      ? '<div style="background:#e8f5e9;border-left:5px solid #2e7d32;padding:18px;border-radius:4px;font-weight:bold;color:#2e7d32;">✅ No violations found</div>'
+      : r.violations.map((v, index) => {
+          const impactColour = { critical:'#cc0000', serious:'#e65100', moderate:'#f9a825', minor:'#558b2f' }[v.impact] || '#555';
+          const wcagTags = v.tags?.filter(t => t.startsWith('wcag')).join(', ') || 'N/A';
+          const helpUrl = v.helpUrl || '';
+
+          const nodesHtml = v.nodes.map(n => `
+            <div style="background:#f5f5f5;padding:10px;border-radius:4px;margin:6px 0;font-size:12px;line-height:1.6;">
+              <strong>Target:</strong> <code>${n.target?.join(', ') || 'N/A'}</code><br>
+              <strong>HTML:</strong> <code style="word-break:break-all;">${(n.html || '').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code><br>
+              ${n.failureSummary ? `<strong>Fix:</strong> ${n.failureSummary}` : ''}
+            </div>`).join('');
+
+          const elementShotHtml = (r.elementScreenshots[v.id] || [])
+            .filter(Boolean)
+            .map(f => {
+              const src = toBase64(path.join(screenshotsDir, f));
+              return src ? `<img src="${src}" alt="Element screenshot" style="max-width:100%;border:1px solid #ddd;margin:4px 0;border-radius:4px;">` : '';
+            })
+            .join('');
+
+          const ticketText = `TITLE: [Accessibility] ${v.id} — ${r.page} (${r.browser})
+
+TYPE: Accessibility Bug
+SEVERITY: ${(v.impact||'').toUpperCase()}
+WCAG CRITERION: ${wcagTags}
+PAGE: ${r.page}
+URL: ${r.url}
+BROWSER: ${r.browser}
+DETECTED: ${date}
+
+DESCRIPTION:
+${v.description}
+
+STEPS TO REPRODUCE:
+1. Open ${r.url} in ${r.browser}
+2. Inspect the element(s) listed below using browser DevTools or a screen reader
+3. Observe that the accessibility requirement is not met
+
+AFFECTED ELEMENTS (${v.nodes.length}):
+${v.nodes.map((n,i) => `  Element ${i+1}:\n  Target: ${n.target?.join(', ')||'N/A'}\n  HTML: ${n.html||'N/A'}\n  Fix: ${n.failureSummary||'N/A'}`).join('\n\n')}
+
+EXPECTED BEHAVIOUR:
+${v.description}
+
+ACTUAL BEHAVIOUR:
+${v.nodes[0]?.failureSummary || 'Element does not meet the required accessibility standard.'}
+
+SUGGESTED FIX:
+${v.nodes.map(n=>n.failureSummary).filter(Boolean).join('\n') || 'See WCAG guidance.'}
+
+REFERENCE: ${helpUrl}`;
+
+          const ticketId = `ticket-${id}-${index}`;
+
+          return `
+            <div style="border:1px solid #ddd;border-left:4px solid ${impactColour};border-radius:4px;padding:16px;margin-bottom:16px;background:white;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div>
+                  <strong style="font-size:14px;">${v.id}</strong>
+                  ${helpUrl ? `<a href="${helpUrl}" target="_blank" style="font-size:11px;color:#0b3c6e;margin-left:8px;">WCAG guidance ↗</a>` : ''}
+                </div>
+                <span style="background:${impactColour};color:white;padding:3px 12px;border-radius:12px;font-size:11px;font-weight:bold;text-transform:uppercase;white-space:nowrap;">${v.impact}</span>
+              </div>
+              <p style="margin:4px 0 8px;color:#444;font-size:13px;">${v.description}</p>
+              <p style="margin:0;font-size:12px;color:#666;"><strong>WCAG:</strong> ${wcagTags} &nbsp;|&nbsp; <strong>Affected elements:</strong> ${v.nodes.length}</p>
+
+              <details style="margin-top:12px;">
+                <summary style="cursor:pointer;font-size:13px;color:#0b3c6e;font-weight:bold;padding:4px 0;">▶ View affected elements</summary>
+                <div style="margin-top:8px;">${nodesHtml}${elementShotHtml}</div>
+              </details>
+
+              <details style="margin-top:8px;">
+                <summary style="cursor:pointer;font-size:13px;color:#0b3c6e;font-weight:bold;padding:4px 0;">📋 Copy bug ticket</summary>
+                <div style="margin-top:10px;position:relative;">
+                  <button onclick="copyTicket('${ticketId}')" style="position:absolute;top:8px;right:8px;background:#0b3c6e;color:white;border:none;border-radius:4px;padding:6px 14px;font-size:12px;cursor:pointer;">Copy</button>
+                  <pre id="${ticketId}" style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:4px;padding:14px;font-size:11px;white-space:pre-wrap;word-break:break-word;margin:0;line-height:1.7;">${ticketText.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
+                </div>
+              </details>
+            </div>`;
+        }).join('');
+
+    return `
+      <section id="${id}" style="margin-bottom:48px;">
+        <div style="background:#0b3c6e;color:white;padding:16px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h2 style="margin:0;font-size:18px;color:white;border:none;padding:0;">${r.page} ${isReg ? '⚠️' : ''}</h2>
+            <span style="font-size:12px;opacity:0.8;">${r.browser}</span>
+          </div>
+          <a href="#top" style="color:#aad4f5;font-size:12px;text-decoration:none;">↑ Back to top</a>
+        </div>
+        <div style="border:1px solid #ddd;border-top:none;border-radius:0 0 8px 8px;padding:20px;background:#fafafa;">
+          <table style="width:100%;font-size:13px;margin-bottom:4px;">
+            <tr><td style="width:130px;font-weight:bold;padding:4px 0;color:#555;">URL</td><td><a href="${r.url}" target="_blank" style="color:#0b3c6e;">${r.url}</a></td></tr>
+            <tr><td style="font-weight:bold;padding:4px 0;color:#555;">Standard</td><td>WCAG 2.2 AA</td></tr>
+            <tr><td style="font-weight:bold;padding:4px 0;color:#555;">Scanned</td><td>${date}</td></tr>
+            <tr><td style="font-weight:bold;padding:4px 0;color:#555;">Trend</td><td>${trend}</td></tr>
+          </table>
+
+          ${summaryCards}
+
+          ${r.screenshotFile ? `
+          <details style="margin-bottom:16px;">
+            <summary style="cursor:pointer;font-size:13px;color:#0b3c6e;font-weight:bold;padding:4px 0;">🖼 Page screenshot</summary>
+            <img src="${toBase64(path.join(screenshotsDir, r.screenshotFile)) || ''}" alt="Screenshot of ${r.page}" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin-top:8px;">
+          </details>` : ''}
+
+          <h3 style="font-size:15px;border-bottom:1px solid #e0e0e0;padding-bottom:6px;color:#0b3c6e;">Violations (${r.counts.total})</h3>
+          ${violationsHtml}
+        </div>
+      </section>`;
+  }).join('');
+
+  // ─── Full HTML ────────────────────────────────────────────────────────
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accessibility Report — ${pageDef.name} (${browserName})</title>
+  <title>Accessibility Report — ${today}</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 24px; color: #222; }
-    h1 { background: #0b3c6e; color: white; padding: 20px; border-radius: 6px; margin-bottom: 24px; }
-    .summary-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
-    .summary-card { background: #f5f5f5; border-radius: 6px; padding: 16px; text-align: center; }
-    .summary-card .number { font-size: 32px; font-weight: bold; }
-    .summary-card .label { font-size: 12px; color: #666; margin-top: 4px; }
-    .critical { color: #cc0000; }
-    .serious  { color: #e65100; }
-    .moderate { color: #f9a825; }
-    .minor    { color: #558b2f; }
-    .meta { background: #f9f9f9; border-radius: 6px; padding: 16px; margin-bottom: 24px; font-size: 14px; }
-    .meta p { margin: 4px 0; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; color: #222; background: #f0f2f5; }
+    a { color: #0b3c6e; }
+    code { background: #f4f4f4; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+
+    /* Layout */
+    #top { display: flex; min-height: 100vh; }
+    #sidebar { width: 280px; min-width: 280px; background: #f8f9fb; border-right: 1px solid #e0e0e0; padding: 20px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+    #main { flex: 1; padding: 28px 32px; max-width: 900px; }
+
+    /* Sidebar */
+    #sidebar h2 { font-size: 13px; text-transform: uppercase; color: #888; letter-spacing: 1px; margin: 0 0 12px; }
+    .sidebar-stat { background: white; border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; }
+    .sidebar-stat .big { font-size: 22px; font-weight: bold; }
+
+    /* Header */
+    #header { background: #0b3c6e; color: white; padding: 18px 24px; border-radius: 8px; margin-bottom: 24px; }
+    #header h1 { margin: 0; font-size: 20px; }
+    #header p { margin: 4px 0 0; font-size: 13px; opacity: 0.85; }
   </style>
 </head>
 <body>
-  <h1>♿ Accessibility Report${isMobile ? ' — Mobile' : ''}</h1>
 
-  <div class="meta">
-    <p><strong>Page:</strong> ${pageDef.name}</p>
-    <p><strong>URL:</strong> <a href="${pageDef.url}">${pageDef.url}</a></p>
-    <p><strong>Browser:</strong> ${browserName}${isMobile ? ' (Mobile)' : ''}</p>
-    <p><strong>Standard:</strong> WCAG 2.2 AA</p>
-    <p><strong>Generated:</strong> ${today}</p>
-    <p><strong>Trend:</strong> ${trend}</p>
-  </div>
+<div id="top">
 
-  <div class="summary-grid">
-    <div class="summary-card">
-      <div class="number">${counts.total}</div>
-      <div class="label">Total</div>
+  <!-- Sidebar navigation -->
+  <div id="sidebar">
+    <div style="margin-bottom:20px;">
+      <div style="font-size:11px;text-transform:uppercase;color:#888;letter-spacing:1px;margin-bottom:8px;">Total violations</div>
+      <div style="font-size:36px;font-weight:bold;color:${totalViolations === 0 ? '#2e7d32' : '#cc0000'};">${totalViolations}</div>
     </div>
-    <div class="summary-card">
-      <div class="number critical">${counts.critical}</div>
-      <div class="label">Critical</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;font-size:12px;">
+      <span style="background:#ffe0e0;color:#cc0000;padding:3px 8px;border-radius:4px;font-weight:bold;">${allResults.reduce((s,r)=>s+r.counts.critical,0)} Critical</span>
+      <span style="background:#fff3e0;color:#e65100;padding:3px 8px;border-radius:4px;font-weight:bold;">${allResults.reduce((s,r)=>s+r.counts.serious,0)} Serious</span>
+      <span style="background:#fffde7;color:#f9a825;padding:3px 8px;border-radius:4px;font-weight:bold;">${allResults.reduce((s,r)=>s+r.counts.moderate,0)} Moderate</span>
+      <span style="background:#f1f8e9;color:#558b2f;padding:3px 8px;border-radius:4px;font-weight:bold;">${allResults.reduce((s,r)=>s+r.counts.minor,0)} Minor</span>
     </div>
-    <div class="summary-card">
-      <div class="number serious">${counts.serious}</div>
-      <div class="label">Serious</div>
-    </div>
-    <div class="summary-card">
-      <div class="number moderate">${counts.moderate}</div>
-      <div class="label">Moderate</div>
-    </div>
-    <div class="summary-card">
-      <div class="number minor">${counts.minor}</div>
-      <div class="label">Minor</div>
+    <div style="font-size:11px;text-transform:uppercase;color:#888;letter-spacing:1px;margin-bottom:10px;">Pages scanned</div>
+    ${navLinks}
+    <div style="margin-top:20px;font-size:11px;color:#aaa;border-top:1px solid #e0e0e0;padding-top:12px;">
+      ${regressions.length > 0
+        ? `<span style="color:#cc0000;">⚠️ ${regressions.length} regression${regressions.length > 1 ? 's' : ''} detected</span>`
+        : `<span style="color:#2e7d32;">✅ No regressions</span>`}
     </div>
   </div>
 
-  ${screenshotRelative ? `
-  <h2>Page Screenshot</h2>
-  <img src="${screenshotRelative}" alt="Page screenshot" style="max-width:100%;border:1px solid #ddd;border-radius:6px;margin-bottom:24px;">
-  ` : ''}
+  <!-- Main content -->
+  <div id="main">
+    <div id="header">
+      <h1>♿ Accessibility Report — TTC Alaska Bookings</h1>
+      <p>WCAG 2.2 AA &nbsp;|&nbsp; Chrome, Firefox, Edge &nbsp;|&nbsp; ${date}</p>
+    </div>
 
-  <h2>Violations (${counts.total})</h2>
-  ${counts.total === 0
-    ? '<p style="color:#2e7d32;font-weight:bold;">✅ No violations found!</p>'
-    : violationsHtml
+    <p style="font-size:13px;color:#666;margin-bottom:24px;background:white;padding:12px 16px;border-radius:6px;border:1px solid #e0e0e0;">
+      Use the sidebar to jump to any page. Each violation has a <strong>📋 Copy bug ticket</strong> section — expand it and click <strong>Copy</strong> to get a pre-filled ticket ready to paste into your tracking tool.
+    </p>
+
+    ${pageSections}
+
+    <p style="color:#aaa;font-size:11px;text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid #e0e0e0;">
+      Generated by TTC Accessibility Test Suite — ${date}
+    </p>
+  </div>
+</div>
+
+<script>
+  function copyTicket(id) {
+    const el = document.getElementById(id);
+    navigator.clipboard.writeText(el.innerText).then(() => {
+      const btn = el.previousElementSibling;
+      btn.textContent = '✓ Copied!';
+      btn.style.background = '#2e7d32';
+      setTimeout(() => { btn.textContent = 'Copy'; btn.style.background = '#0b3c6e'; }, 2000);
+    });
   }
-
-  <p style="color:#888;font-size:12px;margin-top:40px;border-top:1px solid #eee;padding-top:16px;">
-    Generated by TTC Accessibility Test Suite — ${today}
-  </p>
+</script>
 </body>
 </html>`;
 
   fs.writeFileSync(reportPath, html, 'utf8');
 }
 
-module.exports = { generateHtmlReport };
+module.exports = { generateConsolidatedReport };
