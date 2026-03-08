@@ -1,4 +1,5 @@
 node_modules/
+CPCBA-results/
 CPCBA-accessibility-tests/CorpBA-dev-debug/
 CPCBA-accessibility-tests/cpc-results/
 ConstBA-accessibility-tests/ConstBA-dev-debug/
