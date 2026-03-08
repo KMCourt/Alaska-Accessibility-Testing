@@ -13,73 +13,56 @@ npx playwright install
 
 ## Running Tests
 
-### Run all tests
+### Run the full CPCBA suite (all pages, all browsers)
 ```bash
-npx playwright test
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js
 ```
 
-### Run a specific test file
+### Run in a specific browser only
 ```bash
-# Accessibility scan (axe violations)
-npx playwright test tests/accessibility-scan.spec.js
-
-# Colour contrast
-npx playwright test tests/colour-contrast.spec.js
-
-# Keyboard navigation
-npx playwright test tests/keyboard-navigation.spec.js
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --project=chromium
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --project=firefox
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --project=edge
 ```
 
-### Run an individual test and view results immediately
+### Run a specific page by name
 ```bash
-npx playwright test tests/accessibility-scan.spec.js && npx playwright show-report results/html-report
-npx playwright test tests/colour-contrast.spec.js && npx playwright show-report results/html-report
-npx playwright test tests/keyboard-navigation.spec.js && npx playwright show-report results/html-report
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --grep "CPC Page"
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --grep "Booking Confirmation"
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --grep "Sign In Modal"
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --grep "View Booked Courses"
 ```
 
-### Run tests in a specific browser only
+### Run a specific page in a specific browser
 ```bash
-npx playwright test --project=chromium
-npx playwright test --project=firefox
-npx playwright test --project=edge
-```
-
-### Run a specific test by name
-```bash
-npx playwright test --grep "CPC Page"
+npx playwright test CPCBA-accessibility-tests/accessibility-scan.spec.js --grep "CPC Page" --project=chromium
 ```
 
 ---
 
-## Viewing Results
+## Results
 
-### Open the HTML report after tests finish
-```bash
-npx playwright show-report results/html-report
-```
-
----
-
-## Viewing Results
-
-### Open the HTML report after tests finish
-```bash
-npx playwright show-report results/html-report
-```
+Reports are saved to `CPCBA-results/YYYY-MM-DD/report.html` after each run.
+A Teams notification is also sent automatically on completion.
 
 ---
 
 ## Clearing Results
 
-### Delete all previous test results
+### Delete today's debug output (screenshots, traces, videos)
 ```bash
-Remove-Item -Path "results\*" -Recurse -Force
-Remove-Item -Path "dev-debug\*" -Recurse -Force
+Remove-Item -Path "CPCBA-dev-debug\*" -Recurse -Force
+```
+
+### Delete all saved accessibility reports
+```bash
+Remove-Item -Path "CPCBA-results\*" -Recurse -Force
 ```
 
 ---
 
 ## Tips
-- Always run `npx playwright test` from the `accessibility-testing` folder
-- Results are saved to `results/` — check the HTML report for full details
-- ⚠️ KN-02 (focus indicator) logs warnings only — review the screenshots manually in `results/<date>/keyboard/`
+- Always run commands from the `accessibility-testing` folder
+- Tests run sequentially (1 worker) — multiple payment tests share one OTP email and cannot run in parallel
+- The full suite (14 pages × 3 browsers = 42 tests) takes approximately 35 minutes
+- Reports older than 90 days are deleted automatically on each run

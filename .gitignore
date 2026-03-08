@@ -1,5 +1,7 @@
 node_modules/
-dev-debug/
-results/
+CPCBA-dev-debug/
+CPCBA-results/
 test-results/
+results/ # Playwright's built-in HTML reporter output — redundant, use CPCBA-results/ instead
 mobile-test-output.txt
+*.pptx # Presentation files — kept locally only, not for version control

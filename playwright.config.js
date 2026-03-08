@@ -17,16 +17,17 @@ module.exports = defineConfig({
 
   // Move Playwright's debug output to a dev-only folder
   // Testers should use the results/ folder for reports
-  outputDir: './dev-debug',
+  outputDir: './CPCBA-dev-debug',
 
-  // Run tests in parallel across browsers
-  fullyParallel: true,
+  // Run tests sequentially — payment-heavy tests share one OTP email address
+  // and the app rate-limits concurrent OTP requests, causing flakiness in parallel.
+  fullyParallel: false,
 
   // Retry failed tests once before marking as failed
   retries: 1,
 
-  // Number of parallel workers
-  workers: 3,
+  // Single worker ensures no OTP race conditions between tests
+  workers: 1,
 
   // Global timeout per test
   timeout: 60000,

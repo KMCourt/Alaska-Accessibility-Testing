@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const HISTORY_FILE = path.join(__dirname, '..', 'results', 'trend-history.json');
+const HISTORY_FILE = path.join(__dirname, '..', 'CPCBA-results', 'trend-history.json');
 
 // Load existing history or start fresh
 function loadHistory() {
