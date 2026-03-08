@@ -662,7 +662,7 @@ const PAGES = [
 // RESULTS FOLDER SETUP
 // -------------------------------------------
 const today = new Date().toISOString().split('T')[0];
-const resultsDir = path.join(__dirname, '..', 'ConstBA-results', today);
+const resultsDir = path.join(__dirname, 'ConstBA-results', today);
 const screenshotsDir = path.join(resultsDir, 'screenshots');
 const jsonDir = path.join(resultsDir, 'json');
 

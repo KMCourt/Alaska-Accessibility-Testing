@@ -44,7 +44,7 @@ const PAGES = [
 const today = new Date().toISOString().split('T')[0];
 
 // Results go to CPCBA-results (alongside the main accessibility report)
-const baseResultsDir = path.join(__dirname, '..', 'CPCBA-results', today, 'colour-contrast');
+const baseResultsDir = path.join(__dirname, 'cpc-results', today, 'colour-contrast');
 if (!fs.existsSync(baseResultsDir)) fs.mkdirSync(baseResultsDir, { recursive: true });
 
 test.setTimeout(60000);

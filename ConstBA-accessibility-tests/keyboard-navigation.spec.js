@@ -39,7 +39,7 @@ const PAGES = [
 const today = new Date().toISOString().split('T')[0];
 
 // Results go to ConstBA-results (alongside the main accessibility report)
-const baseResultsDir = path.join(__dirname, '..', 'ConstBA-results', today, 'keyboard');
+const baseResultsDir = path.join(__dirname, 'ConstBA-results', today, 'keyboard');
 if (!fs.existsSync(baseResultsDir)) fs.mkdirSync(baseResultsDir, { recursive: true });
 
 test.setTimeout(60000);

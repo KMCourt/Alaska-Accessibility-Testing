@@ -17,7 +17,7 @@ module.exports = defineConfig({
 
   // Move Playwright's debug output to a dev-only folder
   // Testers should use the results/ folder for reports
-  outputDir: './CPCBA-dev-debug',
+  outputDir: './CPCBA-accessibility-tests/CorpBA-dev-debug',
 
   // Run tests sequentially — payment-heavy tests share one OTP email address
   // and the app rate-limits concurrent OTP requests, causing flakiness in parallel.
@@ -35,7 +35,7 @@ module.exports = defineConfig({
   // Reporter — shows results in terminal and saves an HTML report
   reporter: [
     ['list'],
-    ['html', { outputFolder: 'results/html-report', open: 'never' }],
+    ['html', { outputFolder: 'CPCBA-accessibility-tests/CorpBA-dev-debug/html-report', open: 'never' }],
   ],
 
   // Global settings applied to all tests

@@ -1,8 +1,8 @@
 node_modules/
-CPCBA-dev-debug/
-CPCBA-results/
-ConstBA-dev-debug/
-ConstBA-results/
+CPCBA-accessibility-tests/CorpBA-dev-debug/
+CPCBA-accessibility-tests/cpc-results/
+ConstBA-accessibility-tests/ConstBA-dev-debug/
+ConstBA-accessibility-tests/ConstBA-results/
 test-results/
 results/
 mobile-test-output.txt

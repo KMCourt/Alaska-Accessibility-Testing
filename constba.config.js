@@ -18,7 +18,7 @@ module.exports = defineConfig({
   globalTeardown: './utils/constba-global-teardown.js',
 
   // Move Playwright's debug output to a dev-only folder
-  outputDir: './ConstBA-dev-debug',
+  outputDir: './ConstBA-accessibility-tests/ConstBA-dev-debug',
 
   // Run tests sequentially — payment-heavy tests share one OTP email address
   // and the app rate-limits concurrent OTP requests, causing flakiness in parallel.
@@ -36,7 +36,7 @@ module.exports = defineConfig({
   // Reporter — shows results in terminal and saves an HTML report
   reporter: [
     ['list'],
-    ['html', { outputFolder: 'ConstBA-dev-debug/html-report', open: 'never' }],
+    ['html', { outputFolder: 'ConstBA-accessibility-tests/ConstBA-dev-debug/html-report', open: 'never' }],
   ],
 
   // Global settings applied to all tests

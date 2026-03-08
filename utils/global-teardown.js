@@ -33,7 +33,7 @@ function pruneOldReports(baseDir) {
 
 module.exports = async function globalTeardown() {
   const today = new Date().toISOString().split('T')[0];
-  const baseResultsDir = path.join(__dirname, '..', 'CPCBA-results');
+  const baseResultsDir = path.join(__dirname, '..', 'CPCBA-accessibility-tests', 'cpc-results');
   const resultsDir = path.join(baseResultsDir, today);
 
   // Remove reports older than 90 days
@@ -103,7 +103,7 @@ module.exports = async function globalTeardown() {
   console.log(`  Minor    : ${totals.minor}`);
   console.log('========================================');
 
-  console.log(`\n✅ Report saved to: CPCBA-results/${today}/report.html`);
+  console.log(`\n✅ Report saved to: CPCBA-accessibility-tests/cpc-results/${today}/report.html`);
 
   const summaryData = allResults.map(r => ({
     page: r.page, url: r.url, browser: r.browser, ...r.counts,
