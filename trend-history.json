@@ -1,26 +1,6 @@
 {
   "Details and Payment__chromium": [
     {
-      "date": "2026-03-06T15:12:18.114Z",
-      "counts": {
-        "total": 5,
-        "critical": 1,
-        "serious": 3,
-        "moderate": 1,
-        "minor": 0
-      }
-    },
-    {
-      "date": "2026-03-06T15:13:45.810Z",
-      "counts": {
-        "total": 5,
-        "critical": 1,
-        "serious": 3,
-        "moderate": 1,
-        "minor": 0
-      }
-    },
-    {
       "date": "2026-03-06T16:07:09.590Z",
       "counts": {
         "total": 5,
@@ -96,6 +76,26 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:13:03.803Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:37:15.166Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -205,26 +205,6 @@
   ],
   "Details and Payment - Pay__chromium": [
     {
-      "date": "2026-03-06T15:13:47.887Z",
-      "counts": {
-        "total": 5,
-        "critical": 1,
-        "serious": 3,
-        "moderate": 1,
-        "minor": 0
-      }
-    },
-    {
-      "date": "2026-03-06T16:07:09.306Z",
-      "counts": {
-        "total": 5,
-        "critical": 1,
-        "serious": 3,
-        "moderate": 1,
-        "minor": 0
-      }
-    },
-    {
       "date": "2026-03-06T16:08:06.419Z",
       "counts": {
         "total": 5,
@@ -303,29 +283,29 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-08T14:13:40.256Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:37:50.149Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "My Basket Modal__chromium": [
-    {
-      "date": "2026-03-06T15:12:25.810Z",
-      "counts": {
-        "total": 0,
-        "critical": 0,
-        "serious": 0,
-        "moderate": 0,
-        "minor": 0
-      }
-    },
-    {
-      "date": "2026-03-06T15:13:52.980Z",
-      "counts": {
-        "total": 0,
-        "critical": 0,
-        "serious": 0,
-        "moderate": 0,
-        "minor": 0
-      }
-    },
     {
       "date": "2026-03-06T16:07:16.222Z",
       "counts": {
@@ -398,6 +378,26 @@
     },
     {
       "date": "2026-03-08T09:04:55.253Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:12:18.419Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:36:31.156Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -691,16 +691,6 @@
   ],
   "Info Page__chromium": [
     {
-      "date": "2026-03-06T16:07:22.460Z",
-      "counts": {
-        "total": 5,
-        "critical": 1,
-        "serious": 3,
-        "moderate": 1,
-        "minor": 0
-      }
-    },
-    {
       "date": "2026-03-06T16:08:17.881Z",
       "counts": {
         "total": 5,
@@ -772,6 +762,26 @@
     },
     {
       "date": "2026-03-08T09:04:47.841Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:12:07.637Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:36:24.488Z",
       "counts": {
         "total": 7,
         "critical": 1,
@@ -883,6 +893,36 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-08T14:14:57.216Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:39:05.545Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T15:34:09.556Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "Pay by Card__chromium": [
@@ -933,6 +973,26 @@
         "critical": 1,
         "serious": 2,
         "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:15:52.785Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:39:55.253Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
         "minor": 0
       }
     }
@@ -987,6 +1047,26 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-08T15:39:04.212Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:39:54.005Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Add Attendees__chromium": [
@@ -1032,6 +1112,26 @@
     },
     {
       "date": "2026-03-08T09:12:48.548Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T15:40:26.465Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:40:40.423Z",
       "counts": {
         "total": 5,
         "critical": 1,
@@ -1098,6 +1198,26 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T15:48:06.145Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:50:08.080Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -1173,6 +1293,26 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-08T15:46:05.110Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:48:02.675Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "User Profile__chromium": [
@@ -1225,6 +1365,26 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-08T15:46:56.600Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:48:54.249Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Sign In Modal__chromium": [
@@ -1270,6 +1430,26 @@
     },
     {
       "date": "2026-03-08T09:05:02.505Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:12:27.005Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:36:37.729Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -1412,6 +1592,36 @@
         "total": 6,
         "critical": 0,
         "serious": 4,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T15:43:08.821Z",
+      "counts": {
+        "total": 5,
+        "critical": 0,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:38:38.758Z",
+      "counts": {
+        "total": 5,
+        "critical": 0,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T16:41:32.004Z",
+      "counts": {
+        "total": 5,
+        "critical": 0,
+        "serious": 3,
         "moderate": 2,
         "minor": 0
       }
@@ -1712,6 +1922,28 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Construction Page__chromium": [
+    {
+      "date": "2026-03-08T14:11:52.089Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-08T14:36:09.388Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }

@@ -184,6 +184,30 @@ const PAGES = [
       await page.waitForTimeout(2000);
 
       // Step 5: Fill billing address (required before payment)
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
@@ -191,6 +215,9 @@ const PAGES = [
 
       // Step 6: Accept terms and navigate to Pay by Card page
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -237,6 +264,30 @@ const PAGES = [
       await page.waitForTimeout(2000);
 
       // Step 5: Fill billing address
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
@@ -244,6 +295,9 @@ const PAGES = [
 
       // Step 6: Accept terms and go to Pay by Card page
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -254,15 +308,14 @@ const PAGES = [
       await page.waitForTimeout(5000);
       const cardInput   = page.frameLocator('iframe[title="Secure card number input frame"]').locator('input:not([disabled])').first();
       const expiryInput = page.frameLocator('iframe[title="Secure expiration date input frame"]').locator('input:not([disabled])').first();
-      const cvcInput    = page.frameLocator('iframe[title="Secure CVC input frame"]').locator('input:not([disabled])').first();
 
       await cardInput.waitFor({ state: 'visible', timeout: 30000 });
       await cardInput.fill('4242424242424242');
 
       await expiryInput.click();
       await page.keyboard.type('1229', { delay: 100 });
-
-      await cvcInput.click();
+      // Stripe auto-advances focus to CVC after expiry — wait then type directly
+      await page.waitForTimeout(400);
       await page.keyboard.type('123', { delay: 100 });
       await page.waitForTimeout(1000);
 
@@ -312,6 +365,30 @@ const PAGES = [
       await page.waitForTimeout(2000);
 
       // Step 5: Fill billing address
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
@@ -319,6 +396,9 @@ const PAGES = [
 
       // Step 6: Accept terms and go to Pay by Card page
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -328,13 +408,13 @@ const PAGES = [
       await page.waitForTimeout(5000);
       const cardInput2   = page.frameLocator('iframe[title="Secure card number input frame"]').locator('input:not([disabled])').first();
       const expiryInput2 = page.frameLocator('iframe[title="Secure expiration date input frame"]').locator('input:not([disabled])').first();
-      const cvcInput2    = page.frameLocator('iframe[title="Secure CVC input frame"]').locator('input:not([disabled])').first();
 
       await cardInput2.waitFor({ state: 'visible', timeout: 30000 });
       await cardInput2.fill('4242424242424242');
       await expiryInput2.click();
       await page.keyboard.type('1229', { delay: 100 });
-      await cvcInput2.click();
+      // Stripe auto-advances focus to CVC after expiry — wait then type directly
+      await page.waitForTimeout(400);
       await page.keyboard.type('123', { delay: 100 });
       await page.waitForTimeout(1000);
 
@@ -392,6 +472,30 @@ const PAGES = [
       await page.waitForTimeout(2000);
 
       // Step 5: Fill billing address
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
@@ -399,6 +503,9 @@ const PAGES = [
 
       // Step 6: Accept terms and go to Pay by Card page
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -408,13 +515,13 @@ const PAGES = [
       await page.waitForTimeout(5000);
       const cardInput3   = page.frameLocator('iframe[title="Secure card number input frame"]').locator('input:not([disabled])').first();
       const expiryInput3 = page.frameLocator('iframe[title="Secure expiration date input frame"]').locator('input:not([disabled])').first();
-      const cvcInput3    = page.frameLocator('iframe[title="Secure CVC input frame"]').locator('input:not([disabled])').first();
 
       await cardInput3.waitFor({ state: 'visible', timeout: 30000 });
       await cardInput3.fill('4242424242424242');
       await expiryInput3.click();
       await page.keyboard.type('1229', { delay: 100 });
-      await cvcInput3.click();
+      // Stripe auto-advances focus to CVC after expiry — wait then type directly
+      await page.waitForTimeout(400);
       await page.keyboard.type('123', { delay: 100 });
       await page.waitForTimeout(1000);
 
@@ -477,12 +584,39 @@ const PAGES = [
       await page.locator('button:has-text("Verify")').last().click();
       await page.waitForTimeout(2000);
 
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -491,13 +625,13 @@ const PAGES = [
       await page.waitForTimeout(5000);
       const cardInput4   = page.frameLocator('iframe[title="Secure card number input frame"]').locator('input:not([disabled])').first();
       const expiryInput4 = page.frameLocator('iframe[title="Secure expiration date input frame"]').locator('input:not([disabled])').first();
-      const cvcInput4    = page.frameLocator('iframe[title="Secure CVC input frame"]').locator('input:not([disabled])').first();
 
       await cardInput4.waitFor({ state: 'visible', timeout: 30000 });
       await cardInput4.fill('4242424242424242');
       await expiryInput4.click();
       await page.keyboard.type('1229', { delay: 100 });
-      await cvcInput4.click();
+      // Stripe auto-advances focus to CVC after expiry — wait then type directly
+      await page.waitForTimeout(400);
       await page.keyboard.type('123', { delay: 100 });
       await page.waitForTimeout(1000);
 
@@ -548,12 +682,39 @@ const PAGES = [
       await page.locator('button:has-text("Verify")').last().click();
       await page.waitForTimeout(2000);
 
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -562,13 +723,13 @@ const PAGES = [
       await page.waitForTimeout(5000);
       const cardInput5   = page.frameLocator('iframe[title="Secure card number input frame"]').locator('input:not([disabled])').first();
       const expiryInput5 = page.frameLocator('iframe[title="Secure expiration date input frame"]').locator('input:not([disabled])').first();
-      const cvcInput5    = page.frameLocator('iframe[title="Secure CVC input frame"]').locator('input:not([disabled])').first();
 
       await cardInput5.waitFor({ state: 'visible', timeout: 30000 });
       await cardInput5.fill('4242424242424242');
       await expiryInput5.click();
       await page.keyboard.type('1229', { delay: 100 });
-      await cvcInput5.click();
+      // Stripe auto-advances focus to CVC after expiry — wait then type directly
+      await page.waitForTimeout(400);
       await page.keyboard.type('123', { delay: 100 });
       await page.waitForTimeout(1000);
 
@@ -619,12 +780,39 @@ const PAGES = [
       await page.locator('button:has-text("Verify")').last().click();
       await page.waitForTimeout(2000);
 
+      // Job title (required in ConstBA — custom dropdown)
+      // The input has no placeholder attr; its accessible name is "Job title..."
+      const jobTitleInput = page.getByRole('textbox', { name: /job title/i });
+      if (await jobTitleInput.count() > 0) {
+        // Click the containing button to open the dropdown
+        const jobTitleBtn = page.locator('button').filter({ has: jobTitleInput });
+        if (await jobTitleBtn.count() > 0) {
+          await jobTitleBtn.click();
+        } else {
+          await jobTitleInput.click();
+        }
+        await page.waitForTimeout(400);
+        // Try clicking the first visible option via Playwright's async locator
+        try {
+          await page.locator('[role="option"]').first().click({ timeout: 2000 });
+        } catch {
+          // Keyboard fallback — ArrowDown opens/navigates, Enter selects
+          await page.keyboard.press('ArrowDown');
+          await page.waitForTimeout(200);
+          await page.keyboard.press('Enter');
+        }
+        await page.waitForTimeout(500);
+      }
+
       await page.locator('input[placeholder*="Address line 1"]').fill('123 Test Street');
       await page.locator('input[placeholder*="Town/City"]').fill('London');
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
       await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.waitForTimeout(300);
+      // Suitability checkbox (second required checkbox in ConstBA form)
+      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').nth(1).click();
       await page.waitForTimeout(500);
       await page.locator('button:has-text("Pay now by card")').click();
       await page.waitForLoadState('domcontentloaded');
@@ -633,13 +821,13 @@ const PAGES = [
       await page.waitForTimeout(5000);
       const cardInput6   = page.frameLocator('iframe[title="Secure card number input frame"]').locator('input:not([disabled])').first();
       const expiryInput6 = page.frameLocator('iframe[title="Secure expiration date input frame"]').locator('input:not([disabled])').first();
-      const cvcInput6    = page.frameLocator('iframe[title="Secure CVC input frame"]').locator('input:not([disabled])').first();
 
       await cardInput6.waitFor({ state: 'visible', timeout: 30000 });
       await cardInput6.fill('4242424242424242');
       await expiryInput6.click();
       await page.keyboard.type('1229', { delay: 100 });
-      await cvcInput6.click();
+      // Stripe auto-advances focus to CVC after expiry — wait then type directly
+      await page.waitForTimeout(400);
       await page.keyboard.type('123', { delay: 100 });
       await page.waitForTimeout(1000);
 
