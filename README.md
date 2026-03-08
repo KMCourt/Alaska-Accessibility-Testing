@@ -1,6 +1,8 @@
-# TTC Alaska Bookings — Accessibility Testing
+# CPCBA Accessibility Testing
 
-This repository contains automated and manual accessibility tests for the TTC Alaska Bookings platform. The tests check that the site meets **WCAG 2.2 AA** — the current latest accessibility standard.
+Automated and manual accessibility tests for the **TTC Corporate Bookings Platform** (CPCBA).
+
+Tests check that the site meets **WCAG 2.2 AA** — the current legal standard — and also runs **WCAG 2.2 AAA** enhanced checks where possible.
 
 ---
 
@@ -15,127 +17,187 @@ Accessibility testing checks that a website can be used by everyone, including p
 
 ---
 
-## Pages Being Tested
-
-| Page | URL |
-|------|-----|
-| CPC Page | https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc |
-| Details and Payment | https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment |
-| Pay Page | https://ttc-eun-qat-corporatebookings.azurewebsites.net/details-and-payment/pay |
-
----
-
-## What's in This Repository
+## Project Structure
 
 ```
 accessibility-testing/
-  cpc-accessibility.spec.js                       → Automated test script
-  manual-tests/
-    manual-accessibility-test-scripts.md          → Manual test scripts for the team
-  .gitignore                                       → Excludes node_modules and results from GitHub
-  package.json                                     → Project dependencies
-  README.md                                        → This file
+├── CPCBA-accessibility-tests/
+│   ├── accessibility-scan.spec.js      ← Main automated scan (14 pages, 3 browsers)
+│   ├── colour-contrast.spec.js         ← Dedicated contrast checks
+│   └── keyboard-navigation.spec.js     ← Keyboard navigation checks
+│
+├── CPCBA-manual-tests/
+│   └── manual-checklist.html           ← Manual test checklist (open in browser)
+│
+├── utils/
+│   ├── global-teardown.js              ← Builds HTML report after all tests finish
+│   ├── report-generator.js             ← HTML report template
+│   ├── trend-tracker.js                ← Tracks violation counts over time
+│   ├── teams-notify.js                 ← Posts results summary to MS Teams
+│   ├── testmail.js                     ← Retrieves OTP codes from testmail.app
+│   └── create-presentation.js          ← Generates PowerPoint overview (node utils/create-presentation.js)
+│
+├── CPCBA-results/                      ← Generated reports (gitignored)
+│   └── YYYY-MM-DD/
+│       ├── report.html                 ← Main HTML report — open this
+│       ├── json/                       ← Raw scan data per page per browser
+│       └── screenshots/                ← Page and element screenshots
+│
+├── trend-history.json                  ← Violation trend history (tracked in git)
+├── playwright.config.js                ← Browser and test configuration
+├── .env                                ← Your local credentials (gitignored — see .env.example)
+└── .env.example                        ← Template for setting up .env
 ```
+
+---
+
+## Pages Tested (14 total)
+
+| # | Page | What it covers |
+|---|------|---------------|
+| 1 | CPC Page | Main course listing |
+| 2 | Info Page | Individual course details |
+| 3 | My Basket Modal | Shopping basket pop-up |
+| 4 | Sign In Modal | Login pop-up |
+| 5 | Details & Payment | Delegate and billing details |
+| 6 | Details & Payment — Pay | Payment method selection |
+| 7 | Details & Payment — Verified | After email OTP verification |
+| 8 | Pay by Card | Stripe card entry |
+| 9 | Booking Confirmation | Post-payment confirmation |
+| 10 | Add Attendees | Manage delegates page |
+| 11 | Add Attendee — Edit Form | Edit attendee panel |
+| 12 | View Booked Courses | Account: booked courses |
+| 13 | User Profile | Account: profile settings |
+| 14 | Sign Out Page | Post sign-out page |
 
 ---
 
 ## Getting Started
 
-### What You Need
-- [Node.js](https://nodejs.org) — download and install the LTS version
-- [VS Code](https://code.visualstudio.com) — recommended code editor
-- A terminal (built into VS Code)
+### Prerequisites
+- [Node.js](https://nodejs.org) LTS version
+- [VS Code](https://code.visualstudio.com) (recommended)
+- A testmail.app account for OTP email handling (contact the QA team lead)
 
-### Setup Instructions
+### Setup
 
-**Step 1: Clone the repository**
+**1. Clone the repository**
 ```bash
 git clone https://github.com/KMCourt/accessibility-testing.git
 cd accessibility-testing
 ```
 
-**Step 2: Install dependencies**
+**2. Install dependencies**
 ```bash
 npm install
 ```
 
-**Step 3: Install the browser**
+**3. Install browsers**
 ```bash
-npx playwright install chromium
+npx playwright install
 ```
 
-That's it — you're ready to run the tests!
+**4. Configure environment variables**
+```bash
+cp .env.example .env
+```
+Open `.env` and fill in your testmail credentials and Teams webhook URL.
+Contact the QA team lead for the real values.
 
 ---
 
-## Running the Automated Tests
+## Running the Tests
 
-Open the terminal in VS Code and run:
-
+### Run everything (all 14 pages × 3 browsers)
 ```bash
-npx playwright test cpc-accessibility.spec.js --reporter=list
+npx playwright test
 ```
 
-This will:
-1. Open a browser automatically
-2. Visit each page listed above
-3. Scan for accessibility violations
-4. Print a summary to the terminal
-5. Save two files to a `results/` folder for each page:
-   - A **JSON file** with full technical details
-   - A **plain English .txt report** for non-technical team members
+### Run a single browser
+```bash
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=edge
+```
 
----
+### Run a specific test by name
+```bash
+npx playwright test --grep "CPC Page"
+```
 
-## Understanding the Results
+### Run only the contrast or keyboard tests
+```bash
+npx playwright test CPCBA-accessibility-tests/colour-contrast.spec.js
+npx playwright test CPCBA-accessibility-tests/keyboard-navigation.spec.js
+```
 
-### Plain English Report (.txt)
-Written so anyone on the team can understand it — no technical knowledge needed. Opens in any text editor. Contains:
-- A summary of how many issues were found and how serious they are
-- A plain English description of each issue
-- Why each issue matters to real users
-- What needs to be done to fix it
-
-### JSON Report (.json)
-For developers and technical team members. Contains:
-- Full technical detail of each violation
-- The exact HTML elements affected
-- The WCAG criterion each issue fails against
-- A help URL with guidance on how to fix it
+After the run completes, the HTML report is saved to:
+```
+CPCBA-results/YYYY-MM-DD/report.html
+```
+Open this file in any browser to view all results.
 
 ---
 
 ## Manual Testing
 
-Automated tools only catch around 30-40% of accessibility issues. The rest require a human to test manually.
+Automated tools catch roughly 30–40% of accessibility issues. The rest require a human.
 
-The full manual test scripts are in the `manual-tests/` folder. They cover:
-- Keyboard navigation
-- Screen reader behaviour
-- Colour and visual issues
-- Zoom and text resize
-- Mobile and touch
-- Forms and error handling
-- Moving and flashing content
+Open the manual checklist in any browser — no setup needed:
+```
+CPCBA-manual-tests/manual-checklist.html
+```
 
----
+It covers all 14 pages with 9 categories of checks:
+- 🔊 Screen Reader
+- ⌨️ Keyboard Navigation
+- 👁️ Visual & Colour
+- 📝 Content & Structure
+- 📋 Forms & Errors
+- 🎬 Media & Motion
+- 📱 Mobile & Touch
+- 🧠 Cognitive & Usability
+- ⭐ WCAG 2.2 AAA Enhanced Standards
 
-## Accessibility Standard
-
-All tests run against **WCAG 2.2 AA** which includes:
-
-| Standard | What it covers |
-|----------|---------------|
-| WCAG 2.0 A | Fundamental accessibility rules |
-| WCAG 2.0 AA | Legal standard for most organisations |
-| WCAG 2.1 AA | Mobile and modern web rules |
-| WCAG 2.2 AA | Latest standard — focus, forms, and touch |
+Answers are saved automatically in the browser (localStorage) — no server needed.
 
 ---
 
-## Adding a New Page to the Automated Scan
+## Understanding the Automated Report
 
-Open `cpc-accessibility.spec.js` and add a new entry to the `PAGES` array at the top of the file:
+The HTML report groups results by page. Each page has a tab for **Chromium**, **Firefox**, and **Edge**.
+
+### Severity levels
+
+| Level | Meaning |
+|-------|---------|
+| 🔴 Critical | Blocks users entirely — fix immediately |
+| 🟠 Serious | Significantly impairs use — fix as soon as possible |
+| 🟡 Moderate | Causes difficulty — fix in next sprint |
+| ⚪ Minor | Minor annoyance — fix when convenient |
+
+Each violation includes:
+- A description of the issue
+- A screenshot of the affected element
+- A pre-written bug ticket ready to paste into Jira
+
+---
+
+## Accessibility Standards
+
+| Standard | Covered |
+|----------|---------|
+| WCAG 2.0 A | ✅ Automated |
+| WCAG 2.0 AA | ✅ Automated |
+| WCAG 2.1 AA | ✅ Automated |
+| WCAG 2.2 AA | ✅ Automated |
+| WCAG 2.2 AAA | ✅ Automated (where detectable) + Manual checklist |
+
+---
+
+## Adding a New Page
+
+Open [`CPCBA-accessibility-tests/accessibility-scan.spec.js`](CPCBA-accessibility-tests/accessibility-scan.spec.js) and add an entry to the `PAGES` array:
 
 ```javascript
 {
@@ -144,26 +206,21 @@ Open `cpc-accessibility.spec.js` and add a new entry to the `PAGES` array at the
 },
 ```
 
----
+For pages that require navigation steps (e.g. clicking a button to open a modal), add a `setup` function:
 
-## Sharing Updates with the Team
-
-When you make changes to any test file, push them to GitHub:
-
-```bash
-git add .
-git commit -m "describe what you changed"
-git push
-```
-
-Your team members can pull the latest changes with:
-
-```bash
-git pull
+```javascript
+{
+  name: 'My Modal',
+  url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc',
+  setup: async (page) => {
+    await page.locator('button:has-text("Open modal")').click();
+    await page.waitForSelector('[role="dialog"]', { state: 'visible' });
+  },
+},
 ```
 
 ---
 
 ## Questions or Issues
 
-If you have any questions about the tests or need help interpreting results, speak to the QA team.
+Speak to the QA team or raise an issue in the GitHub repository.

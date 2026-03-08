@@ -11,7 +11,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const HISTORY_FILE = path.join(__dirname, '..', 'CPCBA-results', 'trend-history.json');
+// Stored at project root (not inside CPCBA-results/) so it is tracked by git
+// and not lost if the results folder is cleared or the machine changes.
+const HISTORY_FILE = path.join(__dirname, '..', 'trend-history.json');
 
 // Load existing history or start fresh
 function loadHistory() {

@@ -17,11 +17,11 @@
  * - Focus indicators: 3:1 minimum contrast ratio (WCAG 2.2)
  *
  * HOW TO RUN:
- * npx playwright test tests/colour-contrast.spec.js --reporter=list
+ * npx playwright test CPCBA-accessibility-tests/colour-contrast.spec.js --reporter=list
  * ===========================================
  */
 
-const { test, expect } = require('@playwright/test');
+const { test } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 const fs = require('fs');
 const path = require('path');
@@ -42,31 +42,10 @@ const PAGES = [
 ];
 
 const today = new Date().toISOString().split('T')[0];
-const resultsDir = path.join(__dirname, '..', 'results', today, 'colour-contrast');
-if (!fs.existsSync(resultsDir)) fs.mkdirSync(resultsDir, { recursive: true });
 
-// -------------------------------------------
-// HELPER: Calculate relative luminance
-// Used to calculate contrast ratio between two colours.
-// -------------------------------------------
-function getLuminance(r, g, b) {
-  const [rs, gs, bs] = [r, g, b].map(c => {
-    c /= 255;
-    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-function getContrastRatio(l1, l2) {
-  const lighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
-  return (lighter + 0.05) / (darker + 0.05);
-}
-
-function parseRgb(rgb) {
-  const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-  return match ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])] : null;
-}
+// Results go to CPCBA-results (alongside the main accessibility report)
+const baseResultsDir = path.join(__dirname, '..', 'CPCBA-results', today, 'colour-contrast');
+if (!fs.existsSync(baseResultsDir)) fs.mkdirSync(baseResultsDir, { recursive: true });
 
 test.setTimeout(60000);
 
@@ -78,7 +57,10 @@ test.describe('Colour Contrast', () => {
     // -------------------------------------------
     // CC-01: Run axe colour contrast check
     // -------------------------------------------
-    test(`CC-01: Axe contrast check — ${pageDef.name}`, async ({ page, browserName }) => {
+    test(`CC-01: Axe contrast check — ${pageDef.name}`, async ({ page }, testInfo) => {
+      // Use project name so Edge results don't overwrite Chrome results
+      const projectName = testInfo.project.name;
+
       await page.goto(pageDef.url, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(2000);
 
@@ -88,7 +70,7 @@ test.describe('Colour Contrast', () => {
         .analyze();
 
       const violations = results.violations;
-      console.log(`\nCC-01: ${pageDef.name} (${browserName})`);
+      console.log(`\nCC-01: ${pageDef.name} (${projectName})`);
       console.log(`Contrast violations found: ${violations.length}`);
 
       violations.forEach((v, i) => {
@@ -103,11 +85,11 @@ test.describe('Colour Contrast', () => {
         });
       });
 
-      // Save report
+      // Save report — filename includes project name to keep Chrome/Firefox/Edge separate
       const report = {
         page: pageDef.name,
         url: pageDef.url,
-        browser: browserName,
+        browser: projectName,
         test: 'CC-01',
         violations: violations.map(v => ({
           id: v.id,
@@ -120,19 +102,21 @@ test.describe('Colour Contrast', () => {
           })),
         })),
       };
-      fs.writeFileSync(path.join(resultsDir, `${safeName}_${browserName}_cc01.json`), JSON.stringify(report, null, 2));
+      fs.writeFileSync(path.join(baseResultsDir, `${safeName}_${projectName}_cc01.json`), JSON.stringify(report, null, 2));
     });
 
     // -------------------------------------------
     // CC-02: Check text contrast manually using computed styles
     // Catches cases axe misses e.g. text over images
     // -------------------------------------------
-    test(`CC-02: Manual contrast check — ${pageDef.name}`, async ({ page, browserName }) => {
+    test(`CC-02: Manual contrast check — ${pageDef.name}`, async ({ page }, testInfo) => {
+      const projectName = testInfo.project.name;
+
       await page.goto(pageDef.url, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(2000);
 
       // Take screenshot for reference
-      const screenshotPath = path.join(resultsDir, `${safeName}_${browserName}_contrast.png`);
+      const screenshotPath = path.join(baseResultsDir, `${safeName}_${projectName}_contrast.png`);
       await page.screenshot({ path: screenshotPath, fullPage: true });
 
       // Get all text elements and check their contrast
@@ -165,15 +149,15 @@ test.describe('Colour Contrast', () => {
         return issues.slice(0, 50); // Limit to 50 elements
       });
 
-      console.log(`\nCC-02: ${pageDef.name} (${browserName})`);
+      console.log(`\nCC-02: ${pageDef.name} (${projectName})`);
       console.log(`Elements checked: ${contrastIssues.length}`);
       console.log(`Screenshot: ${screenshotPath}`);
       console.log(`Note: Review screenshot manually for text over images — these cannot be automatically detected`);
 
       // Save report
       fs.writeFileSync(
-        path.join(resultsDir, `${safeName}_${browserName}_cc02.json`),
-        JSON.stringify({ page: pageDef.name, url: pageDef.url, browser: browserName, test: 'CC-02', elementsChecked: contrastIssues.length, screenshotPath, elements: contrastIssues }, null, 2)
+        path.join(baseResultsDir, `${safeName}_${projectName}_cc02.json`),
+        JSON.stringify({ page: pageDef.name, url: pageDef.url, browser: projectName, test: 'CC-02', elementsChecked: contrastIssues.length, screenshotPath, elements: contrastIssues }, null, 2)
       );
     });
   }

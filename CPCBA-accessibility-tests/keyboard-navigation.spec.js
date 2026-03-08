@@ -11,7 +11,7 @@
  * - Tab order is logical
  *
  * HOW TO RUN:
- * npx playwright test tests/keyboard-navigation.spec.js --reporter=list
+ * npx playwright test CPCBA-accessibility-tests/keyboard-navigation.spec.js --reporter=list
  * ===========================================
  */
 
@@ -35,8 +35,10 @@ const PAGES = [
 ];
 
 const today = new Date().toISOString().split('T')[0];
-const resultsDir = path.join(__dirname, '..', 'results', today, 'keyboard');
-if (!fs.existsSync(resultsDir)) fs.mkdirSync(resultsDir, { recursive: true });
+
+// Results go to CPCBA-results (alongside the main accessibility report)
+const baseResultsDir = path.join(__dirname, '..', 'CPCBA-results', today, 'keyboard');
+if (!fs.existsSync(baseResultsDir)) fs.mkdirSync(baseResultsDir, { recursive: true });
 
 test.setTimeout(60000);
 
@@ -48,7 +50,9 @@ test.describe('Keyboard Navigation', () => {
     // -------------------------------------------
     // KN-01: All interactive elements reachable by Tab
     // -------------------------------------------
-    test(`KN-01: All elements reachable by Tab — ${pageDef.name}`, async ({ page }) => {
+    test(`KN-01: All elements reachable by Tab — ${pageDef.name}`, async ({ page }, testInfo) => {
+      const projectName = testInfo.project.name;
+
       await page.goto(pageDef.url, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(2000);
 
@@ -70,8 +74,8 @@ test.describe('Keyboard Navigation', () => {
         issues.push('No focusable elements found on the page — keyboard navigation may be completely broken');
       }
 
-      const report = { page: pageDef.name, url: pageDef.url, test: 'KN-01', focusableElements: focusedElements.length, elements: focusedElements, issues };
-      fs.writeFileSync(path.join(resultsDir, `${safeName}_kn01.json`), JSON.stringify(report, null, 2));
+      const report = { page: pageDef.name, url: pageDef.url, browser: projectName, test: 'KN-01', focusableElements: focusedElements.length, elements: focusedElements, issues };
+      fs.writeFileSync(path.join(baseResultsDir, `${safeName}_${projectName}_kn01.json`), JSON.stringify(report, null, 2));
 
       console.log(`\nKN-01: ${pageDef.name}`);
       console.log(`Focusable elements found: ${focusedElements.length}`);
@@ -85,14 +89,16 @@ test.describe('Keyboard Navigation', () => {
     // NOTE: Logs a warning if focus outline is hidden — does not hard fail
     // since this requires human visual verification.
     // -------------------------------------------
-    test(`KN-02: Focus indicator visible — ${pageDef.name}`, async ({ page }) => {
+    test(`KN-02: Focus indicator visible — ${pageDef.name}`, async ({ page }, testInfo) => {
+      const projectName = testInfo.project.name;
+
       await page.goto(pageDef.url, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(2000);
 
       const warnings = [];
 
       await page.keyboard.press('Tab');
-      const screenshotPath = path.join(resultsDir, `${safeName}_focus_indicator.png`);
+      const screenshotPath = path.join(baseResultsDir, `${safeName}_${projectName}_focus_indicator.png`);
       await page.screenshot({ path: screenshotPath, fullPage: false });
 
       const hasFocus = await page.evaluate(() => document.activeElement !== document.body);
@@ -107,8 +113,8 @@ test.describe('Keyboard Navigation', () => {
 
       if (focusOutlineHidden) warnings.push('Focus outline appears to be hidden via CSS — needs manual visual verification');
 
-      const report = { page: pageDef.name, url: pageDef.url, test: 'KN-02', warnings, screenshotPath };
-      fs.writeFileSync(path.join(resultsDir, `${safeName}_kn02.json`), JSON.stringify(report, null, 2));
+      const report = { page: pageDef.name, url: pageDef.url, browser: projectName, test: 'KN-02', warnings, screenshotPath };
+      fs.writeFileSync(path.join(baseResultsDir, `${safeName}_${projectName}_kn02.json`), JSON.stringify(report, null, 2));
 
       console.log(`\nKN-02: ${pageDef.name}`);
       if (warnings.length > 0) {
