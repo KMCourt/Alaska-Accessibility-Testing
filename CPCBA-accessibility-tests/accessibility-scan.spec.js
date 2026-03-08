@@ -733,7 +733,7 @@ test.describe('Accessibility Scan', () => {
 
       // Run axe scan (scoped to a specific element if defined, e.g. a modal)
       const axeBuilder = new AxeBuilder({ page })
-        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'best-practice']);
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'wcag2aaa', 'best-practice']);
       if (pageDef.scanScope) axeBuilder.include(pageDef.scanScope);
       const results = await axeBuilder.analyze();
 
