@@ -93,7 +93,7 @@ function badge(slide, x, y, w, h, color, big, small) {
     x: 0.5, y: 2.62, w: 9, h: 0.45,
     fontSize: 14, color: 'A8C4E8', align: 'center', italic: true,
   });
-  s.addText('TTC Group  |  Corporate Bookings Platform  |  2026', {
+  s.addText('TTC Group  |  Corporate & Construction Bookings Platforms  |  2026', {
     x: 0.5, y: 6.9, w: 9, h: 0.35,
     fontSize: 10, color: '6699BB', align: 'center',
   });
@@ -179,10 +179,14 @@ function badge(slide, x, y, w, h, color, big, small) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// SLIDE 5 — What Pages Are Tested?
+// SLIDE 5a — What Pages Are Tested? (CPCBA)
 // ════════════════════════════════════════════════════════════════════════════
 {
-  const s = contentSlide('What Pages Are Tested?  (14 in total)');
+  const s = contentSlide('What Pages Are Tested?  —  Corporate Bookings (CPCBA)');
+
+  s.addText('14 pages covering the full booking journey', {
+    x: 0.3, y: 0.6, w: 9.4, h: 0.28, fontSize: 10, color: DGREY, italic: true,
+  });
 
   const pages = [
     ['CPC Page',                     'The main course listing page'],
@@ -206,12 +210,54 @@ function badge(slide, x, y, w, h, color, big, small) {
     const col = i < 7 ? 0 : 1;
     const row = i < 7 ? i : i - 7;
     const x   = col === 0 ? 0.3 : col2x;
-    const y   = 0.62 + row * rowH;
+    const y   = 0.9 + row * rowH;
     s.addShape(pres.ShapeType.roundRect, {
       x, y: y + 0.02, w: colW, h: rowH - 0.04,
       fill: { color: i % 2 === 0 ? LGREY : WHITE }, line: { color: 'DDDDDD', width: 0.5 }, rectRadius: 0.05,
     });
     s.addText(`${i + 1}.  ${pages[i][0]}`, { x: x + 0.1, y: y + 0.07, w: colW * 0.54, h: rowH - 0.12, fontSize: 10, bold: true, color: NAVY });
+    s.addText(pages[i][1],                 { x: x + colW * 0.54, y: y + 0.07, w: colW * 0.44, h: rowH - 0.12, fontSize: 9, color: DGREY, italic: true });
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SLIDE 5b — What Pages Are Tested? (ConstBA)
+// ════════════════════════════════════════════════════════════════════════════
+{
+  const s = contentSlide('What Pages Are Tested?  —  Construction Bookings (ConstBA)');
+
+  s.addText('14 pages covering the full construction booking journey', {
+    x: 0.3, y: 0.6, w: 9.4, h: 0.28, fontSize: 10, color: DGREY, italic: true,
+  });
+
+  const pages = [
+    ['Construction Page',            'The main construction course listing'],
+    ['Info Page',                    'Individual course details'],
+    ['My Basket Modal',              'The shopping basket pop-up'],
+    ['Sign In Modal',                'The login pop-up'],
+    ['Details & Payment',            'Delegate and billing details form'],
+    ['Details & Payment — Pay',      'Payment method selection'],
+    ['Details & Payment — Verified', 'After email OTP verification'],
+    ['Pay by Card',                  'Stripe card entry form'],
+    ['Booking Confirmation',         'Post-payment confirmation page'],
+    ['Add Attendees',                'Manage delegates page'],
+    ['Add Attendee — Edit Form',     'Edit attendee details panel'],
+    ['View Booked Courses',          'Account: booked courses list'],
+    ['User Profile',                 'Account: profile settings'],
+    ['Sign Out Page',                'Post sign-out landing page'],
+  ];
+
+  const colW = 4.55, rowH = 0.43, col2x = 5.1;
+  for (let i = 0; i < pages.length; i++) {
+    const col = i < 7 ? 0 : 1;
+    const row = i < 7 ? i : i - 7;
+    const x   = col === 0 ? 0.3 : col2x;
+    const y   = 0.9 + row * rowH;
+    s.addShape(pres.ShapeType.roundRect, {
+      x, y: y + 0.02, w: colW, h: rowH - 0.04,
+      fill: { color: i % 2 === 0 ? LGREY : WHITE }, line: { color: 'DDDDDD', width: 0.5 }, rectRadius: 0.05,
+    });
+    s.addText(`${i + 1}.  ${pages[i][0]}`, { x: x + 0.1, y: y + 0.07, w: colW * 0.54, h: rowH - 0.12, fontSize: 10, bold: true, color: BLUE });
     s.addText(pages[i][1],                 { x: x + colW * 0.54, y: y + 0.07, w: colW * 0.44, h: rowH - 0.12, fontSize: 9, color: DGREY, italic: true });
   }
 }
@@ -254,9 +300,9 @@ function badge(slide, x, y, w, h, color, big, small) {
 // SLIDE 7 — Results Summary
 // ════════════════════════════════════════════════════════════════════════════
 {
-  const s = contentSlide('Latest Results — 3 Browsers, 14 Pages');
+  const s = contentSlide('Latest Results — 3 Browsers, 14 Pages per Platform');
 
-  s.addText('Total issues found across all pages and browsers', {
+  s.addText('Total issues found across all pages and browsers (Corporate Bookings — CPCBA)', {
     x: 0.4, y: 0.62, w: 9.2, h: 0.32, fontSize: 12, color: DGREY, italic: true,
   });
 
@@ -355,31 +401,65 @@ function badge(slide, x, y, w, h, color, big, small) {
     x: 0.3, y: 0.62, w: 9.4, h: 0.4, fontSize: 10, color: DGREY, italic: true, wrap: true,
   });
 
-  const cmds = [
-    { label: 'Run all browsers',          cmd: 'npx playwright test' },
-    { label: 'Run Chrome only',           cmd: 'npx playwright test --project=chromium' },
-    { label: 'Run Firefox only',          cmd: 'npx playwright test --project=firefox' },
-    { label: 'Run Edge only',             cmd: 'npx playwright test --project=edge' },
-    { label: 'Run a single test by name', cmd: 'npx playwright test --grep "CPC Page"' },
-  ];
+  // CPCBA section header
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 0.3, y: 1.05, w: 4.55, h: 0.3,
+    fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.05,
+  });
+  s.addText('Corporate Bookings (CPCBA)', { x: 0.4, y: 1.07, w: 4.35, h: 0.24, fontSize: 10, bold: true, color: WHITE });
 
-  // 5 rows × 1.0" = 5.0" starting y=1.1 → ends 6.1, footer note at 6.55 ✓
-  for (let i = 0; i < cmds.length; i++) {
-    const y = 1.1 + i * 1.0;
+  const cpcbaCmds = [
+    { label: 'All browsers',    cmd: 'npx playwright test' },
+    { label: 'Chrome only',     cmd: 'npx playwright test --project=chromium' },
+    { label: 'Single test',     cmd: 'npx playwright test --grep "CPC Page"' },
+  ];
+  for (let i = 0; i < cpcbaCmds.length; i++) {
+    const y = 1.42 + i * 0.73;
     s.addShape(pres.ShapeType.roundRect, {
-      x: 0.3, y, w: 9.4, h: 0.85,
+      x: 0.3, y, w: 4.55, h: 0.6,
       fill: { color: LGREY }, line: { color: 'CCCCCC', width: 0.5 }, rectRadius: 0.07,
     });
-    s.addText(cmds[i].label, { x: 0.5, y: y + 0.06, w: 3.4, h: 0.28, fontSize: 11, bold: true, color: NAVY });
+    s.addText(cpcbaCmds[i].label, { x: 0.45, y: y + 0.04, w: 1.7, h: 0.24, fontSize: 9, bold: true, color: NAVY });
     s.addShape(pres.ShapeType.roundRect, {
-      x: 4.0, y: y + 0.1, w: 5.5, h: 0.58,
-      fill: { color: '1E1E1E' }, line: { color: '1E1E1E' }, rectRadius: 0.06,
+      x: 0.45, y: y + 0.3, w: 4.25, h: 0.24,
+      fill: { color: '1E1E1E' }, line: { color: '1E1E1E' }, rectRadius: 0.04,
     });
-    s.addText(cmds[i].cmd, { x: 4.1, y: y + 0.17, w: 5.3, h: 0.32, fontSize: 10, color: '00FF90', fontFace: 'Courier New' });
+    s.addText(cpcbaCmds[i].cmd, { x: 0.55, y: y + 0.32, w: 4.1, h: 0.18, fontSize: 8, color: '00FF90', fontFace: 'Courier New' });
   }
 
-  s.addText('Report saved to: CPCBA-results / YYYY-MM-DD / report.html', {
-    x: 0.3, y: 6.52, w: 9.4, h: 0.32, fontSize: 10, color: GREEN, bold: true,
+  // ConstBA section header
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 5.15, y: 1.05, w: 4.55, h: 0.3,
+    fill: { color: BLUE }, line: { color: BLUE }, rectRadius: 0.05,
+  });
+  s.addText('Construction Bookings (ConstBA)', { x: 5.25, y: 1.07, w: 4.35, h: 0.24, fontSize: 10, bold: true, color: WHITE });
+
+  const constbaCmds = [
+    { label: 'All browsers',    cmd: 'npx playwright test --config=constba.config.js' },
+    { label: 'Chrome only',     cmd: 'npx playwright test --config=constba.config.js --project=chromium' },
+    { label: 'Single test',     cmd: 'npx playwright test --config=constba.config.js --grep "Construction Page"' },
+  ];
+  for (let i = 0; i < constbaCmds.length; i++) {
+    const y = 1.42 + i * 0.73;
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 5.15, y, w: 4.55, h: 0.6,
+      fill: { color: LGREY }, line: { color: 'CCCCCC', width: 0.5 }, rectRadius: 0.07,
+    });
+    s.addText(constbaCmds[i].label, { x: 5.3, y: y + 0.04, w: 1.7, h: 0.24, fontSize: 9, bold: true, color: BLUE });
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 5.3, y: y + 0.3, w: 4.25, h: 0.24,
+      fill: { color: '1E1E1E' }, line: { color: '1E1E1E' }, rectRadius: 0.04,
+    });
+    s.addText(constbaCmds[i].cmd, { x: 5.4, y: y + 0.32, w: 4.1, h: 0.18, fontSize: 7.5, color: '00FF90', fontFace: 'Courier New' });
+  }
+
+  s.addText([
+    b('Both suites use the same report format — one HTML file per run with full screenshots and bug tickets', 0),
+    b('Results saved in dated folders — CPCBA-results/YYYY-MM-DD/ and ConstBA-results/YYYY-MM-DD/', 0),
+  ], { x: 0.3, y: 4.65, w: 9.4, h: 1.0, valign: 'top' });
+
+  s.addText('CPCBA report: CPCBA-results / YYYY-MM-DD / report.html      ConstBA report: ConstBA-results / YYYY-MM-DD / report.html', {
+    x: 0.3, y: 6.52, w: 9.4, h: 0.32, fontSize: 9, color: GREEN, bold: true,
   });
 }
 
@@ -390,10 +470,10 @@ function badge(slide, x, y, w, h, color, big, small) {
   const s = contentSlide('Next Steps');
 
   const items = [
-    { icon: '🎯', color: RED,    title: 'Fix Critical issues first',    body: 'These are blocking users right now. Developers should address critical violations as the highest priority.' },
-    { icon: '📅', color: ORANGE, title: 'Schedule regular scans',       body: 'Run the tests after every major release or sprint to catch new issues before they reach production.' },
-    { icon: '🌐', color: BLUE,   title: 'Expand to more platforms',     body: 'The same framework can be extended to cover the ConstructionBA site and any future platforms.' },
-    { icon: '📈', color: GREEN,  title: 'Track improvements over time', body: 'The trend tracker records every run — you will see the violation count reduce as fixes are applied.' },
+    { icon: '🎯', color: RED,      title: 'Fix Critical issues first',        body: 'These are blocking users right now. Developers should address critical violations as the highest priority on both CPCBA and ConstBA.' },
+    { icon: '📅', color: ORANGE,   title: 'Schedule regular scans',           body: 'Run both suites after every major release or sprint to catch new issues before they reach production.' },
+    { icon: '✅', color: BLUE,     title: 'ConstBA coverage is now live',     body: 'Construction Bookings (ConstBA) is fully covered — 14 pages, 3 browsers, identical scan depth and reporting as CPCBA.' },
+    { icon: '📈', color: GREEN,    title: 'Track improvements over time',     body: 'The trend tracker records every run on both platforms — violation counts will reduce visibly as developers apply fixes.' },
   ];
 
   // 4 rows × 1.55" = 6.2" starting y=0.62 → ends 6.82 ✓
@@ -425,13 +505,17 @@ function badge(slide, x, y, w, h, color, big, small) {
     fontSize: 18, color: 'A8C4E8', align: 'center', italic: true,
   });
   s.addText([
-    { text: 'Report:  ', options: { bold: true, color: 'A8C4E8', fontSize: 12 } },
-    { text: 'CPCBA-results / YYYY-MM-DD / report.html', options: { color: '6FCFFF', fontFace: 'Courier New', fontSize: 12 } },
-  ], { x: 1.0, y: 3.2, w: 8, h: 0.42, align: 'center' });
+    { text: 'CPCBA Report:  ', options: { bold: true, color: 'A8C4E8', fontSize: 11 } },
+    { text: 'CPCBA-results / YYYY-MM-DD / report.html', options: { color: '6FCFFF', fontFace: 'Courier New', fontSize: 11 } },
+  ], { x: 0.5, y: 3.15, w: 9, h: 0.38, align: 'center' });
   s.addText([
-    { text: 'Spec file:  ', options: { bold: true, color: 'A8C4E8', fontSize: 12 } },
-    { text: 'CPCBA-accessibility-tests / accessibility-scan.spec.js', options: { color: '6FCFFF', fontFace: 'Courier New', fontSize: 12 } },
-  ], { x: 1.0, y: 3.72, w: 8, h: 0.42, align: 'center' });
+    { text: 'ConstBA Report:  ', options: { bold: true, color: 'A8C4E8', fontSize: 11 } },
+    { text: 'ConstBA-results / YYYY-MM-DD / report.html', options: { color: '6FCFFF', fontFace: 'Courier New', fontSize: 11 } },
+  ], { x: 0.5, y: 3.58, w: 9, h: 0.38, align: 'center' });
+  s.addText([
+    { text: 'Spec files:  ', options: { bold: true, color: 'A8C4E8', fontSize: 11 } },
+    { text: 'CPCBA-accessibility-tests/  &  ConstBA-accessibility-tests/  (accessibility-scan.spec.js)', options: { color: '6FCFFF', fontFace: 'Courier New', fontSize: 10 } },
+  ], { x: 0.5, y: 4.02, w: 9, h: 0.38, align: 'center' });
   s.addText('TTC Group  |  Accessibility Testing Programme  |  2026', {
     x: 0.5, y: 6.9, w: 9, h: 0.35, fontSize: 10, color: '6699BB', align: 'center',
   });
