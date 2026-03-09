@@ -16,40 +16,80 @@ async function postToTeams({ webhookUrl, summaryData, today, regressions }) {
 
   const totalViolations = summaryData.reduce((s, r) => s + r.total, 0);
   const hasRegressions = regressions && regressions.length > 0;
+  const regressionNames = hasRegressions
+    ? regressions.map(r => `${r.page} (${r.browser})`).join(', ')
+    : 'None';
 
-  const rows = summaryData.map(r => ({
-    page: r.page,
-    browser: r.browser,
-    total: r.total,
-    critical: r.critical,
-    serious: r.serious,
-    moderate: r.moderate,
-    minor: r.minor,
-    regression: regressions?.some(x => x.page === r.page && x.browser === r.browser) ? '⚠️ Yes' : 'No',
-  }));
+  // Build result rows as Adaptive Card ColumnSets
+  const resultRows = summaryData.map(r => {
+    const isRegression = regressions?.some(x => x.page === r.page && x.browser === r.browser);
+    return {
+      type: 'ColumnSet',
+      columns: [
+        { type: 'Column', width: 'stretch', items: [{ type: 'TextBlock', text: `${r.page} — ${r.browser}`, wrap: true, size: 'Small' }] },
+        { type: 'Column', width: 'auto',    items: [{ type: 'TextBlock', text: String(r.total),    color: r.total    > 0 ? 'Warning'  : 'Good', size: 'Small' }] },
+        { type: 'Column', width: 'auto',    items: [{ type: 'TextBlock', text: String(r.critical), color: r.critical > 0 ? 'Attention': 'Good', size: 'Small' }] },
+        { type: 'Column', width: 'auto',    items: [{ type: 'TextBlock', text: isRegression ? '⚠️' : '✅', size: 'Small' }] },
+      ],
+      separator: true,
+    };
+  });
 
-  const message = {
-    title: `♿ Accessibility Scan — ${today}`,
-    summary: `TTC Accessibility scan completed for ${today}`,
-    totalViolations,
-    hasRegressions,
-    regressions: hasRegressions
-      ? regressions.map(r => `${r.page} (${r.browser})`).join(', ')
-      : 'None',
-    results: rows,
+  // Adaptive Card — required format for "Post card in a chat or channel" action
+  const card = {
+    type: 'AdaptiveCard',
+    $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+    version: '1.4',
+    body: [
+      {
+        type: 'TextBlock',
+        text: `♿ Accessibility Scan — ${today}`,
+        weight: 'Bolder',
+        size: 'Large',
+        color: hasRegressions ? 'Warning' : 'Accent',
+        wrap: true,
+      },
+      {
+        type: 'FactSet',
+        facts: [
+          { title: 'Total violations', value: String(totalViolations) },
+          { title: 'Regressions',      value: regressionNames },
+          { title: 'Pages scanned',    value: String(summaryData.length) },
+        ],
+      },
+      {
+        type: 'TextBlock',
+        text: 'Results by page & browser',
+        weight: 'Bolder',
+        size: 'Small',
+        spacing: 'Medium',
+      },
+      // Column headers
+      {
+        type: 'ColumnSet',
+        columns: [
+          { type: 'Column', width: 'stretch', items: [{ type: 'TextBlock', text: 'Page — Browser', weight: 'Bolder', size: 'Small' }] },
+          { type: 'Column', width: 'auto',    items: [{ type: 'TextBlock', text: 'Total',          weight: 'Bolder', size: 'Small' }] },
+          { type: 'Column', width: 'auto',    items: [{ type: 'TextBlock', text: 'Crit',           weight: 'Bolder', size: 'Small' }] },
+          { type: 'Column', width: 'auto',    items: [{ type: 'TextBlock', text: 'OK?',            weight: 'Bolder', size: 'Small' }] },
+        ],
+      },
+      ...resultRows,
+    ],
   };
 
   try {
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(message),
+      body: JSON.stringify(card),
     });
 
     if (response.ok) {
       console.log('\n✅ Teams notification sent successfully.');
     } else {
-      console.log(`\n⚠️  Teams notification failed — status: ${response.status}`);
+      const text = await response.text().catch(() => '');
+      console.log(`\n⚠️  Teams notification failed — status: ${response.status} ${text}`);
     }
   } catch (err) {
     console.log(`\n⚠️  Teams notification error: ${err.message}`);
