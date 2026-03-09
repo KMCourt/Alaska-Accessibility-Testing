@@ -595,7 +595,7 @@ const PAGES = [
 // RESULTS FOLDER SETUP
 // -------------------------------------------
 const today = new Date().toISOString().split('T')[0];
-const resultsDir = path.join(__dirname, '..', 'cpc-results', today);
+const resultsDir = path.join(__dirname, '..', 'cpc-results', today, 'mobile');
 const screenshotsDir = path.join(resultsDir, 'screenshots');
 const jsonDir = path.join(resultsDir, 'json');
 

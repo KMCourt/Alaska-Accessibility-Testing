@@ -38,44 +38,42 @@ module.exports = async function globalTeardown() {
 
   // Remove reports older than 90 days
   pruneOldReports(baseResultsDir);
-  const jsonDir = path.join(resultsDir, 'json');
-  const reportPath = path.join(resultsDir, 'report.html');
 
-  if (!fs.existsSync(jsonDir)) {
+  const browserJsonDir = path.join(resultsDir, 'browser', 'json');
+  const mobileJsonDir  = path.join(resultsDir, 'mobile',  'json');
+
+  const readJsonDir = (dir) => {
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .map(f => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+  };
+
+  const browserData = readJsonDir(browserJsonDir);
+  const mobileData  = readJsonDir(mobileJsonDir);
+
+  if (browserData.length === 0 && mobileData.length === 0) {
     console.log('\nNo JSON results found — skipping report generation.');
     return;
   }
 
-  // Read every JSON file written by the scan tests
-  const jsonFiles = fs.readdirSync(jsonDir).filter(f => f.endsWith('.json'));
-  if (jsonFiles.length === 0) {
-    console.log('\nNo JSON results found — skipping report generation.');
-    return;
-  }
-
-  const MOBILE_DEVICES = ['iPhone 15 Pro', 'Galaxy S24', 'Pixel 7'];
-
-  const allResults = jsonFiles.map(f => {
-    const data = JSON.parse(fs.readFileSync(path.join(jsonDir, f), 'utf8'));
-    return {
-      page:               data.page,
-      url:                data.url,
-      browser:            data.browser,
-      counts:             data.summary,
-      previousCounts:     data.previousCounts,
-      violations:         data.violations,
-      screenshotFile:     data.screenshotFile,
-      elementScreenshots: data.elementScreenshots || {},
-    };
+  const toResult = (data) => ({
+    page:               data.page,
+    url:                data.url,
+    browser:            data.browser,
+    counts:             data.summary,
+    previousCounts:     data.previousCounts,
+    violations:         data.violations,
+    screenshotFile:     data.screenshotFile,
+    elementScreenshots: data.elementScreenshots || {},
   });
 
-  // Split into browser and mobile result sets
-  const browserResults = allResults.filter(r => !MOBILE_DEVICES.includes(r.browser));
-  const mobileResults  = allResults.filter(r =>  MOBILE_DEVICES.includes(r.browser));
+  const browserResults = browserData.map(toResult);
+  const mobileResults  = mobileData.map(toResult);
+  const allResults     = [...browserResults, ...mobileResults];
 
   // Rebuild regressions list from stored flags
-  const regressions = jsonFiles
-    .map(f => JSON.parse(fs.readFileSync(path.join(jsonDir, f), 'utf8')))
+  const regressions = [...browserData, ...mobileData]
     .filter(d => d.regression)
     .map(d => ({ page: d.page, browser: d.browser }));
 
@@ -86,18 +84,19 @@ module.exports = async function globalTeardown() {
 
   // ── Browser report ──────────────────────────────────────────────────────
   if (browserResults.length > 0) {
+    const reportPath = path.join(resultsDir, 'browser', 'report.html');
     generateConsolidatedReport({ allResults: browserResults, regressions, reportPath, today });
-    console.log(`\n✅ Browser report saved to: CPCBA-accessibility-tests/cpc-results/${today}/report.html`);
+    console.log(`\n✅ Browser report saved to: CPCBA-accessibility-tests/cpc-results/${today}/browser/report.html`);
   }
 
   // ── Mobile report ───────────────────────────────────────────────────────
   if (mobileResults.length > 0) {
-    const mobileReportPath = path.join(resultsDir, 'report-mobile.html');
+    const mobileReportPath = path.join(resultsDir, 'mobile', 'report.html');
     generateConsolidatedReport({ allResults: mobileResults, regressions, reportPath: mobileReportPath, today });
-    console.log(`✅ Mobile report  saved to: CPCBA-accessibility-tests/cpc-results/${today}/report-mobile.html`);
+    console.log(`✅ Mobile report  saved to: CPCBA-accessibility-tests/cpc-results/${today}/mobile/report.html`);
   }
 
-  // Print grand totals across all results
+  // Print grand totals
   const printTotals = (label, results) => {
     const t = results.reduce(
       (acc, r) => {
@@ -122,7 +121,7 @@ module.exports = async function globalTeardown() {
   };
 
   if (browserResults.length > 0) printTotals('BROWSER TOTALS (Chrome / Firefox / Edge)', browserResults);
-  if (mobileResults.length  > 0) printTotals('MOBILE TOTALS  (iPhone / Galaxy / Pixel)', mobileResults);
+  if (mobileResults.length  > 0) printTotals('MOBILE TOTALS  (iPhone / Galaxy / Pixel)',  mobileResults);
 
   const summaryData = allResults.map(r => ({
     page: r.page, url: r.url, browser: r.browser, ...r.counts,
