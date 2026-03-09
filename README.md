@@ -1,19 +1,8 @@
-# CPCBA Accessibility Testing
+# TTC Accessibility Testing
 
-Automated and manual accessibility tests for the **TTC Corporate Bookings Platform** (CPCBA).
+Automated and manual accessibility tests for the **TTC Corporate Bookings Platform (CPCBA)** and **Construction Bookings Platform (ConstBA)**.
 
-Tests check that the site meets **WCAG 2.2 AA** — the current legal standard — and also runs **WCAG 2.2 AAA** enhanced checks where possible.
-
----
-
-## What is Accessibility Testing?
-
-Accessibility testing checks that a website can be used by everyone, including people who:
-- Are blind or visually impaired and use a screen reader
-- Cannot use a mouse and navigate by keyboard only
-- Have low vision and need to zoom in or increase text size
-- Have motor disabilities and use assistive technology
-- Have cognitive disabilities and need clear, simple content
+Tests check against **WCAG 2.2 AAA** — covering the full standard through automated axe-core scans and manual checklists.
 
 ---
 
@@ -21,40 +10,50 @@ Accessibility testing checks that a website can be used by everyone, including p
 
 ```
 accessibility-testing/
-├── CPCBA-accessibility-tests/
-│   ├── accessibility-scan.spec.js      ← Main automated scan (14 pages, 3 browsers)
-│   ├── colour-contrast.spec.js         ← Dedicated contrast checks
-│   └── keyboard-navigation.spec.js     ← Keyboard navigation checks
 │
-├── CPCBA-manual-tests/
-│   └── manual-checklist.html           ← Manual test checklist (open in browser)
+├── CPCBA-accessibility-tests/
+│   ├── browser-tests/
+│   │   └── accessibility-scan.spec.js      ← Automated scan — Chrome, Firefox, Edge
+│   ├── mobile-tests/
+│   │   └── accessibility-scan.spec.js      ← Automated scan — iPhone 15 Pro, Galaxy S24, Pixel 7
+│   ├── CPCBA-manual-tests/
+│   │   ├── manual-checklist.html           ← Desktop manual checklist (open in browser)
+│   │   └── manual-checklist-mobile.html    ← Mobile manual checklist (open in browser)
+│   └── cpc-results/                        ← Generated reports (gitignored)
+│       └── YYYY-MM-DD/
+│           ├── browser/
+│           │   ├── report.html             ← Browser report (Chrome/Firefox/Edge)
+│           │   ├── json/                   ← Raw scan data per page per browser
+│           │   └── screenshots/            ← Page and element screenshots
+│           └── mobile/
+│               ├── report.html             ← Mobile report (iPhone/Galaxy/Pixel)
+│               ├── json/                   ← Raw scan data per page per device
+│               └── screenshots/            ← Mobile page and element screenshots
+│
+├── ConstBA-accessibility-tests/
+│   ├── accessibility-scan.spec.js
+│   └── ConstBA-results/
 │
 ├── utils/
-│   ├── global-teardown.js              ← Builds HTML report after all tests finish
-│   ├── report-generator.js             ← HTML report template
-│   ├── trend-tracker.js                ← Tracks violation counts over time
-│   ├── teams-notify.js                 ← Posts results summary to MS Teams
-│   ├── testmail.js                     ← Retrieves OTP codes from testmail.app
-│   └── create-presentation.js          ← Generates PowerPoint overview (node utils/create-presentation.js)
+│   ├── global-teardown.js                  ← Builds browser + mobile HTML reports after all tests
+│   ├── report-generator.js                 ← HTML report template
+│   ├── trend-tracker.js                    ← Tracks violation counts over time
+│   ├── teams-notify.js                     ← Posts results summary to MS Teams (Adaptive Card)
+│   ├── testmail.js                         ← Retrieves OTP codes from testmail.app
+│   └── create-presentation.js              ← Generates PowerPoint overview
 │
-├── CPCBA-results/                      ← Generated reports (gitignored)
-│   └── YYYY-MM-DD/
-│       ├── report.html                 ← Main HTML report — open this
-│       ├── json/                       ← Raw scan data per page per browser
-│       └── screenshots/                ← Page and element screenshots
-│
-├── trend-history.json                  ← Violation trend history (tracked in git)
-├── playwright.config.js                ← Browser and test configuration
-├── .env                                ← Your local credentials (gitignored — see .env.example)
-└── .env.example                        ← Template for setting up .env
+├── trend-history.json                      ← Violation trend history (tracked in git)
+├── playwright.config.js                    ← Browser, mobile device and test configuration
+├── .env                                    ← Your local credentials (gitignored — see .env.example)
+└── .env.example                            ← Template for setting up .env
 ```
 
 ---
 
-## Pages Tested (14 total)
+## Pages Tested (14 total — CPCBA)
 
 | # | Page | What it covers |
-|---|------|---------------|
+|---|------|----------------|
 | 1 | CPC Page | Main course listing |
 | 2 | Info Page | Individual course details |
 | 3 | My Basket Modal | Shopping basket pop-up |
@@ -62,7 +61,7 @@ accessibility-testing/
 | 5 | Details & Payment | Delegate and billing details |
 | 6 | Details & Payment — Pay | Payment method selection |
 | 7 | Details & Payment — Verified | After email OTP verification |
-| 8 | Pay by Card | Stripe card entry |
+| 8 | Pay by Card | Stripe card entry form |
 | 9 | Booking Confirmation | Post-payment confirmation |
 | 10 | Add Attendees | Manage delegates page |
 | 11 | Add Attendee — Edit Form | Edit attendee panel |
@@ -72,100 +71,28 @@ accessibility-testing/
 
 ---
 
-## Getting Started
+## Accessibility Standards Covered
 
-### Prerequisites
-- [Node.js](https://nodejs.org) LTS version
-- [VS Code](https://code.visualstudio.com) (recommended)
-- A testmail.app account for OTP email handling (contact the QA team lead)
-
-### Setup
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/KMCourt/accessibility-testing.git
-cd accessibility-testing
-```
-
-**2. Install dependencies**
-```bash
-npm install
-```
-
-**3. Install browsers**
-```bash
-npx playwright install
-```
-
-**4. Configure environment variables**
-```bash
-cp .env.example .env
-```
-Open `.env` and fill in your testmail credentials and Teams webhook URL.
-Contact the QA team lead for the real values.
+| Standard | Automated | Manual checklist |
+|----------|-----------|-----------------|
+| WCAG 2.0 A | ✅ | ✅ |
+| WCAG 2.0 AA | ✅ | ✅ |
+| WCAG 2.1 AA | ✅ | ✅ |
+| WCAG 2.2 AA | ✅ | ✅ |
+| WCAG 2.2 AAA | ✅ (where detectable by axe) | ✅ |
 
 ---
 
-## Running the Tests
+## Understanding the Reports
 
-### Run everything (all 14 pages × 3 browsers)
-```bash
-npx playwright test
-```
+After each run two separate reports are generated:
 
-### Run a single browser
-```bash
-npx playwright test --project=chromium
-npx playwright test --project=firefox
-npx playwright test --project=edge
-```
+| Report | Location | Contains |
+|--------|----------|---------|
+| Browser report | `cpc-results/YYYY-MM-DD/browser/report.html` | Chrome, Firefox, Edge |
+| Mobile report | `cpc-results/YYYY-MM-DD/mobile/report.html` | iPhone 15 Pro, Galaxy S24, Pixel 7 |
 
-### Run a specific test by name
-```bash
-npx playwright test --grep "CPC Page"
-```
-
-### Run only the contrast or keyboard tests
-```bash
-npx playwright test CPCBA-accessibility-tests/colour-contrast.spec.js
-npx playwright test CPCBA-accessibility-tests/keyboard-navigation.spec.js
-```
-
-After the run completes, the HTML report is saved to:
-```
-CPCBA-results/YYYY-MM-DD/report.html
-```
-Open this file in any browser to view all results.
-
----
-
-## Manual Testing
-
-Automated tools catch roughly 30–40% of accessibility issues. The rest require a human.
-
-Open the manual checklist in any browser — no setup needed:
-```
-CPCBA-manual-tests/manual-checklist.html
-```
-
-It covers all 14 pages with 9 categories of checks:
-- 🔊 Screen Reader
-- ⌨️ Keyboard Navigation
-- 👁️ Visual & Colour
-- 📝 Content & Structure
-- 📋 Forms & Errors
-- 🎬 Media & Motion
-- 📱 Mobile & Touch
-- 🧠 Cognitive & Usability
-- ⭐ WCAG 2.2 AAA Enhanced Standards
-
-Answers are saved automatically in the browser (localStorage) — no server needed.
-
----
-
-## Understanding the Automated Report
-
-The HTML report groups results by page. Each page has a tab for **Chromium**, **Firefox**, and **Edge**.
+Each report groups results by page. Every violation includes a description, a screenshot of the affected element, and a pre-written bug ticket ready to copy into Jira.
 
 ### Severity levels
 
@@ -176,51 +103,23 @@ The HTML report groups results by page. Each page has a tab for **Chromium**, **
 | 🟡 Moderate | Causes difficulty — fix in next sprint |
 | ⚪ Minor | Minor annoyance — fix when convenient |
 
-Each violation includes:
-- A description of the issue
-- A screenshot of the affected element
-- A pre-written bug ticket ready to paste into Jira
-
 ---
 
-## Accessibility Standards
+## Manual Testing
 
-| Standard | Covered |
-|----------|---------|
-| WCAG 2.0 A | ✅ Automated |
-| WCAG 2.0 AA | ✅ Automated |
-| WCAG 2.1 AA | ✅ Automated |
-| WCAG 2.2 AA | ✅ Automated |
-| WCAG 2.2 AAA | ✅ Automated (where detectable) + Manual checklist |
+Automated tools catch roughly 30–40% of accessibility issues. The rest require a human tester.
 
----
+Open the relevant checklist directly in any browser — no setup needed:
 
-## Adding a New Page
+| Checklist | Path | Use for |
+|-----------|------|---------|
+| Desktop | `CPCBA-accessibility-tests/CPCBA-manual-tests/manual-checklist.html` | Chrome, Firefox, Edge testing |
+| Mobile | `CPCBA-accessibility-tests/CPCBA-manual-tests/manual-checklist-mobile.html` | iPhone, Android device testing |
 
-Open [`CPCBA-accessibility-tests/accessibility-scan.spec.js`](CPCBA-accessibility-tests/accessibility-scan.spec.js) and add an entry to the `PAGES` array:
-
-```javascript
-{
-  name: 'My New Page',
-  url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/new-page',
-},
-```
-
-For pages that require navigation steps (e.g. clicking a button to open a modal), add a `setup` function:
-
-```javascript
-{
-  name: 'My Modal',
-  url: 'https://ttc-eun-qat-corporatebookings.azurewebsites.net/cpc',
-  setup: async (page) => {
-    await page.locator('button:has-text("Open modal")').click();
-    await page.waitForSelector('[role="dialog"]', { state: 'visible' });
-  },
-},
-```
+Results are saved automatically in the browser (localStorage) — no server needed.
 
 ---
 
 ## Questions or Issues
 
-Speak to the QA team or raise an issue in the GitHub repository.
+Speak to the QA team lead or raise an issue in the [GitHub repository](https://github.com/KMCourt/accessibility-testing).

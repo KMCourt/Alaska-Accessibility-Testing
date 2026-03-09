@@ -2412,5 +2412,131 @@
         "minor": 0
       }
     }
+  ],
+  "CPC Page__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:38:37.217Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-09T10:39:40.343Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Info Page__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:40:00.663Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "My Basket Modal__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:40:08.926Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    }
+  ],
+  "Sign In Modal__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:40:15.750Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:41:16.897Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-09T10:42:19.750Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment - Pay__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:43:22.638Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-09T10:44:26.364Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment - Verified__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:45:12.186Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "Pay by Card__iPhone 15 Pro": [
+    {
+      "date": "2026-03-09T10:46:07.599Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
   ]
 }
