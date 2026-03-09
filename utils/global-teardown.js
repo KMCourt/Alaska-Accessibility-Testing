@@ -53,19 +53,25 @@ module.exports = async function globalTeardown() {
     return;
   }
 
+  const MOBILE_DEVICES = ['iPhone 15 Pro', 'Galaxy S24', 'Pixel 7'];
+
   const allResults = jsonFiles.map(f => {
     const data = JSON.parse(fs.readFileSync(path.join(jsonDir, f), 'utf8'));
     return {
-      page:             data.page,
-      url:              data.url,
-      browser:          data.browser,
-      counts:           data.summary,
-      previousCounts:   data.previousCounts,
-      violations:       data.violations,
-      screenshotFile:   data.screenshotFile,
+      page:               data.page,
+      url:                data.url,
+      browser:            data.browser,
+      counts:             data.summary,
+      previousCounts:     data.previousCounts,
+      violations:         data.violations,
+      screenshotFile:     data.screenshotFile,
       elementScreenshots: data.elementScreenshots || {},
     };
   });
+
+  // Split into browser and mobile result sets
+  const browserResults = allResults.filter(r => !MOBILE_DEVICES.includes(r.browser));
+  const mobileResults  = allResults.filter(r =>  MOBILE_DEVICES.includes(r.browser));
 
   // Rebuild regressions list from stored flags
   const regressions = jsonFiles
@@ -78,32 +84,45 @@ module.exports = async function globalTeardown() {
     regressions.forEach(r => console.log(`   - ${r.page} (${r.browser})`));
   }
 
-  generateConsolidatedReport({ allResults, regressions, reportPath, today });
+  // ── Browser report ──────────────────────────────────────────────────────
+  if (browserResults.length > 0) {
+    generateConsolidatedReport({ allResults: browserResults, regressions, reportPath, today });
+    console.log(`\n✅ Browser report saved to: CPCBA-accessibility-tests/cpc-results/${today}/report.html`);
+  }
 
-  // Print grand totals across all pages and browsers
-  const totals = allResults.reduce(
-    (acc, r) => {
-      acc.total    += r.counts.total    || 0;
-      acc.critical += r.counts.critical || 0;
-      acc.serious  += r.counts.serious  || 0;
-      acc.moderate += r.counts.moderate || 0;
-      acc.minor    += r.counts.minor    || 0;
-      return acc;
-    },
-    { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }
-  );
+  // ── Mobile report ───────────────────────────────────────────────────────
+  if (mobileResults.length > 0) {
+    const mobileReportPath = path.join(resultsDir, 'report-mobile.html');
+    generateConsolidatedReport({ allResults: mobileResults, regressions, reportPath: mobileReportPath, today });
+    console.log(`✅ Mobile report  saved to: CPCBA-accessibility-tests/cpc-results/${today}/report-mobile.html`);
+  }
 
-  console.log('\n========================================');
-  console.log('  SCAN COMPLETE — TOTALS (all pages & browsers)');
-  console.log('========================================');
-  console.log(`  Total    : ${totals.total}`);
-  console.log(`  Critical : ${totals.critical}`);
-  console.log(`  Serious  : ${totals.serious}`);
-  console.log(`  Moderate : ${totals.moderate}`);
-  console.log(`  Minor    : ${totals.minor}`);
-  console.log('========================================');
+  // Print grand totals across all results
+  const printTotals = (label, results) => {
+    const t = results.reduce(
+      (acc, r) => {
+        acc.total    += r.counts.total    || 0;
+        acc.critical += r.counts.critical || 0;
+        acc.serious  += r.counts.serious  || 0;
+        acc.moderate += r.counts.moderate || 0;
+        acc.minor    += r.counts.minor    || 0;
+        return acc;
+      },
+      { total: 0, critical: 0, serious: 0, moderate: 0, minor: 0 }
+    );
+    console.log(`\n========================================`);
+    console.log(`  ${label}`);
+    console.log(`========================================`);
+    console.log(`  Total    : ${t.total}`);
+    console.log(`  Critical : ${t.critical}`);
+    console.log(`  Serious  : ${t.serious}`);
+    console.log(`  Moderate : ${t.moderate}`);
+    console.log(`  Minor    : ${t.minor}`);
+    console.log(`========================================`);
+  };
 
-  console.log(`\n✅ Report saved to: CPCBA-accessibility-tests/cpc-results/${today}/report.html`);
+  if (browserResults.length > 0) printTotals('BROWSER TOTALS (Chrome / Firefox / Edge)', browserResults);
+  if (mobileResults.length  > 0) printTotals('MOBILE TOTALS  (iPhone / Galaxy / Pixel)', mobileResults);
 
   const summaryData = allResults.map(r => ({
     page: r.page, url: r.url, browser: r.browser, ...r.counts,
