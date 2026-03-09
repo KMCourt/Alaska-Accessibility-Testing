@@ -763,7 +763,7 @@ function badge(slide, x, y, w, h, color, big, small) {
 {
   const s = contentSlide('Brand Guidelines — WCAG Accessibility Conformance Check');
 
-  s.addText('Source: TTC Group_Brand Guidelines_V1 4  ·  Colours extracted from official PowerPoint theme  ·  Tested against WCAG 2.1 AA', {
+  s.addText('Source: TTC Group_Brand Guidelines_V1 4  ·  Colours extracted from official PowerPoint theme  ·  Tested against WCAG 2.2 AAA', {
     x: 0.3, y: 0.62, w: 9.4, h: 0.24, fontSize: 8, color: DGREY, italic: true,
   });
 
@@ -800,7 +800,7 @@ function badge(slide, x, y, w, h, color, big, small) {
     x: colL, y: 1.82, w: colW2, h: 0.26,
     fill: { color: '1B5E20' }, line: { color: '1B5E20' }, rectRadius: 0.05,
   });
-  s.addText('✅  WCAG AA Compliant Combinations', {
+  s.addText('✅  WCAG AAA Compliant Combinations', {
     x: colL + 0.08, y: 1.84, w: colW2 - 0.1, h: 0.2, fontSize: 8.5, bold: true, color: WHITE,
   });
 
@@ -846,22 +846,22 @@ function badge(slide, x, y, w, h, color, big, small) {
 
   const rowStart = 2.14, rowGap = 0.54;
 
-  // Left — PASSES
+  // Left — AAA PASSES (≥ 7:1 normal text) + AAA large-only (≥ 4.5:1)
   const passes = [
-    { fg: '190B2F', bg: 'FFFFFF', label: 'Dark Purple on White',         ratio: '18.58' },
-    { fg: '5F4FFC', bg: 'FFFFFF', label: 'Bright Purple on White',       ratio: '5.24' },
-    { fg: '5B1D7A', bg: 'FFFFFF', label: 'Deep Purple on White',         ratio: '11.04' },
-    { fg: 'D8D2E9', bg: '190B2F', label: 'Light Lavender on Dark Purple',ratio: '12.67' },
-    { fg: 'FF99FF', bg: '190B2F', label: 'Pink/Magenta on Dark Purple',  ratio: '9.96' },
+    { fg: '190B2F', bg: 'FFFFFF', label: 'Dark Purple on White',         ratio: '18.58', st: 'PASS' },
+    { fg: '5B1D7A', bg: 'FFFFFF', label: 'Deep Purple on White',         ratio: '11.05', st: 'PASS' },
+    { fg: 'D8D2E9', bg: '190B2F', label: 'Light Lavender on Dark Purple',ratio: '12.67', st: 'PASS' },
+    { fg: 'FF99FF', bg: '190B2F', label: 'Pink/Magenta on Dark Purple',  ratio: '9.96',  st: 'PASS' },
+    { fg: '5F4FFC', bg: 'FFFFFF', label: 'Bright Purple on White',       ratio: '5.24',  st: 'LARGE' },
   ];
   for (let i = 0; i < passes.length; i++) {
-    contrastRow(s, colL, rowStart + i * rowGap, passes[i].fg, passes[i].bg, passes[i].label, passes[i].ratio, 'PASS');
+    contrastRow(s, colL, rowStart + i * rowGap, passes[i].fg, passes[i].bg, passes[i].label, passes[i].ratio, passes[i].st);
   }
 
-  // Right — FAILS / CAUTION
+  // Right — FAILS at AAA (all four miss the 4.5:1 AAA large-text threshold or worse)
   const fails = [
-    { fg: 'A082E0', bg: 'FFFFFF', label: 'Medium Purple on White',       ratio: '3.10', st: 'LARGE' },
-    { fg: '5F4FFC', bg: '190B2F', label: 'Bright Purple on Dark Purple', ratio: '3.55', st: 'LARGE' },
+    { fg: 'A082E0', bg: 'FFFFFF', label: 'Medium Purple on White',       ratio: '3.10', st: 'FAIL' },
+    { fg: '5F4FFC', bg: '190B2F', label: 'Bright Purple on Dark Purple', ratio: '3.55', st: 'FAIL' },
     { fg: 'FF99FF', bg: 'FFFFFF', label: 'Pink/Magenta on White',        ratio: '1.87', st: 'FAIL' },
     { fg: 'D8D2E9', bg: 'FFFFFF', label: 'Light Lavender on White',      ratio: '1.47', st: 'FAIL' },
   ];
@@ -885,7 +885,7 @@ function badge(slide, x, y, w, h, color, big, small) {
   s.addText([
     { text: 'Body: ', options: { bold: true, fontSize: 8, color: DGREY } },
     { text: 'Noto Sans Light', options: { fontSize: 8, color: DGREY, fontFace: 'Courier New' } },
-    { text: '  — Caution. Light weight can fail WCAG 1.4.12 (text spacing) at small sizes. Use Regular or Medium weight for body text below 14px.', options: { fontSize: 8, color: 'B71C1C' } },
+    { text: '  — Caution. Light weight can fail WCAG 1.4.12 (text spacing) at small sizes. At AAA, ensure minimum 18px or use Regular/Medium weight for body text.', options: { fontSize: 8, color: 'B71C1C' } },
   ], { x: 0.4, y: 6.37, w: 9.1, h: 0.18 });
 }
 
