@@ -52,6 +52,7 @@ module.exports = defineConfig({
 
   // Browsers to test against
   projects: [
+    // ── Desktop browsers ─────────────────────────────────────────────────
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
@@ -63,6 +64,22 @@ module.exports = defineConfig({
     {
       name: 'edge',
       use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    },
+
+    // ── Mobile devices (emulated) ────────────────────────────────────────
+    // Run all mobile:   npx playwright test --project="iPhone 15 Pro" --project="Galaxy S24" --project="Pixel 7"
+    // Run one device:   npx playwright test --project="Pixel 7"
+    {
+      name: 'iPhone 15 Pro',
+      use: { ...devices['iPhone 15 Pro'] },    // WebKit (Safari) · iOS 17 · 393×659 · touch
+    },
+    {
+      name: 'Galaxy S24',
+      use: { ...devices['Galaxy S24'] },       // Chromium (Chrome) · Android 14 · 360×780 · touch
+    },
+    {
+      name: 'Pixel 7',
+      use: { ...devices['Pixel 7'] },          // Chromium (Chrome) · Android 14 · 412×839 · touch
     },
   ],
 });

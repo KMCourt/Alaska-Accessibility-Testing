@@ -179,6 +179,58 @@ function badge(slide, x, y, w, h, color, big, small) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
+// SLIDE 4b — Three Layers of Testing
+// ════════════════════════════════════════════════════════════════════════════
+{
+  const s = contentSlide('Three Layers of Testing — Automated + Manual');
+
+  s.addText('Every page on both platforms is covered by automated scans and a manual checklist', {
+    x: 0.3, y: 0.62, w: 9.4, h: 0.28, fontSize: 10, color: DGREY, italic: true,
+  });
+
+  const layers = [
+    {
+      x: 0.2, color: NAVY, title: 'Axe-Core\nAccessibility Scan',
+      items: ['WCAG 2.0, 2.1, 2.2 AA', 'Best-practice rules', '14 pages per platform', '3 browsers each run', 'Screenshots + bug tickets'],
+    },
+    {
+      x: 2.7, color: BLUE, title: 'Colour Contrast\nCheck',
+      items: ['Dedicated contrast scan', 'All text elements', 'Normal & large text', 'WCAG 1.4.3 AA (4.5:1)', 'Per page, per browser'],
+    },
+    {
+      x: 5.2, color: '6A1B9A', title: 'Keyboard\nNavigation Check',
+      items: ['Tab order validation', 'Focus visibility', 'Interactive elements', 'Modal focus trapping', 'Skip links & landmarks'],
+    },
+    {
+      x: 7.7, color: ORANGE, title: 'Manual Testing\nChecklist',
+      items: ['Screen reader testing', 'Cognitive & usability', 'Mobile & touch', 'Media & motion', 'WCAG 2.2 AAA checks'],
+    },
+  ];
+
+  for (const l of layers) {
+    s.addShape(pres.ShapeType.roundRect, {
+      x: l.x, y: 0.98, w: 2.3, h: 5.95,
+      fill: { color: l.color }, line: { color: l.color }, rectRadius: 0.12,
+    });
+    s.addText(l.title, {
+      x: l.x + 0.08, y: 1.05, w: 2.14, h: 0.75,
+      fontSize: 11, bold: true, color: WHITE, align: 'center', wrap: true,
+    });
+    s.addShape(pres.ShapeType.rect, { x: l.x + 0.15, y: 1.85, w: 2.0, h: 0.02, fill: { color: WHITE } });
+    for (let i = 0; i < l.items.length; i++) {
+      s.addText(l.items[i], {
+        x: l.x + 0.15, y: 1.95 + i * 0.75, w: 2.0, h: 0.6,
+        fontSize: 9, color: WHITE, align: 'center', wrap: true,
+      });
+    }
+  }
+
+  s.addText('Automated tests run on demand (or can be scheduled). The manual checklist is completed by a tester in a browser — no installation required.', {
+    x: 0.3, y: 6.98, w: 9.4, h: 0.3, fontSize: 8, color: DGREY, italic: true, align: 'center',
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
 // SLIDE 5a — What Pages Are Tested? (CPCBA)
 // ════════════════════════════════════════════════════════════════════════════
 {
@@ -278,10 +330,10 @@ function badge(slide, x, y, w, h, color, big, small) {
     { color: '888888', label: 'Minor',    desc: 'Nice to fix — minor annoyance' },
   ];
   for (let i = 0; i < levels.length; i++) {
-    const y = 1.02 + i * 1.44;
-    s.addShape(pres.ShapeType.roundRect, { x: 0.3, y, w: 1.1, h: 1.0, fill: { color: levels[i].color }, line: { color: levels[i].color }, rectRadius: 0.1 });
-    s.addText(levels[i].label, { x: 0.3, y: y + 0.32, w: 1.1, h: 0.34, fontSize: 11, bold: true, color: WHITE, align: 'center' });
-    s.addText(levels[i].desc,  { x: 1.55, y: y + 0.32, w: 3.1, h: 0.38, fontSize: 11, color: DGREY, wrap: true });
+    const y = 1.02 + i * 1.2;
+    s.addShape(pres.ShapeType.roundRect, { x: 0.3, y, w: 1.1, h: 0.85, fill: { color: levels[i].color }, line: { color: levels[i].color }, rectRadius: 0.1 });
+    s.addText(levels[i].label, { x: 0.3, y: y + 0.28, w: 1.1, h: 0.28, fontSize: 10, bold: true, color: WHITE, align: 'center' });
+    s.addText(levels[i].desc,  { x: 1.55, y: y + 0.22, w: 3.1, h: 0.45, fontSize: 9,  color: DGREY, wrap: true });
   }
 
   // Right — report features
@@ -293,37 +345,241 @@ function badge(slide, x, y, w, h, color, big, small) {
     b('Close-up screenshots of each individual problem element', 0),
     b('Ready-to-paste bug ticket text for developers', 0),
     b('Regression flag if a page has more issues than last time', 0),
-  ], { x: 5.1, y: 1.0, w: 4.65, h: 5.85, valign: 'top' });
+  ], { x: 5.1, y: 1.0, w: 4.65, h: 5.0, valign: 'top' });
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// SLIDE 7 — Results Summary
+// SLIDE 6b — The HTML Report — Visual Example
 // ════════════════════════════════════════════════════════════════════════════
 {
-  const s = contentSlide('Latest Results — 3 Browsers, 14 Pages per Platform');
+  const s = contentSlide('The HTML Report — What It Looks Like');
 
-  s.addText('Total issues found across all pages and browsers (Corporate Bookings — CPCBA)', {
-    x: 0.4, y: 0.62, w: 9.2, h: 0.32, fontSize: 12, color: DGREY, italic: true,
+  // Mock report window
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 0.25, y: 0.62, w: 9.5, h: 6.25,
+    fill: { color: 'F8F9FA' }, line: { color: 'CCCCCC', width: 1 }, rectRadius: 0.1,
   });
 
-  badge(s, 3.8, 1.05, 2.4, 1.1, NAVY, '~240', 'Total violations');
+  // Report header bar
+  s.addShape(pres.ShapeType.rect, { x: 0.25, y: 0.62, w: 9.5, h: 0.48, fill: { color: NAVY } });
+  s.addText('Accessibility Report — Construction Page', {
+    x: 0.4, y: 0.68, w: 6.0, h: 0.3, fontSize: 11, bold: true, color: WHITE,
+  });
+  // Summary chips in header
+  const chips = [
+    { label: '26 total', color: '555555' },
+    { label: '3 critical', color: RED },
+    { label: '8 serious', color: ORANGE },
+  ];
+  for (let i = 0; i < chips.length; i++) {
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 6.6 + i * 1.04, y: 0.7, w: 0.95, h: 0.26,
+      fill: { color: chips[i].color }, line: { color: chips[i].color }, rectRadius: 0.05,
+    });
+    s.addText(chips[i].label, { x: 6.6 + i * 1.04, y: 0.71, w: 0.95, h: 0.22, fontSize: 8, bold: true, color: WHITE, align: 'center' });
+  }
 
-  const sev = [
+  // Browser tabs
+  const tabs = ['Chrome', 'Firefox', 'Edge'];
+  for (let i = 0; i < tabs.length; i++) {
+    const active = i === 0;
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 0.35 + i * 1.3, y: 1.13, w: 1.2, h: 0.28,
+      fill: { color: active ? WHITE : 'E0E0E0' }, line: { color: 'CCCCCC', width: 0.5 }, rectRadius: 0.05,
+    });
+    s.addText(tabs[i], {
+      x: 0.35 + i * 1.3, y: 1.15, w: 1.2, h: 0.22,
+      fontSize: 8, bold: active, color: active ? NAVY : '777777', align: 'center',
+    });
+  }
+
+  // Page screenshot (real scan screenshot — Construction Page, Chrome)
+  s.addImage({
+    path: 'ConstBA-accessibility-tests/ConstBA-results/2026-03-08/screenshots/construction_page_chromium.png',
+    x: 0.35, y: 1.48, w: 3.2, h: 2.5,
+  });
+
+  // Violation card (right)
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 3.7, y: 1.48, w: 5.9, h: 1.15,
+    fill: { color: WHITE }, line: { color: 'FFCCCC', width: 1 }, rectRadius: 0.06,
+  });
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 3.78, y: 1.54, w: 0.85, h: 0.22,
+    fill: { color: RED }, line: { color: RED }, rectRadius: 0.04,
+  });
+  s.addText('CRITICAL', { x: 3.78, y: 1.55, w: 0.85, h: 0.18, fontSize: 7, bold: true, color: WHITE, align: 'center' });
+  s.addText('image-alt — Images must have alternative text', {
+    x: 4.7, y: 1.54, w: 4.8, h: 0.22, fontSize: 9, bold: true, color: DGREY,
+  });
+  s.addText('<img class="_logo_" src="/assets/logo.png">', {
+    x: 3.78, y: 1.8, w: 5.7, h: 0.2, fontSize: 8, color: '883333', fontFace: 'Courier New',
+  });
+  s.addText('Fix: Add alt="TTC Group Logo" to the img element', {
+    x: 3.78, y: 2.02, w: 5.7, h: 0.2, fontSize: 8, color: GREEN, italic: true,
+  });
+  // Element screenshot (real close-up of a flagged element)
+  s.addImage({
+    path: 'ConstBA-accessibility-tests/ConstBA-results/2026-03-08/screenshots/construction_page_chromium_button-name_0.png',
+    x: 3.7, y: 2.72, w: 2.5, h: 0.7,
+  });
+  // "Copy bug ticket" — expanded dropdown header
+  s.addShape(pres.ShapeType.rect, {
+    x: 3.7, y: 3.5, w: 5.9, h: 0.28,
+    fill: { color: 'EEF2FF' }, line: { color: 'CCCCCC', width: 0.5 },
+  });
+  s.addText('📋  Copy bug ticket  ▼', {
+    x: 3.78, y: 3.52, w: 4.0, h: 0.22, fontSize: 9, bold: true, color: NAVY,
+  });
+  // "Copy" button inside the expanded dropdown
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 8.7, y: 3.52, w: 0.78, h: 0.22,
+    fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.04,
+  });
+  s.addText('Copy', { x: 8.7, y: 3.53, w: 0.78, h: 0.18, fontSize: 7.5, bold: true, color: WHITE, align: 'center' });
+
+  // Bug ticket text box
+  s.addShape(pres.ShapeType.rect, {
+    x: 3.7, y: 3.78, w: 5.9, h: 2.35,
+    fill: { color: 'F8F8F8' }, line: { color: 'E0E0E0', width: 0.5 },
+  });
+
+  const ticketLines = [
+    { t: 'TITLE: [Accessibility] image-alt — Construction Page (Chrome)', bold: true, color: DGREY },
+    { t: '' },
+    { t: 'TYPE: Accessibility Bug   |   SEVERITY: CRITICAL', color: RED, bold: true },
+    { t: 'WCAG CRITERION: wcag2a, wcag412   |   PAGE: Construction Page' },
+    { t: '' },
+    { t: 'DESCRIPTION: Images must have alternative text' },
+    { t: '' },
+    { t: 'AFFECTED ELEMENTS (1):', bold: true, color: DGREY },
+    { t: '  Target: img._logo_' },
+    { t: '  HTML: <img class="_logo_" src="/assets/logo.png">' },
+    { t: '  Fix: Element does not have an alt attribute' },
+    { t: '' },
+    { t: 'EXPECTED: The img element has a descriptive alt text value' },
+    { t: 'ACTUAL: Element does not have an alt attribute' },
+    { t: '' },
+    { t: 'REFERENCE: dequeuniversity.com/rules/axe/4.10/image-alt', color: BLUE },
+  ];
+
+  const lineH = 0.132;
+  for (let i = 0; i < ticketLines.length; i++) {
+    const tl = ticketLines[i];
+    if (!tl.t) continue;
+    s.addText(tl.t, {
+      x: 3.78, y: 3.84 + i * lineH, w: 5.7, h: lineH,
+      fontSize: 6.8, color: tl.color || '333333', bold: tl.bold || false,
+      fontFace: 'Courier New', wrap: false,
+    });
+  }
+
+  // Footer note inside mock
+  s.addShape(pres.ShapeType.rect, { x: 0.25, y: 6.22, w: 9.5, h: 0.02, fill: { color: 'DDDDDD' } });
+  s.addText('One report per run  ·  All pages and browsers in a single HTML file  ·  Open report.html in any browser  ·  No internet required', {
+    x: 0.3, y: 6.26, w: 9.4, h: 0.28, fontSize: 8, color: '888888', align: 'center', italic: true,
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SLIDE 6c — Manual Testing Checklist
+// ════════════════════════════════════════════════════════════════════════════
+{
+  const s = contentSlide('Manual Testing — What Automation Cannot Check');
+
+  s.addText('A browser-based checklist completed by a tester — covers 9 categories across all 14 pages on both platforms', {
+    x: 0.3, y: 0.62, w: 9.4, h: 0.28, fontSize: 10, color: DGREY, italic: true,
+  });
+
+  const cats = [
+    { icon: '🗣️',  title: 'Screen Reader',         desc: 'Does content read out in a logical order? Are all elements announced correctly?' },
+    { icon: '⌨️',  title: 'Keyboard Navigation',   desc: 'Can every feature be used with only a keyboard? Is focus always visible?' },
+    { icon: '👁️',  title: 'Visual & Colour',       desc: 'Is text readable at 200% zoom? Does the page work without colour cues alone?' },
+    { icon: '📝',  title: 'Content & Structure',   desc: 'Are headings meaningful? Is reading order logical without CSS?' },
+    { icon: '📋',  title: 'Forms & Errors',        desc: 'Are error messages descriptive? Can users correct mistakes easily?' },
+    { icon: '🎬',  title: 'Media & Motion',        desc: 'Can animations be paused? Are videos captioned? No auto-play audio?' },
+    { icon: '📱',  title: 'Mobile & Touch',        desc: 'Are touch targets large enough? Does the page work in portrait and landscape?' },
+    { icon: '🧠',  title: 'Cognitive & Usability', desc: 'Is the language plain? Are instructions clear? Are timeouts flagged?' },
+    { icon: '⭐',  title: 'WCAG 2.2 AAA Enhanced', desc: 'Exceeds minimum standards — covers sign language, extended timeouts, pronunciation.' },
+  ];
+
+  const colW = 3.0, rowH = 0.68, col2x = 3.5, col3x = 7.0;
+  for (let i = 0; i < cats.length; i++) {
+    const col = i % 3;
+    const row = Math.floor(i / 3);
+    const x = col === 0 ? 0.25 : col === 1 ? col2x : col3x;
+    const y = 0.98 + row * rowH;
+    s.addShape(pres.ShapeType.roundRect, {
+      x, y, w: colW, h: rowH - 0.06,
+      fill: { color: LGREY }, line: { color: 'DDDDDD', width: 0.5 }, rectRadius: 0.07,
+    });
+    s.addText(cats[i].icon + '  ' + cats[i].title, {
+      x: x + 0.08, y: y + 0.04, w: colW - 0.16, h: 0.24, fontSize: 9, bold: true, color: NAVY,
+    });
+    s.addText(cats[i].desc, {
+      x: x + 0.08, y: y + 0.28, w: colW - 0.16, h: 0.3, fontSize: 7.5, color: DGREY, wrap: true,
+    });
+  }
+
+  s.addText('Checklist opens in any browser — no install needed. Results saved locally. Available for both CPCBA and ConstBA.', {
+    x: 0.3, y: 6.94, w: 9.4, h: 0.25, fontSize: 8, color: GREEN, bold: true, align: 'center',
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SLIDE 7 — Results Summary (both platforms)
+// ════════════════════════════════════════════════════════════════════════════
+{
+  const s = contentSlide('Latest Results — 3 Browsers × 14 Pages × 2 Platforms');
+
+  // ── CPCBA column (left) ──
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 0.25, y: 0.62, w: 4.5, h: 0.3,
+    fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.06,
+  });
+  s.addText('Corporate Bookings (CPCBA)', {
+    x: 0.25, y: 0.64, w: 4.5, h: 0.26, fontSize: 10, bold: true, color: WHITE, align: 'center',
+  });
+  badge(s, 1.5, 1.02, 2.0, 0.78, NAVY, '~240', 'Total violations');
+  const cpcbaSev = [
     { color: RED,      label: '~20', sub: 'Critical' },
     { color: ORANGE,   label: '~56', sub: 'Serious'  },
     { color: YELLOW,   label: '~78', sub: 'Moderate' },
     { color: '999999', label: '~0',  sub: 'Minor'    },
   ];
-  for (let i = 0; i < sev.length; i++) {
-    badge(s, 0.45 + i * 2.27, 2.38, 2.14, 0.82, sev[i].color, sev[i].label, sev[i].sub);
+  for (let i = 0; i < cpcbaSev.length; i++) {
+    badge(s, 0.28 + i * 1.09, 1.9, 1.0, 0.62, cpcbaSev[i].color, cpcbaSev[i].label, cpcbaSev[i].sub);
   }
 
+  // ── ConstBA column (right) ──
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 5.25, y: 0.62, w: 4.5, h: 0.3,
+    fill: { color: BLUE }, line: { color: BLUE }, rectRadius: 0.06,
+  });
+  s.addText('Construction Bookings (ConstBA)', {
+    x: 5.25, y: 0.64, w: 4.5, h: 0.26, fontSize: 10, bold: true, color: WHITE, align: 'center',
+  });
+  badge(s, 6.5, 1.02, 2.0, 0.78, BLUE, '262', 'Total violations');
+  const constbaSev = [
+    { color: RED,      label: '40',  sub: 'Critical' },
+    { color: ORANGE,   label: '109', sub: 'Serious'  },
+    { color: YELLOW,   label: '113', sub: 'Moderate' },
+    { color: '999999', label: '0',   sub: 'Minor'    },
+  ];
+  for (let i = 0; i < constbaSev.length; i++) {
+    badge(s, 5.28 + i * 1.09, 1.9, 1.0, 0.62, constbaSev[i].color, constbaSev[i].label, constbaSev[i].sub);
+  }
+
+  // Divider
+  s.addShape(pres.ShapeType.rect, { x: 4.9, y: 0.62, w: 0.05, h: 1.92, fill: { color: 'DDDDDD' } });
+
+  // Shared notes
   s.addText([
-    b('These are issues across the full booking journey — from browsing courses to managing attendees', 0),
-    b('Many issues appear in all 3 browsers, meaning they are in the code itself, not browser-specific', 0),
+    b('Issues span the full journey — browsing, signing in, paying, and managing attendees', 0),
+    b('Many violations appear in all 3 browsers — they are in the code, not browser-specific', 0),
     b('Critical and Serious issues are the priority — they prevent or significantly impair real users', 0),
-    b('The automated tool finds issues instantly that would take a human tester hours to find manually', 0),
-  ], { x: 0.45, y: 3.35, w: 9.1, h: 3.5, valign: 'top' });
+    b('The automated tool finds issues instantly that would take hours to find manually', 0),
+  ], { x: 0.35, y: 2.65, w: 9.3, h: 3.8, valign: 'top' });
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -339,16 +595,16 @@ function badge(slide, x, y, w, h, color, big, small) {
     { icon: '🔁', color: GREEN,  title: 'Re-run to confirm',           body: 'Run the tests again after a fix — the tool confirms the issue is gone and flags anything new.' },
   ];
 
-  // 4 rows, each 1.55" — total 6.2" starting at y=0.62 → ends at 6.82 ✓
+  // 4 rows, each 1.1" — total 4.4" starting at y=0.65 → last body ends ~5.05
   for (let i = 0; i < steps.length; i++) {
-    const y = 0.62 + i * 1.55;
+    const y = 0.65 + i * 1.1;
     s.addShape(pres.ShapeType.roundRect, {
-      x: 0.3, y, w: 0.72, h: 0.72,
+      x: 0.3, y, w: 0.62, h: 0.62,
       fill: { color: steps[i].color }, line: { color: steps[i].color }, rectRadius: 0.08,
     });
-    s.addText(steps[i].icon,  { x: 0.3,  y: y + 0.1,  w: 0.72, h: 0.45, fontSize: 14, align: 'center' });
-    s.addText(steps[i].title, { x: 1.15, y: y + 0.02, w: 8.55, h: 0.3,  fontSize: 13, bold: true,  color: steps[i].color });
-    s.addText(steps[i].body,  { x: 1.15, y: y + 0.35, w: 8.55, h: 0.38, fontSize: 11, color: DGREY, wrap: true });
+    s.addText(steps[i].icon,  { x: 0.3,  y: y + 0.08, w: 0.62, h: 0.4,  fontSize: 13, align: 'center' });
+    s.addText(steps[i].title, { x: 1.05, y: y + 0.02, w: 8.65, h: 0.28, fontSize: 12, bold: true, color: steps[i].color });
+    s.addText(steps[i].body,  { x: 1.05, y: y + 0.32, w: 8.65, h: 0.42, fontSize: 9,  color: DGREY, wrap: true });
   }
 }
 
@@ -464,28 +720,198 @@ function badge(slide, x, y, w, h, color, big, small) {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
+// SLIDE 10b — Everything We Delivered
+// ════════════════════════════════════════════════════════════════════════════
+{
+  const s = contentSlide('Everything We Delivered — Full Project Summary');
+
+  const deliverables = [
+    { color: NAVY,     icon: '🤖', title: 'Axe-Core Accessibility Scan',    desc: '14 pages × 3 browsers on both CPCBA and ConstBA — fully automated, runs on demand.' },
+    { color: BLUE,     icon: '🎨', title: 'Colour Contrast Test Suite',      desc: 'Dedicated scan for WCAG 1.4.3 contrast ratio violations across both platforms.' },
+    { color: '6A1B9A', icon: '⌨️', title: 'Keyboard Navigation Test Suite',  desc: 'Validates tab order, focus management, and interactive element accessibility.' },
+    { color: ORANGE,   icon: '📋', title: 'Manual Testing Checklist',        desc: '9-category browser-based checklist covering what automation cannot — screen readers, cognitive, mobile.' },
+    { color: GREEN,    icon: '📊', title: 'HTML Accessibility Report',        desc: 'Auto-generated report per run — page screenshots, violation cards, element close-ups, copy-paste bug tickets.' },
+    { color: RED,      icon: '📈', title: 'Trend Tracker',                   desc: 'Git-tracked JSON history of every run — flags regressions and shows improvement over time.' },
+    { color: '555555', icon: '🔔', title: 'Microsoft Teams Notification',    desc: 'Automated summary card posted to Teams when any test suite finishes.' },
+    { color: '00695C', icon: '📄', title: 'Tester Setup Guide (Word)',       desc: 'CPCBA-Tester-Setup-Guide.docx — step-by-step onboarding for new testers.' },
+    { color: '37474F', icon: '🗂️', title: 'GitHub Actions CI/CD',           desc: 'Automated daily schedule — tests can run on push or on a timed trigger without manual effort.' },
+  ];
+
+  const colW = 4.55, rowH = 0.72, col2x = 5.2;
+  for (let i = 0; i < deliverables.length; i++) {
+    const col = i % 2;
+    const row = Math.floor(i / 2);
+    const x = col === 0 ? 0.25 : col2x;
+    const y = 0.62 + row * rowH;
+    s.addShape(pres.ShapeType.roundRect, {
+      x, y: y + 0.04, w: 0.5, h: 0.5,
+      fill: { color: deliverables[i].color }, line: { color: deliverables[i].color }, rectRadius: 0.06,
+    });
+    s.addText(deliverables[i].icon, { x, y: y + 0.1, w: 0.5, h: 0.35, fontSize: 12, align: 'center' });
+    s.addText(deliverables[i].title, {
+      x: x + 0.58, y: y + 0.05, w: colW - 0.62, h: 0.24, fontSize: 9, bold: true, color: deliverables[i].color,
+    });
+    s.addText(deliverables[i].desc, {
+      x: x + 0.58, y: y + 0.28, w: colW - 0.62, h: 0.35, fontSize: 8, color: DGREY, wrap: true,
+    });
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SLIDE 10c — Brand Guidelines WCAG Conformance
+// ════════════════════════════════════════════════════════════════════════════
+{
+  const s = contentSlide('Brand Guidelines — WCAG Accessibility Conformance Check');
+
+  s.addText('Source: TTC Group_Brand Guidelines_V1 4  ·  Colours extracted from official PowerPoint theme  ·  Tested against WCAG 2.1 AA', {
+    x: 0.3, y: 0.62, w: 9.4, h: 0.24, fontSize: 8, color: DGREY, italic: true,
+  });
+
+  // ── Colour palette swatches ──────────────────────────────────────────────
+  const swatches = [
+    { hex: '190B2F', name: 'Dark Purple',     role: 'Primary / dk1' },
+    { hex: '5F4FFC', name: 'Bright Purple',   role: 'Accent 1' },
+    { hex: 'A082E0', name: 'Medium Purple',   role: 'Accent 2' },
+    { hex: '5B1D7A', name: 'Deep Purple',     role: 'Accent 3' },
+    { hex: 'FF99FF', name: 'Pink / Magenta',  role: 'Accent 4' },
+    { hex: 'D8D2E9', name: 'Light Lavender',  role: 'Accent 5' },
+    { hex: '467886', name: 'Teal',            role: 'Hyperlink' },
+    { hex: '96607D', name: 'Muted Pink',      role: 'Visited Link' },
+  ];
+  const sw = 1.14, swGap = 0.04, swStartX = 0.25, swY = 0.92;
+  for (let i = 0; i < swatches.length; i++) {
+    const x = swStartX + i * (sw + swGap);
+    s.addShape(pres.ShapeType.roundRect, {
+      x, y: swY, w: sw, h: 0.42,
+      fill: { color: swatches[i].hex }, line: { color: 'CCCCCC', width: 0.3 }, rectRadius: 0.06,
+    });
+    // hex label inside swatch — white or dark depending on brightness
+    const lum = parseInt(swatches[i].hex.slice(0,2),16)*0.2126 + parseInt(swatches[i].hex.slice(2,4),16)*0.7152 + parseInt(swatches[i].hex.slice(4,6),16)*0.0722;
+    const txtClr = lum > 160 ? DGREY : WHITE;
+    s.addText('#' + swatches[i].hex, { x, y: swY + 0.04, w: sw, h: 0.18, fontSize: 7, bold: true, color: txtClr, align: 'center', fontFace: 'Courier New' });
+    s.addText(swatches[i].name, { x, y: swY + 0.44, w: sw, h: 0.16, fontSize: 7, color: DGREY, align: 'center', bold: true });
+    s.addText(swatches[i].role, { x, y: swY + 0.6,  w: sw, h: 0.14, fontSize: 6.5, color: '888888', align: 'center' });
+  }
+
+  // ── Section headers ──────────────────────────────────────────────────────
+  const colL = 0.25, colR = 5.1, colW2 = 4.7;
+
+  s.addShape(pres.ShapeType.roundRect, {
+    x: colL, y: 1.82, w: colW2, h: 0.26,
+    fill: { color: '1B5E20' }, line: { color: '1B5E20' }, rectRadius: 0.05,
+  });
+  s.addText('✅  WCAG AA Compliant Combinations', {
+    x: colL + 0.08, y: 1.84, w: colW2 - 0.1, h: 0.2, fontSize: 8.5, bold: true, color: WHITE,
+  });
+
+  s.addShape(pres.ShapeType.roundRect, {
+    x: colR, y: 1.82, w: colW2, h: 0.26,
+    fill: { color: 'B71C1C' }, line: { color: 'B71C1C' }, rectRadius: 0.05,
+  });
+  s.addText('❌  Non-Compliant — Avoid for Text', {
+    x: colR + 0.08, y: 1.84, w: colW2 - 0.1, h: 0.2, fontSize: 8.5, bold: true, color: WHITE,
+  });
+
+  // ── Contrast row helper ──────────────────────────────────────────────────
+  function contrastRow(slide, x, y, fgHex, bgHex, label, ratio, status) {
+    const rowH2 = 0.5;
+    const passClr = status === 'PASS' ? '1B5E20' : status === 'LARGE' ? 'E65100' : 'B71C1C';
+    const passLabel = status === 'PASS' ? '✅ PASS' : status === 'LARGE' ? '⚠️ Large only' : '❌ FAIL';
+    // FG swatch
+    slide.addShape(pres.ShapeType.roundRect, {
+      x: x + 0.05, y: y + 0.1, w: 0.32, h: 0.28,
+      fill: { color: fgHex }, line: { color: 'AAAAAA', width: 0.3 }, rectRadius: 0.04,
+    });
+    // BG swatch
+    slide.addShape(pres.ShapeType.roundRect, {
+      x: x + 0.42, y: y + 0.1, w: 0.32, h: 0.28,
+      fill: { color: bgHex }, line: { color: 'AAAAAA', width: 0.3 }, rectRadius: 0.04,
+    });
+    // Label + ratio
+    slide.addText(label, {
+      x: x + 0.82, y: y + 0.04, w: colW2 - 2.0, h: 0.22, fontSize: 8, color: DGREY, bold: true,
+    });
+    slide.addText(ratio + ':1', {
+      x: x + 0.82, y: y + 0.25, w: colW2 - 2.0, h: 0.18, fontSize: 7.5, color: '666666', fontFace: 'Courier New',
+    });
+    // Pass/fail badge
+    slide.addShape(pres.ShapeType.roundRect, {
+      x: x + colW2 - 1.1, y: y + 0.1, w: 1.0, h: 0.26,
+      fill: { color: passClr }, line: { color: passClr }, rectRadius: 0.05,
+    });
+    slide.addText(passLabel, {
+      x: x + colW2 - 1.1, y: y + 0.12, w: 1.0, h: 0.2, fontSize: 7, bold: true, color: WHITE, align: 'center',
+    });
+  }
+
+  const rowStart = 2.14, rowGap = 0.54;
+
+  // Left — PASSES
+  const passes = [
+    { fg: '190B2F', bg: 'FFFFFF', label: 'Dark Purple on White',         ratio: '18.58' },
+    { fg: '5F4FFC', bg: 'FFFFFF', label: 'Bright Purple on White',       ratio: '5.24' },
+    { fg: '5B1D7A', bg: 'FFFFFF', label: 'Deep Purple on White',         ratio: '11.04' },
+    { fg: 'D8D2E9', bg: '190B2F', label: 'Light Lavender on Dark Purple',ratio: '12.67' },
+    { fg: 'FF99FF', bg: '190B2F', label: 'Pink/Magenta on Dark Purple',  ratio: '9.96' },
+  ];
+  for (let i = 0; i < passes.length; i++) {
+    contrastRow(s, colL, rowStart + i * rowGap, passes[i].fg, passes[i].bg, passes[i].label, passes[i].ratio, 'PASS');
+  }
+
+  // Right — FAILS / CAUTION
+  const fails = [
+    { fg: 'A082E0', bg: 'FFFFFF', label: 'Medium Purple on White',       ratio: '3.10', st: 'LARGE' },
+    { fg: '5F4FFC', bg: '190B2F', label: 'Bright Purple on Dark Purple', ratio: '3.55', st: 'LARGE' },
+    { fg: 'FF99FF', bg: 'FFFFFF', label: 'Pink/Magenta on White',        ratio: '1.87', st: 'FAIL' },
+    { fg: 'D8D2E9', bg: 'FFFFFF', label: 'Light Lavender on White',      ratio: '1.47', st: 'FAIL' },
+  ];
+  for (let i = 0; i < fails.length; i++) {
+    contrastRow(s, colR, rowStart + i * rowGap, fails[i].fg, fails[i].bg, fails[i].label, fails[i].ratio, fails[i].st);
+  }
+
+  // ── Font note ────────────────────────────────────────────────────────────
+  s.addShape(pres.ShapeType.roundRect, {
+    x: 0.25, y: 5.9, w: 9.5, h: 0.72,
+    fill: { color: 'FFF8E1' }, line: { color: 'FFD54F', width: 0.5 }, rectRadius: 0.08,
+  });
+  s.addText('Brand Fonts — Accessibility Notes', {
+    x: 0.4, y: 5.95, w: 5.0, h: 0.22, fontSize: 9, bold: true, color: ORANGE,
+  });
+  s.addText([
+    { text: 'Heading: ', options: { bold: true, fontSize: 8, color: DGREY } },
+    { text: 'DM Sans Semibold', options: { fontSize: 8, color: DGREY, fontFace: 'Courier New' } },
+    { text: '  — Good. Semibold weight ensures readability at all sizes.', options: { fontSize: 8, color: DGREY } },
+  ], { x: 0.4, y: 6.17, w: 9.1, h: 0.18 });
+  s.addText([
+    { text: 'Body: ', options: { bold: true, fontSize: 8, color: DGREY } },
+    { text: 'Noto Sans Light', options: { fontSize: 8, color: DGREY, fontFace: 'Courier New' } },
+    { text: '  — Caution. Light weight can fail WCAG 1.4.12 (text spacing) at small sizes. Use Regular or Medium weight for body text below 14px.', options: { fontSize: 8, color: 'B71C1C' } },
+  ], { x: 0.4, y: 6.37, w: 9.1, h: 0.18 });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
 // SLIDE 11 — Next Steps
 // ════════════════════════════════════════════════════════════════════════════
 {
   const s = contentSlide('Next Steps');
 
   const items = [
-    { icon: '🎯', color: RED,      title: 'Fix Critical issues first',        body: 'These are blocking users right now. Developers should address critical violations as the highest priority on both CPCBA and ConstBA.' },
-    { icon: '📅', color: ORANGE,   title: 'Schedule regular scans',           body: 'Run both suites after every major release or sprint to catch new issues before they reach production.' },
-    { icon: '✅', color: BLUE,     title: 'ConstBA coverage is now live',     body: 'Construction Bookings (ConstBA) is fully covered — 14 pages, 3 browsers, identical scan depth and reporting as CPCBA.' },
-    { icon: '📈', color: GREEN,    title: 'Track improvements over time',     body: 'The trend tracker records every run on both platforms — violation counts will reduce visibly as developers apply fixes.' },
+    { icon: '🎯', color: RED,    title: 'Fix Critical issues first',    body: 'These are blocking users right now. Address critical violations as the highest priority on both CPCBA and ConstBA.' },
+    { icon: '📅', color: ORANGE, title: 'Schedule regular scans',       body: 'Run both suites after every major release or sprint to catch new issues before they reach production.' },
+    { icon: '✅', color: BLUE,   title: 'ConstBA coverage is now live', body: 'Construction Bookings (ConstBA) is fully covered — 14 pages, 3 browsers, same scan depth and reporting as CPCBA.' },
+    { icon: '📈', color: GREEN,  title: 'Track improvements over time', body: 'The trend tracker records every run on both platforms — violation counts will reduce as fixes are applied.' },
   ];
 
-  // 4 rows × 1.55" = 6.2" starting y=0.62 → ends 6.82 ✓
+  // 4 rows × 1.1" = 4.4" starting y=0.65 → last body ends ~5.05
   for (let i = 0; i < items.length; i++) {
-    const y = 0.62 + i * 1.55;
+    const y = 0.65 + i * 1.1;
     s.addShape(pres.ShapeType.roundRect, {
-      x: 0.3, y, w: 0.72, h: 0.72,
+      x: 0.3, y, w: 0.62, h: 0.62,
       fill: { color: items[i].color }, line: { color: items[i].color }, rectRadius: 0.08,
     });
-    s.addText(items[i].icon,  { x: 0.3,  y: y + 0.1,  w: 0.72, h: 0.45, fontSize: 14, align: 'center' });
-    s.addText(items[i].title, { x: 1.15, y: y + 0.02, w: 8.55, h: 0.3,  fontSize: 13, bold: true,  color: items[i].color });
-    s.addText(items[i].body,  { x: 1.15, y: y + 0.35, w: 8.55, h: 0.38, fontSize: 11, color: DGREY, wrap: true });
+    s.addText(items[i].icon,  { x: 0.3,  y: y + 0.08, w: 0.62, h: 0.4,  fontSize: 13, align: 'center' });
+    s.addText(items[i].title, { x: 1.05, y: y + 0.02, w: 8.65, h: 0.28, fontSize: 12, bold: true, color: items[i].color });
+    s.addText(items[i].body,  { x: 1.05, y: y + 0.32, w: 8.65, h: 0.42, fontSize: 9,  color: DGREY, wrap: true });
   }
 }
 
