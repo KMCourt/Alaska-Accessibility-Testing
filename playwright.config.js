@@ -52,33 +52,39 @@ module.exports = defineConfig({
 
   // Browsers to test against
   projects: [
-    // ── Desktop browsers ─────────────────────────────────────────────────
+    // ── Desktop browsers — run browser-tests/ only ────────────────────────
     {
       name: 'chromium',
+      testMatch: '**/browser-tests/**/*.spec.js',
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'firefox',
+      testMatch: '**/browser-tests/**/*.spec.js',
       use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'edge',
+      testMatch: '**/browser-tests/**/*.spec.js',
       use: { ...devices['Desktop Edge'], channel: 'msedge' },
     },
 
-    // ── Mobile devices (emulated) ────────────────────────────────────────
+    // ── Mobile devices — run mobile-tests/ only ───────────────────────────
     // Run all mobile:   npx playwright test --project="iPhone 15 Pro" --project="Galaxy S24" --project="Pixel 7"
     // Run one device:   npx playwright test --project="Pixel 7"
     {
       name: 'iPhone 15 Pro',
+      testMatch: '**/mobile-tests/**/*.spec.js',
       use: { ...devices['iPhone 15 Pro'] },    // WebKit (Safari) · iOS 17 · 393×659 · touch
     },
     {
       name: 'Galaxy S24',
+      testMatch: '**/mobile-tests/**/*.spec.js',
       use: { ...devices['Galaxy S24'] },       // Chromium (Chrome) · Android 14 · 360×780 · touch
     },
     {
       name: 'Pixel 7',
+      testMatch: '**/mobile-tests/**/*.spec.js',
       use: { ...devices['Pixel 7'] },          // Chromium (Chrome) · Android 14 · 412×839 · touch
     },
   ],

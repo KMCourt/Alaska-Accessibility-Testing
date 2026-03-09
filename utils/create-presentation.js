@@ -191,11 +191,11 @@ function badge(slide, x, y, w, h, color, big, small) {
   const layers = [
     {
       x: 0.2, color: NAVY, title: 'Axe-Core\nAccessibility Scan',
-      items: ['WCAG 2.0, 2.1, 2.2 AA', 'Best-practice rules', '14 pages per platform', '3 browsers each run', 'Screenshots + bug tickets'],
+      items: ['WCAG 2.0, 2.1, 2.2 AAA', 'Best-practice rules', '14 pages per platform', '3 browsers each run', 'Screenshots + bug tickets'],
     },
     {
       x: 2.7, color: BLUE, title: 'Colour Contrast\nCheck',
-      items: ['Dedicated contrast scan', 'All text elements', 'Normal & large text', 'WCAG 1.4.3 AA (4.5:1)', 'Per page, per browser'],
+      items: ['Dedicated contrast scan', 'All text elements', 'Normal & large text', 'WCAG 1.4.6 AAA (7:1)', 'Per page, per browser'],
     },
     {
       x: 5.2, color: '6A1B9A', title: 'Keyboard\nNavigation Check',
@@ -614,7 +614,7 @@ function badge(slide, x, y, w, h, color, big, small) {
 {
   const s = contentSlide('For Developers — What the Scanner Checks');
 
-  s.addText('Uses axe-core against WCAG 2.0 / 2.1 / 2.2 AA + best practices', {
+  s.addText('Uses axe-core against WCAG 2.0 / 2.1 / 2.2 AAA + best practices', {
     x: 0.3, y: 0.62, w: 9.4, h: 0.3, fontSize: 11, color: DGREY, italic: true,
   });
 
