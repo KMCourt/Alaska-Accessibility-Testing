@@ -123,14 +123,23 @@ module.exports = async function globalTeardown() {
   if (browserResults.length > 0) printTotals('BROWSER TOTALS (Chrome / Firefox / Edge)', browserResults);
   if (mobileResults.length  > 0) printTotals('MOBILE TOTALS  (iPhone / Galaxy / Pixel)',  mobileResults);
 
-  const summaryData = allResults.map(r => ({
-    page: r.page, url: r.url, browser: r.browser, ...r.counts,
-  }));
+  if (browserResults.length > 0) {
+    await postToTeams({
+      webhookUrl: process.env.TEAMS_WEBHOOK_URL,
+      summaryData: browserResults.map(r => ({ page: r.page, url: r.url, browser: r.browser, ...r.counts })),
+      today,
+      regressions,
+      label: 'CPCBA Browser Scan (Chrome / Firefox / Edge)',
+    });
+  }
 
-  await postToTeams({
-    webhookUrl: process.env.TEAMS_WEBHOOK_URL,
-    summaryData,
-    today,
-    regressions,
-  });
+  if (mobileResults.length > 0) {
+    await postToTeams({
+      webhookUrl: process.env.TEAMS_WEBHOOK_URL,
+      summaryData: mobileResults.map(r => ({ page: r.page, url: r.url, browser: r.browser, ...r.counts })),
+      today,
+      regressions,
+      label: 'CPCBA Mobile Scan (iPhone / Galaxy / Pixel)',
+    });
+  }
 };

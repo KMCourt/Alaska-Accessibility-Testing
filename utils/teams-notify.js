@@ -7,7 +7,7 @@
  * ===========================================
  */
 
-async function postToTeams({ webhookUrl, summaryData, today, regressions }) {
+async function postToTeams({ webhookUrl, summaryData, today, regressions, label = 'Accessibility Scan' }) {
   if (!webhookUrl) {
     console.log('\n⚠️  No Teams webhook URL found — skipping notification.');
     console.log('   Add TEAMS_WEBHOOK_URL to your .env file to enable Teams notifications.');
@@ -43,7 +43,7 @@ async function postToTeams({ webhookUrl, summaryData, today, regressions }) {
     body: [
       {
         type: 'TextBlock',
-        text: `♿ Accessibility Scan — ${today}`,
+        text: `♿ ${label} — ${today}`,
         weight: 'Bolder',
         size: 'Large',
         color: hasRegressions ? 'Warning' : 'Accent',
