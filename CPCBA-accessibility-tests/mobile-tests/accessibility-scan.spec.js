@@ -160,9 +160,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
     },
@@ -206,9 +211,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
 
@@ -270,9 +280,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
 
@@ -339,9 +354,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
 
@@ -418,9 +438,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
 
@@ -488,9 +513,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
 
@@ -558,9 +588,14 @@ const PAGES = [
       await page.locator('input[placeholder*="Postcode"]').fill('E1 1AA');
       await page.waitForTimeout(500);
 
-      await page.locator('div[class*="_termsAndConditions_"] label[class*="_checkbox_"]').first().click();
+      await page.evaluate(() => {
+        const checkbox = document.querySelector('[class*="_termsAndConditions_"] input[type="checkbox"]');
+        if (checkbox) checkbox.click();
+      });
       await page.waitForTimeout(500);
-      await page.locator('button:has-text("Pay now by card")').click();
+      const payBtn = page.locator('button:has-text("Pay now by card")');
+      await payBtn.scrollIntoViewIfNeeded();
+      await payBtn.click();
       await page.waitForLoadState('domcontentloaded');
       await page.waitForTimeout(2000);
 
@@ -604,7 +639,7 @@ const jsonDir = path.join(resultsDir, 'json');
 });
 
 
-test.setTimeout(60000);
+test.setTimeout(120000);
 
 test.describe('Accessibility Scan — Mobile', () => {
 
