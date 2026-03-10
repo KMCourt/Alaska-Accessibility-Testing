@@ -17,7 +17,7 @@ module.exports = defineConfig({
 
   globalTeardown: './utils/dors-booking-teardown.js',
 
-  outputDir: './DORS-Booking-accessibility-tests/DORS-Booking-dev-debug',
+  outputDir: './DORS-Booking-accessibility-tests/DORS-Booking-dev-debug/artifacts',
 
   fullyParallel: false,
   retries: 1,
