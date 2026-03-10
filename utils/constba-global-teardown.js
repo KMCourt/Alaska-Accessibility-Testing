@@ -107,8 +107,17 @@ module.exports = async function globalTeardown() {
 
   console.log(`\n✅ Report saved to: ConstBA-accessibility-tests/ConstBA-results/${today}/report.html`);
 
+  const ruleCounts = {};
+  for (const r of allResults) {
+    for (const v of r.violations || []) {
+      ruleCounts[v.id] = (ruleCounts[v.id] || 0) + (v.nodes?.length || 1);
+    }
+  }
+  const topEntry = Object.entries(ruleCounts).sort((a, b) => b[1] - a[1])[0];
+  const topRule = topEntry ? `${topEntry[0]} (${topEntry[1]} elements)` : null;
+
   const summaryData = allResults.map(r => ({
-    page: r.page, url: r.url, browser: r.browser, ...r.counts,
+    page: r.page, url: r.url, browser: r.browser, ...r.counts, previousCounts: r.previousCounts,
   }));
 
   await postToTeams({
@@ -116,5 +125,6 @@ module.exports = async function globalTeardown() {
     summaryData,
     today,
     regressions,
+    topRule,
   });
 };
