@@ -1531,11 +1531,31 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T14:16:51.751Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "My Basket Modal__Galaxy S24": [
     {
       "date": "2026-03-10T11:17:59.382Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T14:17:02.089Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -1555,6 +1575,16 @@
         "moderate": 0,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T14:17:12.656Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment__Galaxy S24": [
@@ -1564,6 +1594,16 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T14:18:08.390Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -1579,6 +1619,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T14:19:05.136Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment - Verified__Galaxy S24": [
@@ -1588,6 +1638,16 @@
         "total": 7,
         "critical": 1,
         "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T14:19:42.952Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
         "moderate": 3,
         "minor": 0
       }
@@ -1601,6 +1661,16 @@
         "critical": 1,
         "serious": 3,
         "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T14:20:40.963Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
         "minor": 0
       }
     }
@@ -1914,6 +1984,18 @@
   "Construction Page__iPhone 15 Pro": [
     {
       "date": "2026-03-10T13:51:09.382Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Construction Page__Galaxy S24": [
+    {
+      "date": "2026-03-10T14:16:34.478Z",
       "counts": {
         "total": 11,
         "critical": 2,
