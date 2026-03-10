@@ -4,6 +4,8 @@ CPCBA-accessibility-tests/CorpBA-dev-debug/
 CPCBA-accessibility-tests/cpc-results/
 ConstBA-accessibility-tests/ConstBA-dev-debug/
 ConstBA-accessibility-tests/ConstBA-results/
+DORS-Booking-accessibility-tests/DORS-Booking-dev-debug/
+DORS-Booking-accessibility-tests/DORS-Booking-results/
 test-results/
 results/
 mobile-test-output.txt
