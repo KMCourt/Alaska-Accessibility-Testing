@@ -23,6 +23,7 @@ const AxeBuilder = require('@axe-core/playwright').default;
 const fs = require('fs');
 const path = require('path');
 const { getPreviousCounts, recordRun, isRegression } = require('../utils/trend-tracker');
+const TREND_HISTORY = path.join(__dirname, '..', 'constba-trend-history.json');
 const { getOtp } = require('../utils/testmail');
 
 const BASE = 'https://ttc-eun-qat-corporatebookings.azurewebsites.net';
@@ -930,10 +931,10 @@ test.describe('Accessibility Scan', () => {
       };
 
       // Get previous run counts for trend comparison
-      const previousCounts = getPreviousCounts(pageDef.name, projectName);
+      const previousCounts = getPreviousCounts(pageDef.name, projectName, TREND_HISTORY);
 
       // Record this run in trend history
-      recordRun({ page: pageDef.name, browser: projectName, counts });
+      recordRun({ page: pageDef.name, browser: projectName, counts, historyFile: TREND_HISTORY });
 
       // Save JSON
       const jsonPath = path.join(jsonDir, `${safeName}_${projectName}.json`);

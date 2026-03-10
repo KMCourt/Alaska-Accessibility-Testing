@@ -24,6 +24,7 @@ const AxeBuilder = require('@axe-core/playwright').default;
 const fs = require('fs');
 const path = require('path');
 const { getPreviousCounts, recordRun, isRegression } = require('../../utils/trend-tracker');
+const TREND_HISTORY = path.join(__dirname, '..', '..', 'cpcba-trend-history.json');
 const { getOtp } = require('../../utils/testmail');
 
 // -------------------------------------------
@@ -702,8 +703,8 @@ test.describe('Accessibility Scan — Mobile', () => {
         minor:    results.violations.filter(v => v.impact === 'minor').length,
       };
 
-      const previousCounts = getPreviousCounts(pageDef.name, projectName);
-      recordRun({ page: pageDef.name, browser: projectName, counts });
+      const previousCounts = getPreviousCounts(pageDef.name, projectName, TREND_HISTORY);
+      recordRun({ page: pageDef.name, browser: projectName, counts, historyFile: TREND_HISTORY });
 
       const jsonPath = path.join(jsonDir, `${safeName}_${safeProject}.json`);
       fs.writeFileSync(jsonPath, JSON.stringify({

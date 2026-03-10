@@ -11,15 +11,15 @@
 const fs = require('fs');
 const path = require('path');
 
-// Stored at project root (not inside CPCBA-results/) so it is tracked by git
-// and not lost if the results folder is cleared or the machine changes.
-const HISTORY_FILE = path.join(__dirname, '..', 'trend-history.json');
+// Default history file — kept for backwards compatibility.
+// Pass a custom historyFile path to each function to keep suites separate.
+const DEFAULT_HISTORY_FILE = path.join(__dirname, '..', 'trend-history.json');
 
 // Load existing history or start fresh
-function loadHistory() {
-  if (fs.existsSync(HISTORY_FILE)) {
+function loadHistory(historyFile = DEFAULT_HISTORY_FILE) {
+  if (fs.existsSync(historyFile)) {
     try {
-      return JSON.parse(fs.readFileSync(HISTORY_FILE, 'utf8'));
+      return JSON.parse(fs.readFileSync(historyFile, 'utf8'));
     } catch {
       return {};
     }
@@ -28,15 +28,15 @@ function loadHistory() {
 }
 
 // Save history back to file
-function saveHistory(history) {
-  const dir = path.dirname(HISTORY_FILE);
+function saveHistory(history, historyFile = DEFAULT_HISTORY_FILE) {
+  const dir = path.dirname(historyFile);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2), 'utf8');
+  fs.writeFileSync(historyFile, JSON.stringify(history, null, 2), 'utf8');
 }
 
 // Get the violation counts from the previous run for a given page + browser
-function getPreviousCounts(pageName, browserName) {
-  const history = loadHistory();
+function getPreviousCounts(pageName, browserName, historyFile = DEFAULT_HISTORY_FILE) {
+  const history = loadHistory(historyFile);
   const key = `${pageName}__${browserName}`;
   const runs = history[key];
   if (!runs || runs.length === 0) return null;
@@ -44,8 +44,8 @@ function getPreviousCounts(pageName, browserName) {
 }
 
 // Record the current run in history
-function recordRun({ page, browser, counts }) {
-  const history = loadHistory();
+function recordRun({ page, browser, counts, historyFile = DEFAULT_HISTORY_FILE }) {
+  const history = loadHistory(historyFile);
   const key = `${page}__${browser}`;
   if (!history[key]) history[key] = [];
   history[key].push({
@@ -54,7 +54,7 @@ function recordRun({ page, browser, counts }) {
   });
   // Keep only last 10 runs per page/browser
   if (history[key].length > 10) history[key] = history[key].slice(-10);
-  saveHistory(history);
+  saveHistory(history, historyFile);
 }
 
 // Returns true if current total is higher than previous (regression)
