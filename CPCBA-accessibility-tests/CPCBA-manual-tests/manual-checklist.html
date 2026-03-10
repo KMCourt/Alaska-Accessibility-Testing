@@ -677,13 +677,13 @@ function renderPages() {
               ${chk.hint ? `<span class="hint">${chk.hint}</span>` : ''}
             </div>
             <div class="radio-group">
-              <label>
+              <label onmousedown="radioMousedown(this)" onclick="radioClick(this,'${fullId}')">
                 <input type="radio" name="${fullId}" value="pass" onchange="saveCheck('${fullId}','pass')"> ✓ Pass
               </label>
-              <label>
+              <label onmousedown="radioMousedown(this)" onclick="radioClick(this,'${fullId}')">
                 <input type="radio" name="${fullId}" value="fail" onchange="saveCheck('${fullId}','fail')"> ✗ Fail
               </label>
-              <label>
+              <label onmousedown="radioMousedown(this)" onclick="radioClick(this,'${fullId}')">
                 <input type="radio" name="${fullId}" value="na" onchange="saveCheck('${fullId}','na')"> N/A
               </label>
             </div>
@@ -749,6 +749,22 @@ function saveCheck(fullId, value) {
   updateProgress();
   updateNavDots();
   updateSummary();
+}
+
+let radioWasChecked = false;
+
+function radioMousedown(label) {
+  radioWasChecked = label.querySelector('input').checked;
+}
+
+function radioClick(label, fullId) {
+  if (radioWasChecked) {
+    label.querySelector('input').checked = false;
+    localStorage.removeItem(storageKey(fullId));
+    updateProgress();
+    updateNavDots();
+    updateSummary();
+  }
 }
 
 function saveNotes(pageId) {
