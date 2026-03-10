@@ -415,6 +415,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:02:54.859Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "CPC Page__firefox": [
@@ -439,11 +449,51 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:03:56.567Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:20:23.262Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "My Basket Modal__firefox": [
     {
       "date": "2026-03-10T10:41:07.702Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:04:03.052Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:20:30.299Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -463,6 +513,26 @@
         "moderate": 0,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:04:10.427Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:20:37.462Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment__firefox": [
@@ -472,6 +542,26 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:04:41.455Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:21:13.489Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -487,6 +577,26 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:05:14.100Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:21:50.301Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment - Verified__firefox": [
@@ -496,6 +606,26 @@
         "total": 7,
         "critical": 1,
         "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:06:09.928Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:23:10.388Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
         "moderate": 3,
         "minor": 0
       }
@@ -511,11 +641,51 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:07:08.786Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:23:39.773Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Booking Confirmation__firefox": [
     {
       "date": "2026-03-10T10:45:00.641Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:08:09.327Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:24:18.625Z",
       "counts": {
         "total": 6,
         "critical": 1,
@@ -535,6 +705,26 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:14:32.248Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:25:08.045Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "Add Attendee - Edit Form__firefox": [
@@ -547,11 +737,51 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:15:42.747Z",
+      "counts": {
+        "total": 3,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:26:03.739Z",
+      "counts": {
+        "total": 3,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "View Booked Courses__firefox": [
     {
       "date": "2026-03-10T10:47:34.691Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:16:36.461Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:26:58.636Z",
       "counts": {
         "total": 6,
         "critical": 1,
@@ -571,6 +801,26 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:17:18.005Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:27:41.703Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Sign Out Page__firefox": [
@@ -580,6 +830,26 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:18:31.247Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:29:02.681Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -607,11 +877,51 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:30:08.395Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:40:31.692Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "My Basket Modal__edge": [
     {
       "date": "2026-03-10T10:50:56.443Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:30:16.708Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:40:38.743Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -631,6 +941,26 @@
         "moderate": 0,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:30:23.767Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:40:45.478Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment__edge": [
@@ -640,6 +970,26 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:31:10.714Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:41:30.681Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -655,6 +1005,26 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:31:57.287Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:42:14.209Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment - Verified__edge": [
@@ -664,6 +1034,26 @@
         "total": 7,
         "critical": 1,
         "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:32:28.422Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:42:52.847Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
         "moderate": 3,
         "minor": 0
       }
@@ -679,11 +1069,51 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:33:02.036Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:43:47.473Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Booking Confirmation__edge": [
     {
       "date": "2026-03-10T10:54:44.499Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:34:00.027Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:44:52.561Z",
       "counts": {
         "total": 6,
         "critical": 1,
@@ -703,6 +1133,26 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:34:48.501Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:45:41.007Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "Add Attendee - Edit Form__edge": [
@@ -715,11 +1165,51 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:35:36.567Z",
+      "counts": {
+        "total": 3,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:46:38.090Z",
+      "counts": {
+        "total": 3,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "View Booked Courses__edge": [
     {
       "date": "2026-03-10T10:57:20.632Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:36:27.687Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:47:28.407Z",
       "counts": {
         "total": 6,
         "critical": 1,
@@ -739,6 +1229,26 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:37:17.819Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:48:18.593Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Sign Out Page__edge": [
@@ -748,6 +1258,26 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:38:38.265Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:49:37.420Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -775,11 +1305,31 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:51:30.536Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "My Basket Modal__iPhone 15 Pro": [
     {
       "date": "2026-03-10T11:01:26.839Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:51:39.280Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -799,6 +1349,16 @@
         "moderate": 0,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:51:47.746Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment__iPhone 15 Pro": [
@@ -811,6 +1371,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:51:59.214Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment - Pay__iPhone 15 Pro": [
@@ -820,6 +1390,16 @@
         "total": 8,
         "critical": 1,
         "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:53:16.861Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
         "moderate": 4,
         "minor": 0
       }
@@ -835,6 +1415,16 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T13:53:57.469Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "Pay by Card__iPhone 15 Pro": [
@@ -845,6 +1435,16 @@
         "critical": 1,
         "serious": 2,
         "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:55:03.007Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
         "minor": 0
       }
     }
@@ -1258,6 +1858,62 @@
     },
     {
       "date": "2026-03-10T12:52:31.887Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Construction Page__firefox": [
+    {
+      "date": "2026-03-10T13:03:42.326Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:20:08.059Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Construction Page__edge": [
+    {
+      "date": "2026-03-10T13:29:52.005Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-10T13:40:16.087Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Construction Page__iPhone 15 Pro": [
+    {
+      "date": "2026-03-10T13:51:09.382Z",
       "counts": {
         "total": 11,
         "critical": 2,

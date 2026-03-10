@@ -15,6 +15,9 @@ const fs = require('fs');
 const path = require('path');
 const { generateConsolidatedReport } = require('./report-generator');
 const { postToTeams } = require('./teams-notify');
+const { pruneHistory } = require('./trend-tracker');
+
+const TREND_HISTORY = path.join(__dirname, '..', 'constba-trend-history.json');
 
 const RETENTION_DAYS = 90;
 
@@ -37,8 +40,9 @@ module.exports = async function globalTeardown() {
   const baseResultsDir = path.join(__dirname, '..', 'ConstBA-accessibility-tests', 'ConstBA-results');
   const resultsDir = path.join(baseResultsDir, today);
 
-  // Remove reports older than 90 days
+  // Remove reports and trend history older than 90 days
   pruneOldReports(baseResultsDir);
+  pruneHistory(TREND_HISTORY);
   const jsonDir = path.join(resultsDir, 'json');
   const reportPath = path.join(resultsDir, 'report.html');
 

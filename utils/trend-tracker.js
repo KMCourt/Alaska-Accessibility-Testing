@@ -63,4 +63,26 @@ function isRegression(previousCounts, currentTotal) {
   return currentTotal > previousCounts.total;
 }
 
-module.exports = { getPreviousCounts, recordRun, isRegression };
+// Remove runs older than retentionDays from the history file.
+// Keys with no remaining runs are deleted entirely.
+function pruneHistory(historyFile = DEFAULT_HISTORY_FILE, retentionDays = 90) {
+  const history = loadHistory(historyFile);
+  if (Object.keys(history).length === 0) return;
+
+  const cutoff = Date.now() - retentionDays * 24 * 60 * 60 * 1000;
+  let pruned = 0;
+
+  for (const key of Object.keys(history)) {
+    const before = history[key].length;
+    history[key] = history[key].filter(run => new Date(run.date).getTime() >= cutoff);
+    pruned += before - history[key].length;
+    if (history[key].length === 0) delete history[key];
+  }
+
+  if (pruned > 0) {
+    saveHistory(history, historyFile);
+    console.log(`🗑️  Trend history: removed ${pruned} run(s) older than ${retentionDays} days from ${path.basename(historyFile)}`);
+  }
+}
+
+module.exports = { getPreviousCounts, recordRun, isRegression, pruneHistory };

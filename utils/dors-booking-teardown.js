@@ -14,6 +14,9 @@ const fs = require('fs');
 const path = require('path');
 const { generateConsolidatedReport } = require('./report-generator');
 const { postToTeams } = require('./teams-notify');
+const { pruneHistory } = require('./trend-tracker');
+
+const TREND_HISTORY = path.join(__dirname, '..', 'dors-trend-history.json');
 
 const RETENTION_DAYS = 90;
 
@@ -37,6 +40,7 @@ module.exports = async function globalTeardown() {
   const resultsDir = path.join(baseResultsDir, today);
 
   pruneOldReports(baseResultsDir);
+  pruneHistory(TREND_HISTORY);
 
   const browserJsonDir = path.join(resultsDir, 'browser', 'json');
   const mobileJsonDir  = path.join(resultsDir, 'mobile',  'json');
