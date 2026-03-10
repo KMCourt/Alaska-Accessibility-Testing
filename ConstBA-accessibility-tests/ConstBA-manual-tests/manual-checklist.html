@@ -268,6 +268,71 @@
       line-height: 14px; cursor: help; flex-shrink: 0;
       margin-left: 4px;
     }
+
+    /* ── Page meta: URL link + nav instructions ── */
+    .page-meta-wrap { margin-top: 3px; display: flex; flex-direction: column; gap: 3px; }
+    .page-meta-link {
+      font-size: 0.78rem; color: #a8c8a8;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .page-meta-link a {
+      color: #7ec8a8; text-decoration: underline;
+      transition: color .15s;
+    }
+    .page-meta-link a:hover { color: #fff; }
+    .nav-instructions {
+      font-size: 0.75rem; color: #a8c8a8;
+      font-style: italic; line-height: 1.4;
+    }
+
+    /* ── Tools Guide panel ── */
+    #tools-guide {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .tools-guide-header {
+      background: #1a3a1a;
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tools-guide-header h2 { font-size: 1rem; font-weight: 700; }
+    .tools-guide-header .toggle { font-size: 1.1rem; transition: transform .2s; }
+    #tools-guide.collapsed .toggle { transform: rotate(-90deg); }
+    .tools-guide-body { padding: 16px 20px; }
+    #tools-guide.collapsed .tools-guide-body { display: none; }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .tool-card {
+      background: #f8f9fa;
+      border: 1px solid #e0e4ea;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .tool-card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1a3a1a;
+      margin-bottom: 6px;
+    }
+    .tool-card p {
+      font-size: 0.8rem;
+      color: #444;
+      line-height: 1.5;
+      margin-bottom: 5px;
+    }
+    .tool-card p:last-child { margin-bottom: 0; }
+    .tool-card a { color: #1a3a1a; }
   </style>
 </head>
 <body>
@@ -319,6 +384,50 @@
   <!-- Main -->
   <main id="main-content">
 
+    <!-- Tools Guide -->
+    <div id="tools-guide">
+      <div class="tools-guide-header" onclick="toggleToolsGuide()">
+        <h2>🧰 How to Test — Tools Guide</h2>
+        <span class="toggle">▼</span>
+      </div>
+      <div class="tools-guide-body">
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card-title">🔊 Screen Reader</div>
+            <p><strong>NVDA</strong> (free, Windows) — download from <a href="https://www.nvaccess.org" target="_blank">nvaccess.org</a>.<br>Start: Win+Ctrl+Enter or open from Start Menu.</p>
+            <p>Navigate: <kbd>Tab</kbd> (interactive elements), <kbd>Arrow keys</kbd> (read content), <kbd>H</kbd> (headings), <kbd>B</kbd> (buttons), <kbd>F</kbd> (form fields).</p>
+            <p>On Mac/iOS: VoiceOver is built-in — <kbd>Cmd+F5</kbd> on Mac, triple-press Home on iOS.</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card-title">⌨️ Keyboard Navigation</div>
+            <p>No tools needed. Put the mouse aside.</p>
+            <p>Use: <kbd>Tab</kbd> (next element), <kbd>Shift+Tab</kbd> (previous), <kbd>Enter</kbd>/<kbd>Space</kbd> (activate), <kbd>Arrow keys</kbd> (menus/dropdowns), <kbd>Escape</kbd> (close modals).</p>
+            <p>Start from the browser address bar and Tab into the page.</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card-title">🎨 Colour Contrast</div>
+            <p>Use the free <strong>Colour Contrast Analyser</strong> app — download from <a href="https://www.tpgi.com/color-contrast-checker/" target="_blank">tpgi.com/color-contrast-checker</a> — to eyedropper colours from the screen.</p>
+            <p>Also in Chrome DevTools: right-click any text element → Inspect → click the colour swatch in the CSS panel to see the contrast ratio.</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card-title">🔍 Browser Extensions</div>
+            <p>Install <strong>axe DevTools</strong> (free version by Deque) from the Chrome/Firefox extension store. Open DevTools (<kbd>F12</kbd>) → axe DevTools tab → Scan page.</p>
+            <p>Also useful: <strong>WAVE</strong> extension from WebAIM (<a href="https://wave.webaim.org" target="_blank">wave.webaim.org</a>) — adds visual overlays showing errors directly on the page.</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card-title">📱 Mobile Emulation</div>
+            <p>In Chrome: <kbd>F12</kbd> → click the device toolbar icon (or <kbd>Ctrl+Shift+M</kbd>) → select a device (e.g. iPhone 15 Pro, Galaxy S24).</p>
+            <p>For real-device screen reader testing: VoiceOver on iOS (Settings → Accessibility → VoiceOver) or TalkBack on Android (Settings → Accessibility → TalkBack).</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card-title">🔎 Zoom Testing</div>
+            <p>In any browser: <kbd>Ctrl+Plus</kbd> (<kbd>Cmd+Plus</kbd> on Mac) to zoom to 200%. Check nothing overlaps or disappears.</p>
+            <p>Also test OS-level text size: Windows Settings → Accessibility → Text size.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Summary -->
     <div id="summary-section">
       <h2>Summary</h2>
@@ -366,21 +475,22 @@
 // DATA
 // ─────────────────────────────────────────────────────────────────────────────
 
+const BASE_URL = 'https://ttc-eun-qat-corporatebookings.azurewebsites.net';
 const PAGES = [
-  { id: 'construction-page',            name: 'Construction Page',             url: '/construction' },
-  { id: 'info-page',                    name: 'Info Page',                     url: '/construction → Info button' },
-  { id: 'my-basket-modal',              name: 'My Basket Modal',               url: 'Modal' },
-  { id: 'sign-in-modal',                name: 'Sign In Modal',                 url: 'Modal' },
-  { id: 'details-and-payment',          name: 'Details & Payment',             url: '/construction/details-and-payment' },
-  { id: 'details-and-payment-pay',      name: 'Details & Payment — Pay',       url: '/construction/details-and-payment/pay' },
-  { id: 'details-and-payment-verified', name: 'Details & Payment — Verified',  url: '/construction/details-and-payment' },
-  { id: 'pay-by-card',                  name: 'Pay by Card',                   url: '/construction/checkout' },
-  { id: 'booking-confirmation',         name: 'Booking Confirmation',          url: '/construction/confirmation' },
-  { id: 'add-attendees',                name: 'Add Attendees',                 url: '/manage-delegates' },
-  { id: 'add-attendee-edit-form',       name: 'Add Attendee — Edit Form',      url: 'Edit panel' },
-  { id: 'view-booked-courses',          name: 'View Booked Courses',           url: '/booked-courses' },
-  { id: 'user-profile',                 name: 'User Profile',                  url: '/profile' },
-  { id: 'sign-out-page',                name: 'Sign Out Page',                 url: '/sign-out' },
+  { id: 'construction-page',            name: 'Construction Page',             url: `${BASE_URL}/construction`,                         nav: null },
+  { id: 'info-page',                    name: 'Info Page',                     url: `${BASE_URL}/construction`,                         nav: 'Open Construction page → click any Info button on a course' },
+  { id: 'my-basket-modal',              name: 'My Basket Modal',               url: `${BASE_URL}/construction`,                         nav: 'Open Construction page → click "Add to basket" on a course → click the cart icon in the header' },
+  { id: 'sign-in-modal',                name: 'Sign In Modal',                 url: `${BASE_URL}/construction`,                         nav: 'Open Construction page → click the "Sign in" button in the header' },
+  { id: 'details-and-payment',          name: 'Details & Payment',             url: `${BASE_URL}/construction/details-and-payment`,     nav: 'Add a course to basket first, then navigate directly to this URL' },
+  { id: 'details-and-payment-pay',      name: 'Details & Payment — Pay',       url: `${BASE_URL}/construction/details-and-payment/pay`, nav: null },
+  { id: 'details-and-payment-verified', name: 'Details & Payment — Verified',  url: `${BASE_URL}/construction/details-and-payment`,     nav: 'Navigate to Details & Payment → fill in form → complete email OTP verification' },
+  { id: 'pay-by-card',                  name: 'Pay by Card',                   url: `${BASE_URL}/construction/details-and-payment`,     nav: 'Complete OTP verification + fill billing address + accept terms → click "Pay now by card"' },
+  { id: 'booking-confirmation',         name: 'Booking Confirmation',          url: null,                                                nav: 'Complete full payment with test card 4242 4242 4242 4242 → arrives at dynamic /confirmation URL' },
+  { id: 'add-attendees',                name: 'Add Attendees',                 url: null,                                                nav: 'Complete payment → click "Add attendees" button on the confirmation page' },
+  { id: 'add-attendee-edit-form',       name: 'Add Attendee — Edit Form',      url: null,                                                nav: 'Navigate to Add Attendees page → click the pencil/edit icon on an attendee row' },
+  { id: 'view-booked-courses',          name: 'View Booked Courses',           url: null,                                                nav: 'Complete payment (now logged in) → click user menu icon in header → "View booked courses"' },
+  { id: 'user-profile',                 name: 'User Profile',                  url: null,                                                nav: 'Complete payment (now logged in) → click user menu icon in header → "User profile"' },
+  { id: 'sign-out-page',                name: 'Sign Out Page',                 url: null,                                                nav: 'Complete payment (now logged in) → click user menu icon in header → "Sign out"' },
 ];
 
 const CATEGORIES = [
@@ -598,11 +708,18 @@ function renderPages() {
         </div>
       </div>`;
 
+    const metaHtml = (() => {
+      const parts = [];
+      if (page.url) parts.push(`<span class="page-meta-link">🔗 <a href="${page.url}" target="_blank" rel="noopener">Open page</a></span>`);
+      if (page.nav) parts.push(`<span class="nav-instructions">↪ ${page.nav}</span>`);
+      return parts.length ? `<div class="page-meta-wrap">${parts.join('')}</div>` : '';
+    })();
+
     section.innerHTML = `
       <div class="page-header" onclick="toggleSection('${page.id}')">
         <div>
           <h3>${page.name}</h3>
-          <div class="page-meta">${page.url}</div>
+          ${metaHtml}
         </div>
         <span class="toggle">▼</span>
       </div>
@@ -753,6 +870,10 @@ function updateSummary() {
 // ─────────────────────────────────────────────────────────────────────────────
 // UI HELPERS
 // ─────────────────────────────────────────────────────────────────────────────
+
+function toggleToolsGuide() {
+  document.getElementById('tools-guide').classList.toggle('collapsed');
+}
 
 function toggleSection(pageId) {
   document.getElementById(`section-${pageId}`).classList.toggle('collapsed');
