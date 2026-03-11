@@ -1,0 +1,54 @@
+{
+  "Sign In Page__chromium": [
+    {
+      "date": "2026-03-11T10:53:46.054Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:55:07.881Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:58:06.254Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:58:45.431Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T11:01:38.733Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ]
+}

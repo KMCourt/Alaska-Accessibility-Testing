@@ -1,0 +1,194 @@
+{
+  "page": "Sign In Page",
+  "url": "https://ttctrainerb2cuat.b2clogin.com/ttctrainerb2cuat.onmicrosoft.com/b2c_1_sign_in_2/oauth2/v2.0/authorize?client_id=d450276d-5adc-498e-a9e6-6d33c0eef6bb&redirect_uri=https%3A%2F%2Fttc-eun-qat-trainer-as.azurewebsites.net%2Fsignin-oidc&response_type=id_token&scope=openid%20profile&response_mode=form_post&nonce=639088236934825665.YzRkYzY0YzctYzM4YS00NGQ0LWI4NWItMjY2Y2UzNWI4MzY2Y2YwNjQyNTctODVhNy00Y2NiLWI2ZTMtMDFkMWQ4MmNlNzI0&state=CfDJ8EJ0yubCRKBOphzisvQjOFyLriM1X0cqlYuiocqBP-VGpjnqt0UwoNMcYCH1HoQa2LTb1Kgz1YpW2KbpW42PbuCJ9bPNaQOe7nrQpvd-7IPORQrTJo1q6wJou8zMcOLYP8KZL1OnJFTyZDmzL1T3zIjDNEnWAy-nATCUX2CVouOiLcJ0kKE4caNzx-dDCzmVw52g8e38TXqiTHLjpjdjIjLRCBZPN9NvLLhaZi8FWgjpQ62s4pgEetbRd2284exGKX4R2UNhIjlqBXFk1z3lZDxmGqjzySnCLQwn5lMNnAqwzvd0AiqxyhlsvwPCcjaEfW2V6QgG1RAAD56uWt2dnZ0&x-client-SKU=ID_NET8_0&x-client-ver=8.3.1.0",
+  "browser": "chromium",
+  "scannedAt": "2026-03-11T11:01:38.734Z",
+  "summary": {
+    "total": 4,
+    "critical": 0,
+    "serious": 1,
+    "moderate": 3,
+    "minor": 0
+  },
+  "previousCounts": {
+    "total": 4,
+    "critical": 0,
+    "serious": 1,
+    "moderate": 3,
+    "minor": 0
+  },
+  "regression": false,
+  "screenshotFile": "sign_in_page_chromium.png",
+  "elementScreenshots": {
+    "color-contrast": [
+      "sign_in_page_chromium_color-contrast_0.png"
+    ],
+    "landmark-one-main": [
+      "sign_in_page_chromium_landmark-one-main_0.png"
+    ],
+    "page-has-heading-one": [
+      "sign_in_page_chromium_page-has-heading-one_0.png"
+    ],
+    "region": [
+      "sign_in_page_chromium_region_0.png"
+    ]
+  },
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7ae1bf",
+                "bgColor": "#ffffff",
+                "contrastRatio": 1.57,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<body>",
+                  "target": [
+                    "body"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.57 (foreground color: #7ae1bf, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<a id=\"forgotPassword\" href=\"/ttctrainerb2cuat.on...\">",
+          "target": [
+            "#forgotPassword"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.57 (foreground color: #7ae1bf, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    },
+    {
+      "id": "landmark-one-main",
+      "impact": "moderate",
+      "tags": [
+        "cat.semantics",
+        "best-practice"
+      ],
+      "description": "Ensure the document has a main landmark",
+      "help": "Document should have one main landmark",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "page-has-main",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "Document does not have a main landmark"
+            }
+          ],
+          "none": [],
+          "impact": "moderate",
+          "html": "<html lang=\"en\">",
+          "target": [
+            "html"
+          ],
+          "failureSummary": "Fix all of the following:\n  Document does not have a main landmark"
+        }
+      ]
+    },
+    {
+      "id": "page-has-heading-one",
+      "impact": "moderate",
+      "tags": [
+        "cat.semantics",
+        "best-practice"
+      ],
+      "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+      "help": "Page should contain a level-one heading",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "page-has-heading-one",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "Page must have a level-one heading"
+            }
+          ],
+          "none": [],
+          "impact": "moderate",
+          "html": "<html lang=\"en\">",
+          "target": [
+            "html"
+          ],
+          "failureSummary": "Fix all of the following:\n  Page must have a level-one heading"
+        }
+      ]
+    },
+    {
+      "id": "region",
+      "impact": "moderate",
+      "tags": [
+        "cat.keyboard",
+        "best-practice",
+        "RGAAv4",
+        "RGAA-9.2.1"
+      ],
+      "description": "Ensure all page content is contained by landmarks",
+      "help": "All page content should be contained by landmarks",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "region",
+              "data": {
+                "isIframe": false
+              },
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "Some page content is not contained by landmarks"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "moderate",
+          "html": "<div class=\"sign-in-instruction\">\n                <h2>Welcome to TTC</h2>\n                <p>If you have previously created your account please enter your email address and password to sign in.</p>\n            </div>",
+          "target": [
+            ".sign-in-instruction"
+          ],
+          "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+        }
+      ]
+    }
+  ],
+  "incomplete": []
+}

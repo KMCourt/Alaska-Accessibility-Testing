@@ -59,6 +59,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:17:35.792Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Info Page__chromium": [
@@ -104,6 +114,16 @@
     },
     {
       "date": "2026-03-11T07:06:23.559Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:17:53.323Z",
       "counts": {
         "total": 7,
         "critical": 1,
@@ -163,6 +183,16 @@
         "moderate": 0,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:18:03.879Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
     }
   ],
   "Sign In Modal__chromium": [
@@ -208,6 +238,16 @@
     },
     {
       "date": "2026-03-11T07:06:37.390Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:18:12.703Z",
       "counts": {
         "total": 0,
         "critical": 0,
@@ -267,6 +307,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:18:55.449Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Details and Payment - Pay__chromium": [
@@ -312,6 +362,16 @@
     },
     {
       "date": "2026-03-11T07:07:43.439Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:19:40.205Z",
       "counts": {
         "total": 8,
         "critical": 1,
@@ -371,6 +431,16 @@
         "moderate": 3,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:21:06.532Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
     }
   ],
   "Pay by Card__chromium": [
@@ -416,6 +486,16 @@
     },
     {
       "date": "2026-03-11T07:09:15.736Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:21:58.715Z",
       "counts": {
         "total": 5,
         "critical": 1,
@@ -475,6 +555,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:22:40.954Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Add Attendees__chromium": [
@@ -520,6 +610,16 @@
     },
     {
       "date": "2026-03-11T07:11:06.122Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:24:11.493Z",
       "counts": {
         "total": 5,
         "critical": 1,
@@ -579,6 +679,16 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:24:58.460Z",
+      "counts": {
+        "total": 6,
+        "critical": 0,
+        "serious": 4,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "View Booked Courses__chromium": [
@@ -624,6 +734,16 @@
     },
     {
       "date": "2026-03-11T07:12:30.105Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:25:51.092Z",
       "counts": {
         "total": 6,
         "critical": 1,
@@ -683,6 +803,16 @@
         "moderate": 2,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-11T10:26:33.842Z",
+      "counts": {
+        "total": 3,
+        "critical": 0,
+        "serious": 1,
+        "moderate": 2,
+        "minor": 0
+      }
     }
   ],
   "Sign Out Page__chromium": [
@@ -728,6 +858,16 @@
     },
     {
       "date": "2026-03-11T07:14:22.198Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 4,
+        "minor": 0
+      }
+    },
+    {
+      "date": "2026-03-11T10:27:33.693Z",
       "counts": {
         "total": 8,
         "critical": 1,
