@@ -19,6 +19,16 @@
         "moderate": 4,
         "minor": 0
       }
+    },
+    {
+      "date": "2026-03-10T14:40:46.412Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
     }
   ],
   "Construction Page__firefox": [
@@ -68,6 +78,306 @@
   "Construction Page__iPhone 15 Pro": [
     {
       "date": "2026-03-10T13:51:09.382Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Info Page__chromium": [
+    {
+      "date": "2026-03-10T14:41:02.741Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "My Basket Modal__chromium": [
+    {
+      "date": "2026-03-10T14:41:11.057Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    }
+  ],
+  "Sign In Modal__chromium": [
+    {
+      "date": "2026-03-10T14:41:17.773Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment__chromium": [
+    {
+      "date": "2026-03-10T14:41:55.013Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Sign Out Page__Galaxy S24": [
+    {
+      "date": "2026-03-10T14:42:01.610Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment - Pay__chromium": [
+    {
+      "date": "2026-03-10T14:42:35.471Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Construction Page__Pixel 7": [
+    {
+      "date": "2026-03-10T14:42:58.943Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Info Page__Pixel 7": [
+    {
+      "date": "2026-03-10T14:43:16.624Z",
+      "counts": {
+        "total": 7,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment - Verified__chromium": [
+    {
+      "date": "2026-03-10T14:43:17.735Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "My Basket Modal__Pixel 7": [
+    {
+      "date": "2026-03-10T14:43:26.226Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    }
+  ],
+  "Sign In Modal__Pixel 7": [
+    {
+      "date": "2026-03-10T14:43:34.946Z",
+      "counts": {
+        "total": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "minor": 0
+      }
+    }
+  ],
+  "Pay by Card__chromium": [
+    {
+      "date": "2026-03-10T14:44:10.220Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment__Pixel 7": [
+    {
+      "date": "2026-03-10T14:44:36.172Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Booking Confirmation__chromium": [
+    {
+      "date": "2026-03-10T14:45:05.680Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment - Pay__Pixel 7": [
+    {
+      "date": "2026-03-10T14:45:35.168Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Add Attendees__chromium": [
+    {
+      "date": "2026-03-10T14:45:52.873Z",
+      "counts": {
+        "total": 5,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "Details and Payment - Verified__Pixel 7": [
+    {
+      "date": "2026-03-10T14:46:04.320Z",
+      "counts": {
+        "total": 8,
+        "critical": 1,
+        "serious": 4,
+        "moderate": 3,
+        "minor": 0
+      }
+    }
+  ],
+  "Add Attendee - Edit Form__chromium": [
+    {
+      "date": "2026-03-10T14:46:46.080Z",
+      "counts": {
+        "total": 5,
+        "critical": 0,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    }
+  ],
+  "Pay by Card__Pixel 7": [
+    {
+      "date": "2026-03-10T14:47:21.885Z",
+      "counts": {
+        "total": 11,
+        "critical": 2,
+        "serious": 5,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "View Booked Courses__chromium": [
+    {
+      "date": "2026-03-10T14:47:36.668Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Booking Confirmation__Pixel 7": [
+    {
+      "date": "2026-03-10T14:48:06.507Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "Add Attendee - Edit Form__Pixel 7": [
+    {
+      "date": "2026-03-10T14:56:33.256Z",
+      "counts": {
+        "total": 5,
+        "critical": 0,
+        "serious": 3,
+        "moderate": 2,
+        "minor": 0
+      }
+    }
+  ],
+  "View Booked Courses__Pixel 7": [
+    {
+      "date": "2026-03-10T14:57:19.558Z",
+      "counts": {
+        "total": 6,
+        "critical": 1,
+        "serious": 1,
+        "moderate": 4,
+        "minor": 0
+      }
+    }
+  ],
+  "User Profile__Pixel 7": [
+    {
+      "date": "2026-03-10T14:58:04.161Z",
+      "counts": {
+        "total": 4,
+        "critical": 0,
+        "serious": 2,
+        "moderate": 2,
+        "minor": 0
+      }
+    }
+  ],
+  "Sign Out Page__Pixel 7": [
+    {
+      "date": "2026-03-10T14:59:34.023Z",
       "counts": {
         "total": 11,
         "critical": 2,
